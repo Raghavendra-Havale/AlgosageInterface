@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  darkMode: "class",
   theme: {
     extend: {
       screens: {
@@ -16,10 +15,11 @@ export default {
         success: "#2a9c47",
         light: "rgb(110, 111, 111)",
       },
-      // fontFamily: {
-      //   sans: ["Graphik", "sans-serif"],
-      //   serif: ["Merriweather", "serif"],
-      // },
+      fontFamily: {
+        sans: ["poppins", "Graphik", "sans-serif"],
+        serif: ["Merriweather", "serif"],
+        mono: ["ui-monospace", "SFMono-Regular"],
+      },
     },
   },
   plugins: [],
