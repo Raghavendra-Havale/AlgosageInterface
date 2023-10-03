@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Jost", sans-serif;
+  }
+  
+  html {
+    font-size: 62.5%;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  li {
+    list-style: none;
+  }
+  
+  .main-nav {
+    width: 100%;
+    height: 5rem;
+    display: grid;
+    /* column-gap: 10rem; */
+    grid-template-columns: 2rem 0.3fr 2fr 1fr 2rem;
+    /* background-color: antiquewhite; */
+  }
+  
+  .logo {
+    background-color: black;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    grid-column: 2/3;
+  }
+  .logo button {
+    text-transform: uppercase;
+    align-items: center;
+    display: flex;
+  }
+  
+  .menu-link {
+    grid-column: 3/4;
+    /* background-color: aqua; */
+  }
+  
+  .menu-link ul {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 5rem;
+    font-size: large;
+  }
+  /* .hamburger-menu {
+  }
+   */
+  .menu-link li {
+    padding: 3rem;
+  }
+  
+  .gamma-logo {
+    width: auto !important;
+    font-size: 3rem;
+  }
+  
+  .login-network-app {
+    grid-column: 4/5;
+    /* background-color: blue; */
+  }
+  
+  .login-network-app ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 5rem;
+  }
+  
+  @media (max-width: 1080px) {
+    .main-nav {
+      height: 4rem;
+      grid-template-columns: 2rem 0.3fr 2fr 1fr 2rem;
+    }
+    .logo,
+    .menu-link,
+    .login-network-app,
+    .login-network-app ul {
+      height: 4rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .main-nav {
+      height: 3rem;
+      grid-template-columns: 1rem 0.3fr 2fr 1fr 1rem;
+    }
+    .menu-link ul,
+    .login-network-app ul {
+      display: none;
+    }
+  }
+  
