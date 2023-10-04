@@ -1,15 +1,14 @@
 import Body from "./Pages/Body/body";
 import Navbar from "./components/navbar/navbar";
-import ProtocolStats from "./components/ProtocolStats";
+
+import Footer from "./components/footer";
 
 function App() {
   return (
-    <div className="text-white h-screen w-screen overflow-y-scroll overflow-x-hidden bg-primary">
+    <div className="text-white min-h-screen h-full w-full flex flex-col overflow-x-hidden bg-primary scroll-smooth antialiased font-sans">
       <Navbar />
-      <main>
-        <ProtocolStats />
-        <Body />
-      </main>
+      <Body />
+      <Footer />
     </div>
   );
 }
