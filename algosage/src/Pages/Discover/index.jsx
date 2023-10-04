@@ -1,43 +1,13 @@
-import React from "react";
 import Card from "./Card";
-import { Cards } from "./Cards";
 
 function Discover() {
   return (
     <>
-      <div className="flex ">
-            <div className="flex flex-col py-8 ">
-                <div className="text-xl ml-1">Browse Exchanges</div>
-                <Card/>
-                <Cards/>
-            </div>
-        </div>
+      <section className="mx-auto max-w-6xl my-6 w-full px-5 xl:px-0 flex flex-col gap-y-6">
+        <Card />
+      </section>
     </>
-  )
+  );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export default Discover;

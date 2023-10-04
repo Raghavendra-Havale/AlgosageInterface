@@ -5,7 +5,7 @@ const Body = () => {
   return (
     <main>
       <ProtocolStats />
-      <div className="mx-auto max-w-6xl w-full px-5 xl:px-0 flex flex-col">
+      <div className="bg-primary text-white">
         <Outlet />
       </div>
     </main>

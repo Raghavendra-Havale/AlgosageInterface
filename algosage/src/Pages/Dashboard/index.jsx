@@ -5,7 +5,7 @@ import { PiMagnifyingGlass } from "react-icons/pi";
 const Dashboard = () => {
   return (
     <>
-      <section className="mx-auto max-w-7xl my-6 w-full xl:px-0">
+      <section className="mx-auto max-w-6xl my-6 w-full px-5 xl:px-0">
         <p className="pb-2 text-sm text-light">TVL by Chain</p>
         <div className="grid auto-cols-max grid-flow-col gap-x-2 overflow-auto text-sm font-medium">
           <Link to="/dashboard">
@@ -28,7 +28,7 @@ const Dashboard = () => {
           </Link>
         </div>
       </section>
-      <section className="mx-auto max-w-7xl w-full xl:px-0">
+      <section className="mx-auto max-w-6xl my-6 w-full px-5 xl:px-0">
         <div className="mb-4 flex flex-wrap gap-3">
           <div className="w-fit rounded-lg bg-light/10 p-[2px] hidden md:block">
             <button className="text-sm py-2.5 px-5 rounded-lg hover:text-white font-medium text-white bg-light/20">
