@@ -5,7 +5,7 @@ import Footer from "./components/footer";
 
 function App() {
   return (
-    <div className="text-white min-h-screen h-full w-full flex flex-col overflow-x-hidden bg-primary scroll-smooth antialiased font-sans">
+    <div className="min-h-screen h-full flex flex-col bg-primary">
       <Navbar />
       <Body />
       <Footer />

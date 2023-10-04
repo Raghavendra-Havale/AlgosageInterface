@@ -3,10 +3,10 @@ import { AiOutlineMenu } from "react-icons/ai";
 
 function Navbar() {
   return (
-    <div className="fixed top-0 bg-primary flex h-[var(--header-height)] items-center justify-between px-5 sm:sticky py-3">
+    <div className="fixed top-0 bg-primary flex h-[var(--header-height)] items-center justify-between px-5 sm:sticky py-3 z-10">
       <div className="flex items-center lg:gap-x-6 xl:gap-x-8">
-        <a className="-ml-2.5 p-2.5" href="/">
-          <Link to={"/discover"}>
+        <Link to={"/discover"}>
+          <a className="-ml-2.5 p-2.5" href="/discover">
             <svg
               width={70}
               height={12}
@@ -18,43 +18,51 @@ function Navbar() {
                 fill="#fff"
               ></path>
             </svg>
-          </Link>
-        </a>
+          </a>
+        </Link>
         <nav className="hidden h-full items-center lg:flex">
           <span className="mr-6 h-[17px] w-px bg-[#393939] xl:mr-8"></span>
 
           <ul className="m-0 flex h-full list-none items-center gap-4 p-0">
             <li>
-              <a
-                className="flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light"
-                href="/"
-              >
-                <Link to={"/discover"}>Discover</Link>
-              </a>
+              <Link to={"/discover"}>
+                <a
+                  className="flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light"
+                  href="/discover"
+                >
+                  Discover
+                </a>
+              </Link>
             </li>
             <li>
-              <a
-                className="flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light"
-                href="/"
-              >
-                <Link to={"/dashboard"}>Dashboard</Link>
-              </a>
+              <Link to={"/dashboard"}>
+                <a
+                  className="flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light"
+                  href="/dashboard"
+                >
+                  Dashboard
+                </a>
+              </Link>
             </li>
             <li>
-              <a
-                className="flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light"
-                href=""
-              >
-                <Link to={"/staking"}>Stake algo</Link>
-              </a>
+              <Link to={"/staking"}>
+                <a
+                  className="flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light"
+                  href="/staking"
+                >
+                  Stake algo
+                </a>
+              </Link>
             </li>
             <li>
-              <a
-                className="flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light"
-                href="/"
-              >
-                <Link to={"/revenue"}>Revenue</Link>
-              </a>
+              <Link to={"/revenue"}>
+                <a
+                  className="flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light"
+                  href="/revenue"
+                >
+                  Revenue
+                </a>
+              </Link>
             </li>
           </ul>
         </nav>
