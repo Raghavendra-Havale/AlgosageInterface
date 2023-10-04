@@ -3,7 +3,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 
 function Navbar() {
   return (
-    <div className="fixed flex h-[var(--header-height)] items-center justify-between px-5 sm:sticky py-3">
+    <div className="fixed top-0 bg-primary flex h-[var(--header-height)] items-center justify-between px-5 sm:sticky py-3">
       <div className="flex items-center lg:gap-x-6 xl:gap-x-8">
         <a className="-ml-2.5 p-2.5" href="/">
           <Link to={"/discover"}>

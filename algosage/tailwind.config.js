@@ -16,9 +16,9 @@ export default {
         light: "rgb(110, 111, 111)",
       },
       fontFamily: {
-        sans: ["poppins", "Graphik", "sans-serif"],
-        serif: ["Merriweather", "serif"],
-        mono: ["ui-monospace", "SFMono-Regular"],
+        sans: ["ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ["ui-serif", "Georgia", "Cambria"],
+        nunito: ["Nunito Sans", "sans-serif"],
       },
     },
   },

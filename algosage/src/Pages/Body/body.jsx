@@ -1,10 +1,14 @@
 import { Outlet } from "react-router-dom";
+import ProtocolStats from "../../components/ProtocolStats";
 
 const Body = () => {
   return (
-    <section className="mx-auto max-w-6xl my-6 w-full px-5 xl:px-0 flex flex-col gap-y-6">
-      <Outlet />
-    </section>
+    <main>
+      <ProtocolStats />
+      <div className="mx-auto max-w-6xl w-full px-5 xl:px-0 flex flex-col">
+        <Outlet />
+      </div>
+    </main>
   );
 };
 
