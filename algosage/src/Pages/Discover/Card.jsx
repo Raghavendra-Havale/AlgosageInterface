@@ -56,7 +56,6 @@ const cards = [
 ];
 
 const Card = () => {
-<<<<<<< Updated upstream
   return (
     <>
       <h1 className="text-xl font-normal text-white/90 pb-3">
@@ -113,30 +112,6 @@ const Card = () => {
       <Cards />
     </>
   );
-=======
-    return (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 justify-between  ">
-            {cards.map((card) => (
-                <div className="ml-1 mt-5 p-2 rounded-lg  bg-secondary relative overflow-hidden">
-                    <img className="absolute top-0 right-0 -mr-2 h-auto w-28" src={card.img} />
-                    <h1 className="text-xl">{card.title}</h1>
-                    <h2 className="text-gray-500 text-md">Decentralized Exchange</h2>
-                    <div className="flex  mt-4 mr-2 ">
-                        <div className="flex flex-col gap-1 border-r border-r-gray-500 px-3">
-                            <div className="text-gray-500 text-sm ">TVL</div>
-                            <div className="flex items-center text-xl">$27.96M</div>
-                        </div>
-                        <div className="flex flex-col gap-1 border-r border-r-gray-500 px-3 last:border-none">
-                            <div className="text-gray-500 text-sm">Total Pairs</div>
-                            <div className="flex items-center text-xl">143</div>
-                        </div>
-                    </div>
-                    <button className="rounded-lg border-solid border-2 border-gray-500 w-full p-2 mt-6 enabled:hover:bg-gray-800">Provide Liquidity → </button>
-                </div>
-            ))}
-        </div>
-    )
->>>>>>> Stashed changes
 };
 
 export default Card;
