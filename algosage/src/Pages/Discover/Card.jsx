@@ -68,18 +68,19 @@ const Card = () => {
             key={card.title}
           >
             <img
-              className="absolute top-0 right-0 -mr-2 h-auto w-28"
+              className="absolute top-0 right-0 -mr-2 h-auto w-28 z-[1]"
               src={card.img}
+              alt={card.title}
             />
-            <h1 className="text-xl">{card.title}</h1>
-            <h2 className="text-gray-500 text-md">Decentralized Exchange</h2>
+            <h1 className="text-xl  z-[5]">{card.title}</h1>
+            <h2 className="text-light text-md">Decentralized Exchange</h2>
             <div className="flex  mt-4 mr-2 ">
               <div className="flex flex-col gap-1 border-r border-r-gray-500 pr-3">
-                <div className="text-gray-500 text-sm ">TVL</div>
+                <div className="text-light text-sm ">TVL</div>
                 <div className="flex items-center text-xl">$27.96M</div>
               </div>
               <div className="flex flex-col gap-1 border-r border-r-gray-500 pl-3 last:border-none">
-                <div className="text-gray-500 text-sm">Total Pairs</div>
+                <div className="text-light text-sm">Total Pairs</div>
                 <div className="flex items-center text-xl">143</div>
               </div>
             </div>

@@ -8,23 +8,21 @@ const Dashboard = () => {
       <section className="mx-auto max-w-6xl my-6 w-full px-5 xl:px-0">
         <p className="pb-2 text-sm text-light">TVL by Chain</p>
         <div className="grid auto-cols-max grid-flow-col gap-x-2 overflow-auto text-sm font-medium">
-          <Link to="/dashboard">
-            <a
-              href="/dashboard"
-              className="flex justify-between items-center bg-light/10 rounded-lg py-3 px-4 gap-12 cursor-default select-none w-[241px] h-[48px]"
-            >
-              <div className="flex items-center gap-2">
-                <img
-                  alt="BNB logo"
-                  src="https://app.gamma.xyz/_next/static/media/bnb.5470df19.svg"
-                  className=""
-                />
-                <span className="whitespace-nowrap font-medium text-white">
-                  BNB Chain
-                </span>
-              </div>
-              <div className="font-medium text-white-90">$28.17M</div>
-            </a>
+          <Link
+            to="/dashboard"
+            className="flex justify-between items-center bg-light/10 rounded-lg py-3 px-4 gap-12 cursor-default select-none w-[241px] h-[48px]"
+          >
+            <div className="flex items-center gap-2">
+              <img
+                alt="BNB logo"
+                src="https://app.gamma.xyz/_next/static/media/bnb.5470df19.svg"
+                className=""
+              />
+              <span className="whitespace-nowrap font-medium text-white">
+                BNB Chain
+              </span>
+            </div>
+            <div className="font-medium text-white-90">$28.17M</div>
           </Link>
         </div>
       </section>

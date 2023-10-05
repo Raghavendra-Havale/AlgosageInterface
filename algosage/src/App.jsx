@@ -1,6 +1,5 @@
 import Body from "./Pages/Body/body";
 import Navbar from "./components/navbar/navbar";
-
 import Footer from "./components/footer";
 
 function App() {
