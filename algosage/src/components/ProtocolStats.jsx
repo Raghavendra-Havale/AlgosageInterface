@@ -4,7 +4,7 @@ function ProtocolStats() {
       <div className="mx-auto max-w-6xl">
         <div className="flex justify-between">
           <div>
-            <div className="text-xl text-white-100">Protocol Stats</div>
+            <div className="text-xl text-white">Protocol Stats</div>
             <div className="flex mt-4">
               <div className="flex flex-col gap-1 break-all border-r border-r-[#454545] px-3 first:pl-0 last:border-none">
                 <div className="whitespace-nowrap text-xs font-medium text-light">

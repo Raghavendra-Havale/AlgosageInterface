@@ -3,7 +3,7 @@ export const Cards = () => {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div className="relative rounded-lg border border-[#272C31] bg-light/10 p-5">
         <img
-          className="absolute top-5 right-8 mr-2  w-28 h-32"
+          className="absolute top-5 right-8 mr-2  w-28 h-32 hidden lg:block"
           src="https://app.gamma.xyz/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstake-gamma-card-bg.fff15eaf.png&w=128&q=75"
         />
         <h1 className="text-xl p-1">Stake GAMMA</h1>
@@ -18,7 +18,7 @@ export const Cards = () => {
 
       <div className="relative rounded-lg border border-[#272C31] bg-light/10 p-5">
         <img
-          className="absolute top-5 right-10 mr-2  w-28 h-32"
+          className="absolute top-5 right-10 mr-2  w-28 h-32 hidden lg:block"
           src="https://app.gamma.xyz/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpartners-card-bg.46fcd918.png&w=256&q=75"
         />
         <h1 className="text-xl p-1">For Web3 Projects & Founders</h1>

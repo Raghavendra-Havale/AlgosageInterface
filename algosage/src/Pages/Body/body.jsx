@@ -3,7 +3,7 @@ import ProtocolStats from "../../components/ProtocolStats";
 
 const Body = () => {
   return (
-    <main>
+    <main className="flex-1">
       <ProtocolStats />
       <div className="bg-primary text-white">
         <Outlet />
