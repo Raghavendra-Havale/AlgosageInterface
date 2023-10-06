@@ -1,5 +1,12 @@
+import ProtocolStats from "../../components/ProtocolStats";
+
 function Revenue() {
-  return <div>Revenue</div>;
+  return (
+    <>
+      <ProtocolStats />
+      <div>Revenue</div>
+    </>
+  );
 }
 
 export default Revenue;

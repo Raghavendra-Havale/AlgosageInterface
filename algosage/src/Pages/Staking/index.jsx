@@ -1,5 +1,12 @@
+import ProtocolStats from "../../components/ProtocolStats";
+
 function Staking() {
-  return <div>Staking</div>;
+  return (
+    <>
+      <ProtocolStats />
+      <div>Staking</div>
+    </>
+  );
 }
 
 export default Staking;

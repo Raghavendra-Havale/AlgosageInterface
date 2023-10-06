@@ -7,12 +7,15 @@ export default {
         sm: "640px",
         md: "768px",
         lg: "976px",
-        xl: "1440px",
+        xl: "1280px",
       },
       colors: {
         primary: "rgb(20, 20, 21)",
         secondary: "rgb(29, 30, 31)",
         success: "#2a9c47",
+        yellow: "rgb(190, 151, 34)",
+        purple: "rgb(147, 121, 184)",
+        cyan: "rgb(77, 215, 232)",
         light: "rgb(110, 111, 111)",
       },
       fontFamily: {

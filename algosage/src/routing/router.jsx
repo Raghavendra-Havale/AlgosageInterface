@@ -5,6 +5,7 @@ import Dashboard from "../Pages/Dashboard";
 import Discover from "../Pages/Discover";
 import Staking from "../Pages/Staking";
 import Revenue from "../Pages/Revenue";
+import Vault from "../Pages/Vault/vault";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "revenue",
         element: <Revenue />,
+      },
+      {
+        path: "vault",
+        element: <Vault />,
       },
     ],
   },
