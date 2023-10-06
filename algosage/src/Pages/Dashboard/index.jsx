@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { AiOutlineDown } from "react-icons/ai";
 import { PiMagnifyingGlass } from "react-icons/pi";
+import ProtocolStats from "../../components/ProtocolStats";
 
 const Dashboard = () => {
   return (
     <>
+      <ProtocolStats />
       <section className="mx-auto max-w-6xl my-6 w-full px-5 xl:px-0">
         <p className="pb-2 text-sm text-light">TVL by Chain</p>
         <div className="grid auto-cols-max grid-flow-col gap-x-2 overflow-auto text-sm font-medium">
@@ -22,7 +24,7 @@ const Dashboard = () => {
                 BNB Chain
               </span>
             </div>
-            <div className="font-medium text-white-90">$28.17M</div>
+            <div className="font-medium text-white">$28.17M</div>
           </Link>
         </div>
       </section>
@@ -43,7 +45,7 @@ const Dashboard = () => {
             </button>
           </div>
           <div className="hidden grow md:block"></div>
-          <button className="bg-light/10 hover:bg-light/30 cursor-pointer flex items-center gap-1.5 px-3 py-2 text-sm outline-none justify-between font-medium select-none h-11 w-45 shrink-0 rounded-lg">
+          <button className="bg-light/10 hover:bg-light/30 cursor-pointer flex items-center gap-1.5 px-3 py-2 text-sm outline-none justify-between font-medium select-none h-11 w-45 shrink-0 rounded-lg text-white">
             <button className="">All Strategies</button>
             <AiOutlineDown />
           </button>
@@ -63,22 +65,22 @@ const Dashboard = () => {
           <table className="w-full overflow-hidden rounded-lg">
             <thead>
               <tr>
-                <th className="whitespace-nowrap bg-light/40 p-4 text-left text-xs font-semibold uppercase text-white-90">
+                <th className="whitespace-nowrap bg-light/40 p-4 text-left text-xs font-semibold uppercase text-white">
                   <div className="cursor-pointer select-none flex items-center gap-2">
                     Algo Vault
                   </div>
                 </th>
-                <th className="whitespace-nowrap bg-light/40 p-4 text-left text-xs font-semibold uppercase text-white-90">
+                <th className="whitespace-nowrap bg-light/40 p-4 text-left text-xs font-semibold uppercase text-white">
                   <div className="cursor-pointer select-none flex items-center gap-2">
                     strategy
                   </div>
                 </th>
-                <th className="whitespace-nowrap bg-light/40 p-4 text-left text-xs font-semibold uppercase text-white-90">
+                <th className="whitespace-nowrap bg-light/40 p-4 text-left text-xs font-semibold uppercase text-white">
                   <div className="cursor-pointer select-none flex items-center gap-2">
                     tvl
                   </div>
                 </th>
-                <th className="whitespace-nowrap bg-light/40 p-4 text-left text-xs font-semibold uppercase text-white-90">
+                <th className="whitespace-nowrap bg-light/40 p-4 text-left text-xs font-semibold uppercase text-white">
                   <div className="cursor-pointer select-none flex items-center gap-2">
                     total apr (24h)
                   </div>
@@ -96,38 +98,42 @@ const Dashboard = () => {
                 role="button"
               >
                 <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center shrink-0">
-                      <img
-                        src="	https://app.gamma.xyz/_next/static/media/icon.dddcef40.svg"
-                        alt="weth"
-                        className="z-0 -mr-1.5"
-                        decoding="async"
-                      />
-                      <img
-                        src="https://app.gamma.xyz/_next/static/media/icon.ca2e2bd7.svg"
-                        alt="wbnb"
-                        className="z-0 -mr-1.5 "
-                        decoding="async"
-                      />
+                  <Link to={"/vault"}>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center shrink-0">
+                        <img
+                          src="	https://app.gamma.xyz/_next/static/media/icon.dddcef40.svg"
+                          alt="weth"
+                          className="z-0 -mr-1.5"
+                          decoding="async"
+                        />
+                        <img
+                          src="https://app.gamma.xyz/_next/static/media/icon.ca2e2bd7.svg"
+                          alt="wbnb"
+                          className="z-0 -mr-1.5 "
+                          decoding="async"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="whitespace-nowrap font-semibold text-white/80">
+                          WETH-WBNB
+                        </span>
+                        <span className="text-xs text-white/60">Thena</span>
+                      </div>
+                      <div className="flex gap-x-2">
+                        <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
+                          0.1277%
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex flex-col">
-                      <span className="whitespace-nowrap font-semibold text-white/80">
-                        WETH-WBNB
-                      </span>
-                      <span className="text-xs text-white/60">Thena</span>
-                    </div>
-                    <div className="flex gap-x-2">
-                      <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                        0.1277%
-                      </span>
-                    </div>
-                  </div>
+                  </Link>
                 </td>
                 <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                    Narrow
-                  </span>
+                  <Link to={"/vault"}>
+                    <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
+                      Narrow
+                    </span>
+                  </Link>
                 </td>
                 <td className="px-5 py-3 pr-8 text-sm text-white">$3.82M</td>
                 <td className="px-5 py-3 pr-8 text-sm text-white">
@@ -137,192 +143,6 @@ const Dashboard = () => {
                 </td>
                 <td className="px-5 py-3 pr-8 text-sm text-white">-</td>
               </tr>
-              {/* ///////////////////////////////////////////////////////////////////// */}
-              <tr
-                className="border-t border-t-black bg-light/20 hover:bg-light/30"
-                role="button"
-              >
-                <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center shrink-0">
-                      <img
-                        src="	https://app.gamma.xyz/_next/static/media/icon.dddcef40.svg"
-                        alt="weth"
-                        className="z-0 -mr-1.5"
-                        decoding="async"
-                      />
-                      <img
-                        src="https://app.gamma.xyz/_next/static/media/icon.ca2e2bd7.svg"
-                        alt="wbnb"
-                        className="z-0 -mr-1.5 "
-                        decoding="async"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="whitespace-nowrap font-semibold text-white/80">
-                        WETH-WBNB
-                      </span>
-                      <span className="text-xs text-white/60">Thena</span>
-                    </div>
-                    <div className="flex gap-x-2">
-                      <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                        0.1277%
-                      </span>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                    Narrow
-                  </span>
-                </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">$3.82M</td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <span className="flex items-center gap-x-1">
-                    7.58%<button className="text-sm">✨</button>
-                  </span>
-                </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">-</td>
-              </tr>
-              <tr
-                className="border-t border-t-black bg-light/20 hover:bg-light/30"
-                role="button"
-              >
-                <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center shrink-0">
-                      <img
-                        src="	https://app.gamma.xyz/_next/static/media/icon.dddcef40.svg"
-                        alt="weth"
-                        className="z-0 -mr-1.5"
-                        decoding="async"
-                      />
-                      <img
-                        src="https://app.gamma.xyz/_next/static/media/icon.ca2e2bd7.svg"
-                        alt="wbnb"
-                        className="z-0 -mr-1.5 "
-                        decoding="async"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="whitespace-nowrap font-semibold text-white/80">
-                        WETH-WBNB
-                      </span>
-                      <span className="text-xs text-white/60">Thena</span>
-                    </div>
-                    <div className="flex gap-x-2">
-                      <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                        0.1277%
-                      </span>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                    Narrow
-                  </span>
-                </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">$3.82M</td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <span className="flex items-center gap-x-1">
-                    7.58%<button className="text-sm">✨</button>
-                  </span>
-                </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">-</td>
-              </tr>
-              <tr
-                className="border-t border-t-black bg-light/20 hover:bg-light/30"
-                role="button"
-              >
-                <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center shrink-0">
-                      <img
-                        src="	https://app.gamma.xyz/_next/static/media/icon.dddcef40.svg"
-                        alt="weth"
-                        className="z-0 -mr-1.5"
-                        decoding="async"
-                      />
-                      <img
-                        src="https://app.gamma.xyz/_next/static/media/icon.ca2e2bd7.svg"
-                        alt="wbnb"
-                        className="z-0 -mr-1.5 "
-                        decoding="async"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="whitespace-nowrap font-semibold text-white/80">
-                        WETH-WBNB
-                      </span>
-                      <span className="text-xs text-white/60">Thena</span>
-                    </div>
-                    <div className="flex gap-x-2">
-                      <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                        0.1277%
-                      </span>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                    Narrow
-                  </span>
-                </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">$3.82M</td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <span className="flex items-center gap-x-1">
-                    7.58%<button className="text-sm">✨</button>
-                  </span>
-                </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">-</td>
-              </tr>
-              <tr
-                className="border-t border-t-black bg-light/20 hover:bg-light/30"
-                role="button"
-              >
-                <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center shrink-0">
-                      <img
-                        src="	https://app.gamma.xyz/_next/static/media/icon.dddcef40.svg"
-                        alt="weth"
-                        className="z-0 -mr-1.5"
-                        decoding="async"
-                      />
-                      <img
-                        src="https://app.gamma.xyz/_next/static/media/icon.ca2e2bd7.svg"
-                        alt="wbnb"
-                        className="z-0 -mr-1.5 "
-                        decoding="async"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="whitespace-nowrap font-semibold text-white/80">
-                        WETH-WBNB
-                      </span>
-                      <span className="text-xs text-white/60">Thena</span>
-                    </div>
-                    <div className="flex gap-x-2">
-                      <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                        0.1277%
-                      </span>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                    Narrow
-                  </span>
-                </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">$3.82M</td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <span className="flex items-center gap-x-1">
-                    7.58%<button className="text-sm">✨</button>
-                  </span>
-                </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">-</td>
-              </tr>
-              {/* /////////////////////////////////////////////////////////////////////////// */}
             </tbody>
             <tfoot>
               <tr>

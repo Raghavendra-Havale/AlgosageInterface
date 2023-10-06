@@ -1,4 +1,5 @@
 import { Cards } from "./Cards";
+import { Link } from "react-router-dom";
 
 const cards = [
   {
@@ -64,7 +65,7 @@ const Card = () => {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {cards.map((card) => (
           <div
-            className="relative rounded-lg border border-[#272C31] bg-light/10 p-5 w-full overflow-hidden"
+            className="relative rounded-lg border border-[#272C31] bg-light/10 p-5 w-full overflow-hidden text-white/80"
             key={card.title}
           >
             <img
@@ -84,9 +85,11 @@ const Card = () => {
                 <div className="flex items-center text-xl">143</div>
               </div>
             </div>
-            <button className="rounded-lg border-solid border border-light w-full p-2 mt-6 enabled:hover:bg-light/30">
-              Provide Liquidity →{" "}
-            </button>
+            <Link to="/dashboard">
+              <button className="rounded-lg border-solid border border-light w-full p-2 mt-6 enabled:hover:bg-light/30">
+                Provide Liquidity →{" "}
+              </button>
+            </Link>
           </div>
         ))}
 
