@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
+import { useState } from "react";
 
 function Navbar() {
+  const [activeTab, setActiveTab] = useState("discover");
   return (
     <header className="fixed inset-x-0 top-0 z-10 flex h-[56px] items-center justify-between bg-primary px-5 sm:sticky">
       <div className="flex items-center lg:gap-x-6 xl:gap-x-8">
@@ -12,34 +14,42 @@ function Navbar() {
           <span className="mr-6 h-[17px] w-px bg-[#393939] xl:mr-8"></span>
 
           <ul className="m-0 flex h-full list-none items-center gap-4 p-0">
-            <li>
+            <li onClick={() => setActiveTab("discover")}>
               <Link
                 to={"/discover"}
-                className="flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light"
+                className={`flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                  activeTab === "discover" ? "text-white bg-light/30" : ""
+                } `}
               >
                 Discover
               </Link>
             </li>
-            <li>
+            <li onClick={() => setActiveTab("dashboard")}>
               <Link
                 to={"/dashboard"}
-                className="flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light"
+                className={`flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                  activeTab === "dashboard" ? "text-white bg-light/30" : ""
+                } `}
               >
                 Dashboard
               </Link>
             </li>
-            <li>
+            <li onClick={() => setActiveTab("staking")}>
               <Link
                 to={"/staking"}
-                className="flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light"
+                className={`flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                  activeTab === "staking" ? "text-white bg-light/30" : ""
+                } `}
               >
                 Stake algo
               </Link>
             </li>
-            <li>
+            <li onClick={() => setActiveTab("revenue")}>
               <Link
                 to={"/revenue"}
-                className="flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light"
+                className={`flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                  activeTab === "revenue" ? "text-white bg-light/30" : ""
+                } `}
               >
                 Revenue
               </Link>
