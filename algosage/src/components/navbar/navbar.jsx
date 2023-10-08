@@ -3,12 +3,12 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { useState } from "react";
 
 function Navbar() {
-  const [activeTab, setActiveTab] = useState("discover");
+  const [activeTab, setActiveTab] = useState("");
   const [reveal, setReveal] = useState(false);
-  console.log(reveal);
 
-  function handleReveal() {
-    setReveal((reveal) => !reveal);
+  function handleNavBar(page) {
+    setActiveTab(page);
+    setReveal(false);
   }
 
   return (
@@ -17,104 +17,102 @@ function Navbar() {
         <Link to={"/discover"} className=" pr-2.5">
           <p className="text-white/80 text-sm font-mono">ALGOSAGE</p>
         </Link>
-        <nav className="hidden h-full items-center lg:flex">
+        <nav className="h-full items-center flex relative">
           <span className="mr-6 h-[17px] w-px bg-[#393939] xl:mr-8"></span>
-
-          <ul className="m-0 flex h-full list-none items-center gap-4 p-0">
-            <li onClick={() => setActiveTab("discover")}>
-              <Link
-                to={"/discover"}
-                className={`flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
-                  activeTab === "discover" ? "text-white bg-light/30" : ""
-                } `}
-              >
-                Discover
-              </Link>
-            </li>
-            <li onClick={() => setActiveTab("dashboard")}>
-              <Link
-                to={"/dashboard"}
-                className={`flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
-                  activeTab === "dashboard" ? "text-white bg-light/30" : ""
-                } `}
-                page={1}
-              >
-                Dashboard
-              </Link>
-            </li>
-            <li onClick={() => setActiveTab("staking")}>
-              <Link
-                to={"/staking"}
-                className={`flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
-                  activeTab === "staking" ? "text-white bg-light/30" : ""
-                } `}
-              >
-                Stake algo
-              </Link>
-            </li>
-            <li onClick={() => setActiveTab("revenue")}>
-              <Link
-                to={"/revenue"}
-                className={`flex px-[10px] h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
-                  activeTab === "revenue" ? "text-white bg-light/30" : ""
-                } `}
-              >
-                Revenue
-              </Link>
-            </li>
-          </ul>
-        </nav>
-        <nav className="flex h-full items-center lg:hidden relative">
-          <span className="mr-3 h-[17px] w-px bg-[#393939] xl:mr-8"></span>
           <div
-            className="cursor-pointer text-2xl relative outline-none transform-none text-white"
-            onClick={handleReveal}
+            className="cursor-pointer text-2xl relative outline-none transform-none text-white flex lg:hidden"
+            onClick={() => setReveal(true)}
           >
             <AiOutlineMenu />
           </div>
-          {reveal && (
-            <ul className="absolute top-[40px] m-0 flex h-[700px] w-screen -left-[103px] list-none flex-col p-0 bg-secondary">
-              <li>
+          {window.innerWidth <= 768 && reveal && (
+            <div className="flex-col lg:flex-row m-0 flex h-[600px] lg:h-full list-none items-left lg:items-center lg:gap-4 px-4  lg:p-0 absolute top-[40px] lg:top-0 w-[1000px] bg-primary lg:bg-transparent lg:relative -left-[105px] lg:left-0">
+              <div onClick={() => handleNavBar("discover")}>
                 <Link
                   to={"/discover"}
-                  className={`flex p-4 select-none items-center hover:bg-light hover:text-white font-medium text-sm border-b border-b-black/95 text-white/60 bg-secondary w-full ${
-                    activeTab === "discover" ? "bg-light text-white" : ""
+                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                    activeTab === "discover" ? "text-white bg-light/30" : ""
                   } `}
                 >
                   Discover
                 </Link>
-              </li>
-              <li>
+              </div>
+              <div onClick={() => handleNavBar("dashboard")}>
                 <Link
                   to={"/dashboard"}
-                  className={`flex p-4 select-none items-center hover:bg-light hover:text-white font-medium text-sm border-b border-b-black/95 text-white/60 bg-secondary w-full ${
-                    activeTab === "dashboard" ? "bg-light text-white" : ""
+                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light${
+                    activeTab === "dashboard" ? "text-white bg-light/30" : ""
                   } `}
                 >
                   Dashboard
                 </Link>
-              </li>
-              <li>
+              </div>
+              <div onClick={() => handleNavBar("staking")}>
                 <Link
                   to={"/staking"}
-                  className={`flex p-4 select-none items-center hover:bg-light hover:text-white font-medium text-sm border-b border-b-black/95 text-white/60 bg-secondary w-full ${
-                    activeTab === "staking" ? "bg-light text-white" : ""
+                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                    activeTab === "staking" ? "text-white bg-light/30" : ""
                   } `}
                 >
-                  Stake Algo
+                  Stake algo
                 </Link>
-              </li>
-              <li>
+              </div>
+              <div onClick={() => handleNavBar("revenue")}>
                 <Link
                   to={"/revenue"}
-                  className={`flex p-4 select-none items-center hover:bg-light hover:text-white font-medium text-sm border-b border-b-black/95 text-white/60 bg-secondary w-full ${
-                    activeTab === "revenue" ? "bg-light text-white" : ""
+                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                    activeTab === "revenue" ? "text-white bg-light/30" : ""
                   } `}
                 >
                   Revenue
                 </Link>
-              </li>
-            </ul>
+              </div>
+            </div>
+          )}
+          {window.innerWidth > 768 && (
+            <div className="flex-col lg:flex-row m-0 flex h-[600px] lg:h-full list-none items-left lg:items-center lg:gap-4 px-4  lg:p-0 absolute top-[40px] lg:top-0 w-[1000px] bg-primary lg:bg-transparent lg:relative -left-[105px] lg:left-0">
+              <div onClick={() => setActiveTab("discover")}>
+                <Link
+                  to={"/discover"}
+                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                    activeTab === "discover" ? "text-white bg-light/30" : ""
+                  } `}
+                >
+                  Discover
+                </Link>
+              </div>
+              <div onClick={() => setActiveTab("dashboard")}>
+                <Link
+                  to={"/dashboard"}
+                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light${
+                    activeTab === "dashboard" ? "text-white bg-light/30" : ""
+                  } `}
+                  page={1}
+                >
+                  Dashboard
+                </Link>
+              </div>
+              <div onClick={() => setActiveTab("staking")}>
+                <Link
+                  to={"/staking"}
+                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                    activeTab === "staking" ? "text-white bg-light/30" : ""
+                  } `}
+                >
+                  Stake algo
+                </Link>
+              </div>
+              <div onClick={() => setActiveTab("revenue")}>
+                <Link
+                  to={"/revenue"}
+                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                    activeTab === "revenue" ? "text-white bg-light/30" : ""
+                  } `}
+                >
+                  Revenue
+                </Link>
+              </div>
+            </div>
           )}
         </nav>
       </div>
