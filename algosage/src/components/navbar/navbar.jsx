@@ -47,7 +47,7 @@ function Navbar() {
                   Dashboard
                 </Link>
               </div>
-              <div onClick={() => handleNavBar("staking")}>
+              {/* <div onClick={() => handleNavBar("staking")}>
                 <Link
                   to={"/staking"}
                   className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
@@ -66,7 +66,7 @@ function Navbar() {
                 >
                   Revenue
                 </Link>
-              </div>
+              </div> */}
             </div>
           )}
           {window.innerWidth > 768 && (
@@ -92,7 +92,7 @@ function Navbar() {
                   Dashboard
                 </Link>
               </div>
-              <div onClick={() => setActiveTab("staking")}>
+              {/* <div onClick={() => setActiveTab("staking")}>
                 <Link
                   to={"/staking"}
                   className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
@@ -111,7 +111,7 @@ function Navbar() {
                 >
                   Revenue
                 </Link>
-              </div>
+              </div> */}
             </div>
           )}
         </nav>
