@@ -7,6 +7,7 @@ function Vault() {
   const [change, setChange] = useState(true);
   return (
     <>
+      <div className="h-[56px] sm:hidden"></div>
       <div className="relative mb-8 w-full overflow-hidden bg-secondary px-5 pt-8">
         <div className="mx-auto max-w-6xl relative">
           <img
