@@ -1,11 +1,14 @@
-import { BsFillPatchCheckFill } from "react-icons/bs";
+import { BsFillPatchCheckFill, BsArrow90DegLeft } from "react-icons/bs";
 import { AiOutlineDown } from "react-icons/ai";
+import { GrAdd } from "react-icons/gr";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 function Details() {
   const [open1, setOpen1] = useState(true);
   const [open2, setOpen2] = useState(true);
   const [open3, setOpen3] = useState(true);
+  const [display, setDisplay] = useState("your share");
 
   function handleOpen1() {
     setOpen1((open) => !open);
@@ -215,49 +218,11 @@ function Details() {
         </div>
         <div className="order-1 flex h-fit flex-col gap-y-3 md:order-2 md:w-[360px]">
           <div className="rounded-lg overflow-hidden">
-            <div className="bg-light/40 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
-              Your Share
-            </div>
-            <div className="bg-light/20 font-normal text-xs">
-              <div className="grid grid-cols-2 border-b border-b-black">
-                <div className="p-4 border-r last:border-none border-r-black-95">
-                  <div className="pb-1 text-xs font-normal text-white-80">
-                    Your Balance
-                  </div>
-                  <div className="pb-2 text-sm text-white">-</div>
-                  <div className="text-xs text-light/80">0.00 LP</div>
-                </div>
-              </div>
-              <div className="p-4">
-                <div className="flex gap-x-3 pb-4">
-                  <span className="rounded-xl bg-light/60 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap hover:bg-light/40">
-                    <a
-                      href="https://swap.defillama.com/?chain=bsc&to=0x2170ed0880ac9a755fd29b2688956bd959f933f8"
-                      className="flex flex-row items-center gap-x-2"
-                    >
-                      Get WETH token
-                    </a>
-                  </span>
-                  <span className="rounded-xl bg-light/60 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap hover:bg-light/40">
-                    <a
-                      href="https://swap.defillama.com/?chain=bsc&to=0x2170ed0880ac9a755fd29b2688956bd959f933f8"
-                      className="flex flex-row items-center gap-x-2"
-                    >
-                      Get WBNB token
-                    </a>
-                  </span>
-                </div>
-                <div className="flex gap-x-1.5">
-                  <button className="font-medium flex items-center gap-x-2 justify-center bg-white text-black enabled:hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full flex-1">
-                    Deposit
-                  </button>
-                  <button className="font-medium flex items-center gap-x-2 justify-center bg-light/40 text-white-100 enabled:hover:bg-light/30 px-3 py-[11px] text-sm rounded-lg w-full flex-1">
-                    Withdraw
-                  </button>
-                </div>
-              </div>
-            </div>
+            {display === "your share" && <YourShare setDisplay={setDisplay} />}
+            {display === "withdraw" && <Withdraw setDisplay={setDisplay} />}
+            {display === "deposit" && <Deposit setDisplay={setDisplay} />}
           </div>
+
           <div className="rounded-lg overflow-hidden">
             <div
               className="p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center bg-light/20"
@@ -279,5 +244,207 @@ function Details() {
     </div>
   );
 }
-
 export default Details;
+
+function YourShare({ setDisplay }) {
+  return (
+    <>
+      <div className="bg-light/40 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
+        Your Share
+      </div>
+      <div className="bg-light/20 font-normal text-xs">
+        <div className="grid grid-cols-2 border-b border-b-black">
+          <div className="p-4 border-r last:border-none border-r-black-95">
+            <div className="pb-1 text-xs font-normal text-white-80">
+              Your Balance
+            </div>
+            <div className="pb-2 text-sm text-white">-</div>
+            <div className="text-xs text-light/80">0.00 LP</div>
+          </div>
+        </div>
+        <div className="p-4">
+          <div className="flex gap-x-3 pb-4">
+            <span className="rounded-xl bg-light/60 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap hover:bg-light/40">
+              <a
+                href="https://swap.defillama.com/?chain=bsc&to=0x2170ed0880ac9a755fd29b2688956bd959f933f8"
+                className="flex flex-row items-center gap-x-2"
+              >
+                Get WETH token
+              </a>
+            </span>
+            <span className="rounded-xl bg-light/60 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap hover:bg-light/40">
+              <a
+                href="https://swap.defillama.com/?chain=bsc&to=0x2170ed0880ac9a755fd29b2688956bd959f933f8"
+                className="flex flex-row items-center gap-x-2"
+              >
+                Get WBNB token
+              </a>
+            </span>
+          </div>
+
+          <div className="flex gap-x-1.5">
+            <button
+              className="font-medium flex items-center gap-x-2 justify-center bg-white text-black enabled:hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full flex-1"
+              onClick={() => setDisplay("deposit")}
+            >
+              Deposit
+            </button>
+            <button
+              className="font-medium flex items-center gap-x-2 justify-center bg-light/40 text-white-100 enabled:hover:bg-light/30 px-3 py-[11px] text-sm rounded-lg w-full flex-1"
+              onClick={() => setDisplay("withdraw")}
+            >
+              Withdraw
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function Deposit({ setDisplay }) {
+  return (
+    <>
+      <div className="bg-light/30 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
+        <div className="flex gap-x-3">
+          <BackArrow setDisplay={setDisplay} />
+          Deposit
+        </div>
+      </div>
+      <div className="bg-light/10 font-normal text-xs">
+        <div className="p-4">
+          <div className="pb-6">
+            <div className="flex flex-col gap-y-[6px]">
+              <div className="flex justify-between text-light">
+                <span>Amount</span>
+                <span>Balance 0.00</span>
+              </div>
+              <div className="flex h-[42px] items-center justify-between gap-x-3 overflow-hidden rounded-lg bg-light/10">
+                <div className="flex flex-1 gap-x-2 pl-4 items-center">
+                  <input
+                    type="number"
+                    placeholder="0.00"
+                    className="w-full bg-transparent text-base font-normal text-white outline-none truncate [appearance:textfield] placeholder:text-white/20 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-opacity duration-300 ease-in-out"
+                  />
+                </div>
+                <div className="flex h-full items-center justify-center bg-light/20 px-5 text-xs text-white/80">
+                  WETH
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 mb-[2px] flex items-center justify-center">
+              <div className="rounded-md bg-light/20 p-1.5">
+                <GrAdd className="text-white/80 text-base" />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-y-[6px]">
+              <div className="flex justify-between text-light">
+                <span>Amount</span>
+                <span>Balance 0.00</span>
+              </div>
+              <div className="flex h-[42px] items-center justify-between gap-x-3 overflow-hidden rounded-lg bg-light/10">
+                <div className="flex flex-1 gap-x-2 pl-4 items-center">
+                  <input
+                    type="number"
+                    placeholder="0.00"
+                    className="w-full bg-transparent text-base font-normal text-white outline-none truncate [appearance:textfield] placeholder:text-white/20 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-opacity duration-300 ease-in-out"
+                  />
+                </div>
+                <div className="flex h-full items-center justify-center bg-light/20 px-5 text-xs text-white/80">
+                  WBNB
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-md border border-light/20 p-3 flex flex-col gap-y-2 mb-4">
+            <div className="flex items-center justify-between text-white/50 text-xs font-normal">
+              <div className="truncate">Total liquidity providing (In USD)</div>
+              <div>-</div>
+            </div>
+            <div className="items-center justify-between text-white/80 text-xs font-normal hidden">
+              <div className="truncate">Gas Estimate</div>
+              <div>-</div>
+            </div>
+          </div>
+          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full">
+            Connect Wallet
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+function Withdraw({ setDisplay }) {
+  return (
+    <>
+      <div className="bg-light/30 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
+        <div className="flex gap-x-3">
+          <BackArrow setDisplay={setDisplay} />
+          Withdraw
+        </div>
+      </div>
+      <div className="bg-light/10 font-normal text-xs">
+        <div className="p-4">
+          <div className="pb-6">
+            <div className="flex flex-col gap-y-[6px]">
+              <div className="flex justify-between text-light">
+                <span>Amount</span>
+                <span>Balance 0.00</span>
+              </div>
+              <div className="flex h-[42px] items-center justify-between gap-x-3 overflow-hidden rounded-lg bg-light/10">
+                <div className="flex flex-1 gap-x-2 pl-4 items-center">
+                  <input
+                    type="number"
+                    placeholder="0.00"
+                    className="w-full bg-transparent text-base font-normal text-white outline-none truncate [appearance:textfield] placeholder:text-white/20 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-opacity duration-300 ease-in-out"
+                  />
+                </div>
+                <div className="flex h-full items-center justify-center bg-light/20 px-5 text-xs text-white/80">
+                  WETH-WBNB
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-md border border-light/20 p-3 flex flex-col gap-y-2 mb-4">
+            <div className="flex items-center justify-between text-white/50 text-xs font-normal">
+              <div className="truncate">Your Balance (In USD)</div>
+              <div>-</div>
+            </div>
+            <div className="items-center justify-between text-white/80 text-xs font-normal hidden">
+              <div className="truncate">Gas Estimate</div>
+              <div>-</div>
+            </div>
+          </div>
+          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full">
+            Connect Wallet
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function BackArrow({ setDisplay }) {
+  return (
+    <button onClick={() => setDisplay("your share")}>
+      <BsArrow90DegLeft />
+    </button>
+  );
+}
+
+BackArrow.propTypes = {
+  setDisplay: PropTypes.func,
+};
+YourShare.propTypes = {
+  setDisplay: PropTypes.func,
+};
+Deposit.propTypes = {
+  setDisplay: PropTypes.func,
+};
+Withdraw.propTypes = {
+  setDisplay: PropTypes.func,
+};

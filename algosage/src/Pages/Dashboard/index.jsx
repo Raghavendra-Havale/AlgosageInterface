@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { AiOutlineDown } from "react-icons/ai";
 import { PiMagnifyingGlass } from "react-icons/pi";
 import ProtocolStats from "../../components/ProtocolStats";
+import TvlChains from "./components/TvlChains";
 
 const Dashboard = () => {
   return (
@@ -10,22 +11,7 @@ const Dashboard = () => {
       <section className="mx-auto max-w-6xl my-6 w-full px-5 xl:px-0">
         <p className="pb-2 text-sm text-light">TVL by Chain</p>
         <div className="grid auto-cols-max grid-flow-col gap-x-2 overflow-auto text-sm font-medium">
-          <Link
-            to="/dashboard"
-            className="flex justify-between items-center bg-light/10 rounded-lg py-3 px-4 gap-12 cursor-default select-none w-[241px] h-[48px]"
-          >
-            <div className="flex items-center gap-2">
-              <img
-                alt="BNB logo"
-                src="https://app.gamma.xyz/_next/static/media/bnb.5470df19.svg"
-                className=""
-              />
-              <span className="whitespace-nowrap font-medium text-white">
-                BNB Chain
-              </span>
-            </div>
-            <div className="font-medium text-white">$28.17M</div>
-          </Link>
+          <TvlChains />
         </div>
       </section>
       <section className="mx-auto max-w-6xl my-6 w-full px-5 xl:px-0">
@@ -135,13 +121,19 @@ const Dashboard = () => {
                     </span>
                   </Link>
                 </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">$3.82M</td>
                 <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <span className="flex items-center gap-x-1">
-                    7.58%<button className="text-sm">✨</button>
-                  </span>
+                  <Link to={"/vault"}>$3.82M</Link>
                 </td>
-                <td className="px-5 py-3 pr-8 text-sm text-white">-</td>
+                <td className="px-5 py-3 pr-8 text-sm text-white">
+                  <Link to={"/vault"}>
+                    <span className="flex items-center gap-x-1">
+                      7.58%<button className="text-sm">✨</button>
+                    </span>
+                  </Link>
+                </td>
+                <td className="px-5 py-3 pr-8 text-sm text-white">
+                  <Link to={"/vault"}>-</Link>
+                </td>
               </tr>
             </tbody>
             <tfoot>
