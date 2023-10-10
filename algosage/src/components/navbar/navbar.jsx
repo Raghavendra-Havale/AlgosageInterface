@@ -14,7 +14,11 @@ function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-10 flex h-[56px] items-center justify-between bg-primary px-5 sm:sticky">
       <div className="flex items-center lg:gap-x-6 xl:gap-x-8">
-        <Link to={"/discover"} className=" pr-2.5">
+        <Link
+          to={"/discover"}
+          className=" pr-2.5"
+          onClick={() => setActiveTab("discover")}
+        >
           <p className="text-white/80 text-sm font-mono">ALGOSAGE</p>
         </Link>
         <nav className="h-full items-center flex relative">
@@ -25,12 +29,12 @@ function Navbar() {
           >
             <AiOutlineMenu />
           </div>
-          {window.innerWidth <= 768 && reveal && (
-            <div className="flex-col lg:flex-row m-0 flex h-[600px] lg:h-full list-none items-left lg:items-center lg:gap-4 px-4  lg:p-0 absolute top-[40px] lg:top-0 w-[1000px] bg-primary lg:bg-transparent lg:relative -left-[105px] lg:left-0">
+          {window.innerWidth <= 975 && reveal && (
+            <div className="flex-col lg:flex-row m-0 flex h-screen lg:h-full list-none items-left lg:items-center lg:gap-4 px-4  lg:p-0 absolute top-[40px] lg:top-0 w-[1000px] bg-primary lg:bg-transparent lg:relative -left-[105px] lg:left-0">
               <div onClick={() => handleNavBar("discover")}>
                 <Link
                   to={"/discover"}
-                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                  className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-lg lg:text-sm whitespace-nowrap rounded text-light ${
                     activeTab === "discover" ? "text-white bg-light/30" : ""
                   } `}
                 >
@@ -40,17 +44,17 @@ function Navbar() {
               <div onClick={() => handleNavBar("dashboard")}>
                 <Link
                   to={"/dashboard"}
-                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light${
+                  className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium  text-lg lg:text-sm  whitespace-nowrap rounded text-light${
                     activeTab === "dashboard" ? "text-white bg-light/30" : ""
                   } `}
                 >
                   Dashboard
                 </Link>
               </div>
-              <div onClick={() => handleNavBar("staking")}>
+              {/* <div onClick={() => handleNavBar("staking")}>
                 <Link
                   to={"/staking"}
-                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                  className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium  text-lg lg:text-sm  whitespace-nowrap rounded text-light ${
                     activeTab === "staking" ? "text-white bg-light/30" : ""
                   } `}
                 >
@@ -60,17 +64,17 @@ function Navbar() {
               <div onClick={() => handleNavBar("revenue")}>
                 <Link
                   to={"/revenue"}
-                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
+                  className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium  text-lg lg:text-sm  whitespace-nowrap rounded text-light ${
                     activeTab === "revenue" ? "text-white bg-light/30" : ""
                   } `}
                 >
                   Revenue
                 </Link>
-              </div>
+              </div> */}
             </div>
           )}
-          {window.innerWidth > 768 && (
-            <div className="flex-col lg:flex-row m-0 flex h-[600px] lg:h-full list-none items-left lg:items-center lg:gap-4 px-4  lg:p-0 absolute top-[40px] lg:top-0 w-[1000px] bg-primary lg:bg-transparent lg:relative -left-[105px] lg:left-0">
+          {window.innerWidth > 975 && (
+            <div className="flex-col lg:flex-row m-0 flex h-[600px] lg:h-full list-none items-left lg:items-center lg:gap-4 px-4  lg:p-0 absolute top-[40px] lg:top-0 w-[500px] bg-primary lg:bg-transparent lg:relative -left-[105px] lg:left-0">
               <div onClick={() => setActiveTab("discover")}>
                 <Link
                   to={"/discover"}
@@ -92,7 +96,7 @@ function Navbar() {
                   Dashboard
                 </Link>
               </div>
-              <div onClick={() => setActiveTab("staking")}>
+              {/* <div onClick={() => setActiveTab("staking")}>
                 <Link
                   to={"/staking"}
                   className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
@@ -111,7 +115,7 @@ function Navbar() {
                 >
                   Revenue
                 </Link>
-              </div>
+              </div> */}
             </div>
           )}
         </nav>
