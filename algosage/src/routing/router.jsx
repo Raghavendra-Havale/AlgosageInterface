@@ -3,8 +3,8 @@ import App from "../App";
 import { Error0 } from "../Pages/Errors";
 import Dashboard from "../Pages/Dashboard";
 import Discover from "../Pages/Discover";
-import Staking from "../Pages/Staking";
-import Revenue from "../Pages/Revenue";
+import CreateStrategy from "../Pages/CreateStrategy";
+import ManageStrategy from "../Pages/ManageStrategy";
 import Vault from "../Pages/Vault/vault";
 
 const router = createBrowserRouter([
@@ -26,12 +26,12 @@ const router = createBrowserRouter([
         element: <Discover />,
       },
       {
-        path: "staking",
-        element: <Staking />,
+        path: "create-strategy",
+        element: <CreateStrategy />,
       },
       {
-        path: "revenue",
-        element: <Revenue />,
+        path: "manage-strategy",
+        element: <ManageStrategy />,
       },
       {
         path: "vault",

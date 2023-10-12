@@ -51,26 +51,30 @@ function Navbar() {
                   Dashboard
                 </Link>
               </div>
-              {/* <div onClick={() => handleNavBar("staking")}>
+              <div onClick={() => handleNavBar("create-strategy")}>
                 <Link
-                  to={"/staking"}
+                  to={"/create-strategy"}
                   className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium  text-lg lg:text-sm  whitespace-nowrap rounded text-light ${
-                    activeTab === "staking" ? "text-white bg-light/30" : ""
+                    activeTab === "create-strategy"
+                      ? "text-white bg-light/30"
+                      : ""
                   } `}
                 >
-                  Stake algo
+                  Create Strategy
                 </Link>
               </div>
-              <div onClick={() => handleNavBar("revenue")}>
+              <div onClick={() => handleNavBar("manage-strategy")}>
                 <Link
-                  to={"/revenue"}
+                  to={"/manage-strategy"}
                   className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium  text-lg lg:text-sm  whitespace-nowrap rounded text-light ${
-                    activeTab === "revenue" ? "text-white bg-light/30" : ""
+                    activeTab === "manage-strategy"
+                      ? "text-white bg-light/30"
+                      : ""
                   } `}
                 >
-                  Revenue
+                  Manage Strategy
                 </Link>
-              </div> */}
+              </div>
             </div>
           )}
           {window.innerWidth > 975 && (
@@ -96,26 +100,30 @@ function Navbar() {
                   Dashboard
                 </Link>
               </div>
-              {/* <div onClick={() => setActiveTab("staking")}>
+              <div onClick={() => setActiveTab("create-strategy")}>
                 <Link
-                  to={"/staking"}
+                  to={"/create-strategy"}
                   className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
-                    activeTab === "staking" ? "text-white bg-light/30" : ""
+                    activeTab === "create-strategy"
+                      ? "text-white bg-light/30"
+                      : ""
                   } `}
                 >
-                  Stake algo
+                  Create Strategy
                 </Link>
               </div>
-              <div onClick={() => setActiveTab("revenue")}>
+              <div onClick={() => setActiveTab("manage-strategy")}>
                 <Link
-                  to={"/revenue"}
+                  to={"/manage-strategy"}
                   className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
-                    activeTab === "revenue" ? "text-white bg-light/30" : ""
+                    activeTab === "manage-strategy"
+                      ? "text-white bg-light/30"
+                      : ""
                   } `}
                 >
-                  Revenue
+                  Manage Strategy
                 </Link>
-              </div> */}
+              </div>
             </div>
           )}
         </nav>
