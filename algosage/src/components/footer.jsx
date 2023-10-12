@@ -1,13 +1,13 @@
 import { RiTwitterXFill } from "react-icons/ri";
-import { BiLogoDiscord, BiLogoGithub } from "react-icons/bi";
-import { FaTelegram } from "react-icons/fa";
+import { BiLogoDiscord } from "react-icons/bi";
+import { AiFillMediumSquare, AiOutlineMail } from "react-icons/ai";
 import { IoDocumentTextOutline } from "react-icons/io5";
 
 function Footer() {
   return (
     <footer className="flex items-center justify-end gap-3 p-6">
       <a
-        href="https://twitter.com/GammaStrategies"
+        href="https://twitter.com/Range_Protocol"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
@@ -15,7 +15,7 @@ function Footer() {
         <RiTwitterXFill />
       </a>
       <a
-        href="https://twitter.com/GammaStrategies"
+        href="https://discord.com/invite/range-protocol"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
@@ -23,23 +23,23 @@ function Footer() {
         <BiLogoDiscord />
       </a>
       <a
-        href="https://twitter.com/GammaStrategies"
+        href="https://rangeprotocol.medium.com/"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <BiLogoGithub />
+        <AiFillMediumSquare />
       </a>
       <a
-        href="https://twitter.com/GammaStrategies"
+        href="mailto:contact@rangeprotocol.com"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <FaTelegram />
+        <AiOutlineMail />
       </a>
       <a
-        href="https://twitter.com/GammaStrategies"
+        href="https://range-protocol.gitbook.io/range-protocol/"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"

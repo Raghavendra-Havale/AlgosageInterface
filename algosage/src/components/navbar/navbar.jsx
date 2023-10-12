@@ -16,10 +16,10 @@ function Navbar() {
       <div className="flex items-center lg:gap-x-6 xl:gap-x-8">
         <Link
           to={"/discover"}
-          className=" pr-2.5"
+          className="h-[40px] w-[40px] rounded-full overflow-hidden"
           onClick={() => setActiveTab("discover")}
         >
-          <p className="text-white/80 text-sm font-mono">ALGOSAGE</p>
+          <img src="../../logo.png" alt="logo" className="" />
         </Link>
         <nav className="h-full items-center flex relative">
           <span className="mr-6 h-[17px] w-px bg-[#393939] xl:mr-8"></span>

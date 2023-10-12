@@ -208,11 +208,11 @@ function Details() {
               </p>
             </div>
             <p className="text-sm text-light/80">
-              Your access to and use of Gamma through this interface is entirely
-              at your own risk and could lead to substantial losses. You take
-              full responsibility for your use of the interface, and acknowledge
-              that you use it on the basis of your own enquiry, without
-              solicitation or inducement.
+              Your access to and use of Algosage through this interface is
+              entirely at your own risk and could lead to substantial losses.
+              You take full responsibility for your use of the interface, and
+              acknowledge that you use it on the basis of your own enquiry,
+              without solicitation or inducement.
             </p>
           </div>
         </div>
