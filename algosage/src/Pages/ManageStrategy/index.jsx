@@ -8,7 +8,7 @@ function ManageStrategy() {
         ManageStrategy
       </section>
     </>
-  );
+  )
 }
 
 export default ManageStrategy;
