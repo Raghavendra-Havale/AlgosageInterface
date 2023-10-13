@@ -329,7 +329,7 @@ function YourShare({ setDisplay }) {
 function Deposit({ setDisplay }) {
 
   const [message,setMessage]=useState('');
-  const address = "0x99D20577e42fC6aB38FB94809430d80F9103BAab";//contract  address
+  const address = "0xaf159dd96a0dbe6cfd5d3a21936378150291c6f2";//contract  address
   const UNIaddress= "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984" ;
   const SOLaddress="0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692";
   const [contract, setContract] = useState(null);
