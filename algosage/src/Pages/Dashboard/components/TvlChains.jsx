@@ -9,17 +9,17 @@ const chains = [
   {
     title: "Goerli",
     img: "https://app.gamma.xyz/_next/static/media/eth.fdd82abb.svg",
-    amount: `$${5.16}M`,
+    amount: `$${0.00}M`,
   },
   {
     title: "Polygon PoS",
     img: "https://app.gamma.xyz/_next/static/media/polygon.a8468c20.svg",
-    amount: `$${2.42}M`,
+    amount: `$${0.00}M`,
   },
   {
     title: "Arbitrum",
     img: "https://app.gamma.xyz/_next/static/media/arbitrum.b084ab24.svg",
-    amount: `$${812.44}K`,
+    amount: `$${0.00}K`,
   },
   // {
   //   title: "Moonbeam",

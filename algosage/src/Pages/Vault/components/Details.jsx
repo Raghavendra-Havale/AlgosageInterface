@@ -62,16 +62,17 @@ function Details() {
                     </div>
                     <div className="flex flex-col gap-y-4 p-4">
                       <p>
-                        Liquidity ranges are automatically rebalanced when
+                        For Automated Vaults Liquidity ranges are automatically rebalanced when
                         certain rebalance triggers are hit.
                       </p>
                       <p>
-                        A liquidity range is set at 10% and 1,000% of current
-                        price, and rebalance triggers are set at 7.5%. When the
-                        price moves from 7.5% of the distance from the current
-                        price to either the lower or upper range, the position
-                        will be automatically rebalanced in a new range of 10%
-                        and 1,000% of the current price.
+                        For Automated Vaults, as per the algorithm, the ranges are triggered for rebalancing.
+                        Each vault may have it's own separate mechanism to handle the rebalances. AlgoSage vaults support
+                        multiple positions and hence the algorithms can be made advanced too. Vaults also support HOLD functionality
+                        which allows the managers to have HOLD all assets into the vault and not any position, this is usually
+                        helpful to avoid sudden directional movements.
+                        The possibilities with AlgoSage vaults are endless.
+
                       </p>
                     </div>
                   </div>
@@ -101,7 +102,7 @@ function Details() {
                 <h3 className="flex" onClick={handleOpen3}>
                   <button
                     className="px-4 flex flex-1 items-center justify-between py-4 transition-all"
-                    // onClick={() => handleOpen3((open) => !open)}
+                  // onClick={() => handleOpen3((open) => !open)}
                   >
                     Trade-offs <AiOutlineDown className="" />
                   </button>
@@ -147,19 +148,19 @@ function Details() {
                     <td className="px-5 py-3 pr-8 text-sm text-white">
                       <div className="flex items-center gap-3">
                         <img
-                          src="https://app.gamma.xyz/_next/static/media/icon.ca2e2bd7.svg"
-                          alt="WBNB"
+                          src="https://cryptologos.cc/logos/uniswap-uni-logo.svg?v=026"
+                          alt="UNI"
                           width={24}
                           height={24}
                           decoding="async"
                         />
                         <span className="whitespace-nowrap font-semibold text-white/90">
-                          rETH
+                          UNI
                         </span>
                       </div>
                     </td>
                     <td className="px-5 py-3 pr-8 text-sm text-white">
-                      54.93%
+                      -- %
                     </td>
                     <td className="px-5 py-3 pr-8 text-sm text-white">-- --</td>
                   </tr>
@@ -167,19 +168,19 @@ function Details() {
                     <td className="px-5 py-3 pr-8 text-sm text-white">
                       <div className="flex items-center gap-3">
                         <img
-                          src="https://app.gamma.xyz/_next/static/media/icon.dddcef40.svg"
-                          alt="WBNB"
+                          src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=026"
+                          alt="SOL"
                           width={24}
                           height={24}
                           decoding="async"
                         />
                         <span className="whitespace-nowrap font-semibold text-white/90">
-                          WETH
+                          SOL
                         </span>
                       </div>
                     </td>
                     <td className="px-5 py-3 pr-8 text-sm text-white">
-                      24.93%
+                      -- %
                     </td>
                     <td className="px-5 py-3 pr-8 text-sm text-white">-- --</td>
                   </tr>

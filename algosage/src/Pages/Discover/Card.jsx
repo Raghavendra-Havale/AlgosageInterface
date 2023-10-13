@@ -78,11 +78,11 @@ const Card = () => {
             <div className="flex  mt-4 mr-2 ">
               <div className="flex flex-col gap-1 border-r border-r-gray-500 pr-3">
                 <div className="text-light text-sm ">TVL</div>
-                <div className="flex items-center text-xl">$27.96M</div>
+                <div className="flex items-center text-xl">--</div>
               </div>
               <div className="flex flex-col gap-1 border-r border-r-gray-500 pl-3 last:border-none">
                 <div className="text-light text-sm">Total Pairs</div>
-                <div className="flex items-center text-xl">143</div>
+                <div className="flex items-center text-xl">--</div>
               </div>
             </div>
             <Link to="/dashboard">
@@ -112,7 +112,7 @@ const Card = () => {
                 </div>
             </div> */}
       </div>
-      <Cards />
+      {/* <Cards /> */}
     </>
   );
 };

@@ -1,50 +1,51 @@
 import { Link } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
-import { useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import ABI from "./ABI.json";
+// import ConnectWalletButton from "./ConnectWalletButton";
 
 function Navbar() {
   const [activeTab, setActiveTab] = useState("");
   const [reveal, setReveal] = useState(false);
   const address = "0x32dCe5B86Bd874B19332cb76FE7FaE29EC772042";  //contract  address
   const [contract, setContract] = useState(null);
-  const [metamask,setMetamask]=useState(false);
+  const [metamask, setMetamask] = useState(false);
   const [userAddr, setUserAddr] = useState('')
   const [shortAddr, setShortAddr] = useState('')
 
   function shortenAddress(address, startLength = 6, endLength = 4) {
     const shortenedAddress = `${address.substring(0, startLength)}...${address.substring(address.length - endLength)}`;
     return shortenedAddress;
-}
+  }
 
-  useEffect(()=>{
-    const initialize = async()=> {
+  useEffect(() => {
+    const initialize = async () => {
       if (window.ethereum && metamask) {
         await window.ethereum.enable();
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
-          // Get the connected wallet's address
-          const address = await signer.getAddress();
-          setUserAddr(address)
-         
-        const contract =  new ethers.Contract(address, ABI.abi, signer);
+        // Get the connected wallet's address
+        const address = await signer.getAddress();
+        setUserAddr(address)
+
+        const contract = new ethers.Contract(address, ABI.abi, signer);
         setContract(contract);
-      
+
       }
-    
+
 
 
     }
     initialize();
-    if(userAddr!=''){
-    
-    const myAddr = shortenAddress(userAddr);
-    setShortAddr(myAddr)
+    if (userAddr != '') {
+
+      const myAddr = shortenAddress(userAddr);
+      setShortAddr(myAddr)
     }
 
-  },[metamask, userAddr]);
-  
+  }, [metamask, userAddr]);
+
 
   const walletCheck = () => {        //check wallet exist?
     if (window.ethereum) {
@@ -60,7 +61,7 @@ function Navbar() {
     setReveal(false);
   }
 
- 
+
 
   return (
     <header className="fixed inset-x-0 top-0 z-10 flex h-[56px] items-center justify-between bg-primary px-5 sm:sticky">
@@ -85,9 +86,8 @@ function Navbar() {
               <div onClick={() => handleNavBar("discover")}>
                 <Link
                   to={"/discover"}
-                  className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-lg lg:text-sm whitespace-nowrap rounded text-light ${
-                    activeTab === "discover" ? "text-white bg-light/30" : ""
-                  } `}
+                  className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-lg lg:text-sm whitespace-nowrap rounded text-light ${activeTab === "discover" ? "text-white bg-light/30" : ""
+                    } `}
                 >
                   Discover
                 </Link>
@@ -95,9 +95,8 @@ function Navbar() {
               <div onClick={() => handleNavBar("dashboard")}>
                 <Link
                   to={"/dashboard"}
-                  className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium  text-lg lg:text-sm  whitespace-nowrap rounded text-light${
-                    activeTab === "dashboard" ? "text-white bg-light/30" : ""
-                  } `}
+                  className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium  text-lg lg:text-sm  whitespace-nowrap rounded text-light${activeTab === "dashboard" ? "text-white bg-light/30" : ""
+                    } `}
                 >
                   Dashboard
                 </Link>
@@ -105,11 +104,10 @@ function Navbar() {
               <div onClick={() => handleNavBar("create-strategy")}>
                 <Link
                   to={"/create-strategy"}
-                  className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium  text-lg lg:text-sm  whitespace-nowrap rounded text-light ${
-                    activeTab === "create-strategy"
-                      ? "text-white bg-light/30"
-                      : ""
-                  } `}
+                  className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium  text-lg lg:text-sm  whitespace-nowrap rounded text-light ${activeTab === "create-strategy"
+                    ? "text-white bg-light/30"
+                    : ""
+                    } `}
                 >
                   Create Strategy
                 </Link>
@@ -117,11 +115,10 @@ function Navbar() {
               <div onClick={() => handleNavBar("manage-strategy")}>
                 <Link
                   to={"/manage-strategy"}
-                  className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium  text-lg lg:text-sm  whitespace-nowrap rounded text-light ${
-                    activeTab === "manage-strategy"
-                      ? "text-white bg-light/30"
-                      : ""
-                  } `}
+                  className={`flex p-4 px-5 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium  text-lg lg:text-sm  whitespace-nowrap rounded text-light ${activeTab === "manage-strategy"
+                    ? "text-white bg-light/30"
+                    : ""
+                    } `}
                 >
                   Manage Strategy
                 </Link>
@@ -133,9 +130,8 @@ function Navbar() {
               <div onClick={() => setActiveTab("discover")}>
                 <Link
                   to={"/discover"}
-                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
-                    activeTab === "discover" ? "text-white bg-light/30" : ""
-                  } `}
+                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${activeTab === "discover" ? "text-white bg-light/30" : ""
+                    } `}
                 >
                   Discover
                 </Link>
@@ -143,9 +139,8 @@ function Navbar() {
               <div onClick={() => setActiveTab("dashboard")}>
                 <Link
                   to={"/dashboard"}
-                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light${
-                    activeTab === "dashboard" ? "text-white bg-light/30" : ""
-                  } `}
+                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light${activeTab === "dashboard" ? "text-white bg-light/30" : ""
+                    } `}
                   page={1}
                 >
                   Dashboard
@@ -154,11 +149,10 @@ function Navbar() {
               <div onClick={() => setActiveTab("create-strategy")}>
                 <Link
                   to={"/create-strategy"}
-                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
-                    activeTab === "create-strategy"
-                      ? "text-white bg-light/30"
-                      : ""
-                  } `}
+                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${activeTab === "create-strategy"
+                    ? "text-white bg-light/30"
+                    : ""
+                    } `}
                 >
                   Create Strategy
                 </Link>
@@ -166,11 +160,10 @@ function Navbar() {
               <div onClick={() => setActiveTab("manage-strategy")}>
                 <Link
                   to={"/manage-strategy"}
-                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${
-                    activeTab === "manage-strategy"
-                      ? "text-white bg-light/30"
-                      : ""
-                  } `}
+                  className={`flex p-4 -ml-4 lg:-ml-0 lg:px-[10px] lg:h-[37px] select-none items-center hover:bg-light/30 hover:rounded hover:text-white font-medium text-sm whitespace-nowrap rounded text-light ${activeTab === "manage-strategy"
+                    ? "text-white bg-light/30"
+                    : ""
+                    } `}
                 >
                   Manage Strategy
                 </Link>
@@ -179,18 +172,20 @@ function Navbar() {
           )}
         </nav>
       </div>
+
       <div className="flex gap-4 items-center">
         {shortAddr != '' ? <h2 className="font-medium text-white">{shortAddr}</h2> : null}
-      {!metamask ? (
+        {!metamask ? (
           <button className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-light/10 hover:bg-light/30 rounded-lg" onClick={walletCheck}>
             Connect Wallet
           </button>
         ) : (
-          <button className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-light/10 hover:bg-light/30 rounded-lg" onClick={() => {setMetamask(false); setShortAddr(''); setUserAddr('')}}>
+          <button className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-light/10 hover:bg-light/30 rounded-lg" onClick={() => { setMetamask(false); setShortAddr(''); setUserAddr('') }}>
             Disconnect
           </button>
         )}
       </div>
+
     </header>
   );
 }
