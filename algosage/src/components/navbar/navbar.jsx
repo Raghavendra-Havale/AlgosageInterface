@@ -10,22 +10,41 @@ function Navbar() {
   const address = "0x32dCe5B86Bd874B19332cb76FE7FaE29EC772042";  //contract  address
   const [contract, setContract] = useState(null);
   const [metamask,setMetamask]=useState(false);
+  const [userAddr, setUserAddr] = useState('')
+  const [shortAddr, setShortAddr] = useState('')
+
+  function shortenAddress(address, startLength = 6, endLength = 4) {
+    const shortenedAddress = `${address.substring(0, startLength)}...${address.substring(address.length - endLength)}`;
+    return shortenedAddress;
+}
 
   useEffect(()=>{
     const initialize = async()=> {
-      if(window.ethereum && metamask){
+      if (window.ethereum && metamask) {
         await window.ethereum.enable();
-        const provider= new ethers.providers.Web3Provider(window.ethereum);
-        const signer= provider.getSigner();
-        const contract= new ethers.Contract(address,ABI.abi,signer);
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+          // Get the connected wallet's address
+          const address = await signer.getAddress();
+          setUserAddr(address)
+         
+        const contract =  new ethers.Contract(address, ABI.abi, signer);
         setContract(contract);
+      
       }
+    
 
 
     }
     initialize();
+    if(userAddr!=''){
+    
+    const myAddr = shortenAddress(userAddr);
+    setShortAddr(myAddr)
+    }
 
-  },[metamask]);
+  },[metamask, userAddr]);
+  
 
   const walletCheck = () => {        //check wallet exist?
     if (window.ethereum) {
@@ -40,6 +59,8 @@ function Navbar() {
     setActiveTab(page);
     setReveal(false);
   }
+
+ 
 
   return (
     <header className="fixed inset-x-0 top-0 z-10 flex h-[56px] items-center justify-between bg-primary px-5 sm:sticky">
@@ -158,7 +179,8 @@ function Navbar() {
           )}
         </nav>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center">
+        {shortAddr != '' ? <h2 className="font-medium text-white">{shortAddr}</h2> : null}
       {!metamask ? (
           <button className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-light/10 hover:bg-light/30 rounded-lg" onClick={walletCheck}>
             Connect Wallet
