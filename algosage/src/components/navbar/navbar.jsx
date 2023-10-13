@@ -1,10 +1,40 @@
 import { Link } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
-import { useState } from "react";
+import { useState,useEffect} from "react";
+import { ethers } from "ethers";
+import ABI from "./ABI.json";
 
 function Navbar() {
   const [activeTab, setActiveTab] = useState("");
   const [reveal, setReveal] = useState(false);
+  const address = "0x32dCe5B86Bd874B19332cb76FE7FaE29EC772042";  //contract  address
+  const [contract, setContract] = useState(null);
+  const [metamask,setMetamask]=useState(false);
+
+  useEffect(()=>{
+    const initialize = async()=> {
+      if(window.ethereum && metamask){
+        await window.ethereum.enable();
+        const provider= new ethers.providers.Web3Provider(window.ethereum);
+        const signer= provider.getSigner();
+        const contract= new ethers.Contract(address,ABI.abi,signer);
+        setContract(contract);
+      }
+
+
+    }
+    initialize();
+
+  },[metamask]);
+
+  const walletCheck = () => {        //check wallet exist?
+    if (window.ethereum) {
+      setMetamask(true);
+    } else {
+      alert('MetaMask not installed!');
+    }
+  };
+
 
   function handleNavBar(page) {
     setActiveTab(page);
@@ -129,9 +159,15 @@ function Navbar() {
         </nav>
       </div>
       <div className="flex gap-4">
-        <button className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-light/10 hover:bg-light/30 rounded-lg">
-          Connect Wallet
-        </button>
+      {!metamask ? (
+          <button className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-light/10 hover:bg-light/30 rounded-lg" onClick={walletCheck}>
+            Connect Wallet
+          </button>
+        ) : (
+          <button className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-light/10 hover:bg-light/30 rounded-lg" onClick={() => setMetamask(false)}>
+            Disconnect
+          </button>
+        )}
       </div>
     </header>
   );
