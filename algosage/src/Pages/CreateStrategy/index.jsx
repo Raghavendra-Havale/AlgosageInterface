@@ -1,7 +1,74 @@
 import ProtocolStats from "../../components/ProtocolStats";
 import "./index.css";
+import ABI from "./ABI.json";
+import { ethers } from "ethers";
+import { useEffect, useState } from "react";
 
-function CreateStrategy() {
+const CreateStrategy = () => {
+  const address = "0x0824dD008b6C29cB1d38d85d44858880d9C41a7B";
+  const [user, setUser] = useState({});
+  const [wallet, setWallet] = useState("");
+
+  const [network, setNetwork] = useState("");
+  const [dex, setDex] = useState("");
+  const [poolAddress, setPoolAddress] = useState("");
+  const [feeType, setFeeType] = useState("");
+  const [swapRouter, setSwapRouter] = useState("");
+  const [oracleAddress, setOracleAddress] = useState("");
+  const [vaultVisible, setVaultVisible] = useState(false);
+  const [whiteDeposit, setWhiteDeposit] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    console.log("current wallet", user);
+    setLoading(true);
+
+    try {
+      const tx = await user.launchVault(
+        poolAddress,
+        oracleAddress,
+        swapRouter,
+        vaultVisible,
+        whiteDeposit,
+        Number(feeType),
+        {
+          gasLimit: 270000,
+          gasPrice: 20000000000,
+        }
+      );
+
+      const receipt = await tx.wait();
+      console.log(receipt);
+      console.log("Deposit successful!");
+      // setMessage("deposit successful !");
+    } catch (error) {
+      console.error("Error during deposit:", error.message || error);
+      // setMessage(error.message);
+    } finally {
+      setLoading(false);
+      // setMessage("");
+    }
+  };
+
+  useEffect(() => {
+    const initialize = async () => {
+      if (window.ethereum) {
+        await window.ethereum.enable();
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(address, ABI, signer);
+        const signers = await provider.listAccounts();
+        const walletAddress = signers[0];
+        console.log("heloo");
+        setUser(contract);
+        setWallet(walletAddress);
+        console.log(walletAddress);
+      }
+    };
+    initialize();
+  }, []);
+
   return (
     <>
       <ProtocolStats />
@@ -16,6 +83,7 @@ function CreateStrategy() {
               funds or public funds with a <br /> revenue-sharing model.
             </p>
           </div>
+          {loading && <p>Loading...</p>}
           <form className="grid grid-cols-2 grid-rows-4 md:grid-cols-3 md:grid-rows-2 gap-4 mt-4">
             <div>
               <label className="block text-sm text-gray-500 ">
@@ -33,8 +101,13 @@ function CreateStrategy() {
               <label className="block text-sm text-gray-500">
                 Choose DEX (Liquidity Source){" "}
               </label>
-              <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-[#29292999]">
-                <option>Uniswap V3</option>
+              <select
+                className="p-3 focus:outline-none rounded-lg w-full text-sm bg-[#29292999]"
+                onChange={(e) => setDex(e.target.value)}
+              >
+                <option value={`0xB4C5E700c8114d0C758b71865Cf9F70605cdF6d8`}>
+                  Uniswap V3
+                </option>
               </select>
             </div>
             <div>
@@ -43,18 +116,23 @@ function CreateStrategy() {
               </label>
               <input
                 type="text"
+                value={poolAddress}
                 placeholder="pool address"
                 className="p-3 focus:outline-none placeholder:text-light rounded-lg w-full text-sm bg-[#29292999]"
+                onChange={(e) => setPoolAddress(e.target.value)}
               />
             </div>
             <div>
               <label className="block text-sm text-gray-500 ">
                 Select Fee Type:
               </label>
-              <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-[#29292999]">
-                <option> DynamicFeesOnly</option>
-                <option>FlatProfit</option>
-                <option>DynamicProfit</option>
+              <select
+                className="p-3 focus:outline-none rounded-lg w-full text-sm bg-[#29292999]"
+                onChange={(e) => setFeeType(e.target.value)}
+              >
+                <option value={0}> DynamicFeesOnly</option>
+                <option value={1}>FlatProfit</option>
+                <option value={2}>DynamicProfit</option>
               </select>
             </div>
             <div>
@@ -63,8 +141,10 @@ function CreateStrategy() {
               </label>
               <input
                 type="text"
+                value={swapRouter}
                 placeholder="swaprouter"
                 className="p-3 focus:outline-none placeholder:text-light rounded-lg w-full text-sm bg-[#29292999]"
+                onChange={(e) => setSwapRouter(e.target.value)}
               />
             </div>
             <div>
@@ -73,26 +153,39 @@ function CreateStrategy() {
               </label>
               <input
                 type="text"
+                value={oracleAddress}
                 placeholder="oracle"
                 className="p-3 focus:outline-none placeholder:text-light rounded-lg w-full text-sm bg-[#29292999]"
+                onChange={(e) => setOracleAddress(e.target.value)}
               />
             </div>
             <div className="flex items-center gap-2">
               <p className="text-gray-500">Vault Visibility:</p>
               <label className="switch cursor-pointer">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={vaultVisible}
+                  onChange={() => setVaultVisible(!vaultVisible)}
+                />
                 <span className="slider"></span>
               </label>
             </div>
             <div className="flex items-center gap-2">
               <p className="text-gray-500 break-all">WhiteListedDeposits:</p>
               <label className="switch cursor-pointer">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={whiteDeposit}
+                  onChange={() => setWhiteDeposit(!whiteDeposit)}
+                />
                 <span className="slider"></span>
               </label>
             </div>
 
-            <button className="font-semibold flex items-center gap-x-2 justify-center bg-light text-black/100 hover:bg-white/40 px-3 py-5 rounded-lg w-1/2 col-span-full mx-auto text-xl">
+            <button
+              className="font-semibold flex items-center gap-x-2 justify-center bg-light text-black/100 hover:bg-white/40 px-3 py-5 rounded-lg w-1/2 col-span-full mx-auto text-xl"
+              onClick={handleClick}
+            >
               Create Strategy
             </button>
           </form>
@@ -100,6 +193,6 @@ function CreateStrategy() {
       </section>
     </>
   );
-}
+};
 
 export default CreateStrategy;
