@@ -1,13 +1,16 @@
-import { BsFillPatchCheckFill, BsArrow90DegLeft } from "react-icons/bs";
+import {
+  // BsFillPatchCheckFill,
+  BsArrow90DegLeft,
+} from "react-icons/bs";
 import { AiOutlineDown } from "react-icons/ai";
 import { GrAdd } from "react-icons/gr";
-//import { useState } from "react";
 import PropTypes from "prop-types";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import ABI from './ABI.json';
+import ABI from "./ABI.json";
 import UNIabi from "./UNI.json";
 import SOLabi from "./SOL.json";
+import Notification from "../notification";
 
 function Details() {
   const [open1, setOpen1] = useState(true);
@@ -317,118 +320,90 @@ function YourShare({ setDisplay }) {
 }
 
 function Deposit({ setDisplay }) {
-
-  const [message,setMessage]=useState('');
-  const address = "0x99D20577e42fC6aB38FB94809430d80F9103BAab";//contract  address
-  const UNIaddress= "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984" ;
-  const SOLaddress="0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692";
+  const [message, setMessage] = useState("");
+  const address = "0xaf159dd96a0dbe6cfd5d3a21936378150291c6f2"; //contract  address
+  const UNIaddress = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
+  const SOLaddress = "0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692";
   const [contract, setContract] = useState(null);
-  const [metamask,setMetamask]=useState(false);
-  const [user,setUser]=useState('');
-  const [UNIcontract,setUNIcontract]=useState(null);
-  const [SOLcontract,setSOLcontract]=useState(null);
-  const [coin0Amount,setCoin0Amount]=useState(0);
-  const [coin1Amount,setCoin1Amount]=useState(0);
-
-
+  const [metamask, setMetamask] = useState(false);
+  const [user, setUser] = useState("");
+  const [UNIcontract, setUNIcontract] = useState(null);
+  const [SOLcontract, setSOLcontract] = useState(null);
+  const [coin0Amount, setCoin0Amount] = useState(0);
+  const [coin1Amount, setCoin1Amount] = useState(0);
   const handleCoin0 = (e) => {
     setCoin0Amount(e.target.value);
   };
-
-
   const handleCoin1 = (e) => {
     setCoin1Amount(e.target.value);
   };
-
-  useEffect(()=>{
-    const initialize = async()=> {
-      if(window.ethereum ){
+  useEffect(() => {
+    const initialize = async () => {
+      if (window.ethereum) {
         await window.ethereum.enable();
-        const provider= new ethers.providers.Web3Provider(window.ethereum);
-        const signer= provider.getSigner();
-        const contract=new ethers.Contract(address,ABI,signer);
-        const UNIContract=new ethers.Contract(UNIaddress,UNIabi,signer);
-        const SOLContract=new ethers.Contract(SOLaddress,SOLabi,signer)
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(address, ABI, signer);
+        const UNIContract = new ethers.Contract(UNIaddress, UNIabi, signer);
+        const SOLContract = new ethers.Contract(SOLaddress, SOLabi, signer);
         const signers = await provider.listAccounts();
         const walletAddress = signers[0];
-         setUser(walletAddress);
+        setUser(walletAddress);
         setUNIcontract(UNIContract);
         setSOLcontract(SOLContract);
         setContract(contract);
-        
       }
-
-
-    }
+    };
     initialize();
-    
+  }, []);
+  const handleDeposit = async () => {
+    console.log("current wallet", user);
 
-  },[]);
-
-
-
-  const handleDeposit=async()=>{
-
-    console.log("current wallet",user);
-  
-    try{
-   
+    try {
       if (coin0Amount === null || coin0Amount === undefined) {
-        console.error('Coin 0 amount is not valid.');
+        console.error("Coin 0 amount is not valid.");
         return;
       }
-  
+
       if (coin1Amount === null || coin1Amount === undefined) {
-        console.error('Coin 1 amount is not valid.');
+        console.error("Coin 1 amount is not valid.");
         return;
       }
+      const amountToken0 = ethers.utils.parseEther(coin0Amount);
+      const amountToken1 = ethers.utils.parseEther(coin1Amount);
 
-    const amountToken0 = ethers.utils.parseEther(coin0Amount);
-    const amountToken1 = ethers.utils.parseEther(coin1Amount);
-   
+      //const isApprovedToken0 = await UNIcontract.allowance(user,address);
+      const app1 = await UNIcontract.approve(address, amountToken0);
+      await app1.wait();
+      console.log("coin 0 aproved");
+      //  if(!isApprovedToken0){
+      //  const app1=await UNIcontract.approve(address, amountToken0);
+      //  await app1.wait();
+      //  console.log('Token 0 approved.');
+      // }else {console.log("token 0 already approved;")}
+      // const isApprovedToken1 = await SOLcontract.allowance(user,address);
+      // if(!isApprovedToken1){
+      //  const app2=await SOLcontract.approve(address, amountToken1);
+      //  await app2.wait();
+      //  console.log('Token 1 approved.');
+      // }else{console.log("token 1 already approved;")}
+      const app2 = await SOLcontract.approve(address, amountToken1);
+      await app2.wait();
+      console.log("coin 1 aproved");
+      const tx = await contract.deposit(amountToken0, amountToken1, {
+        gasLimit: 270000,
+        gasPrice: 20000000000,
+      });
 
-   //const isApprovedToken0 = await UNIcontract.allowance(user,address);
-   const app1=await UNIcontract.approve(address, amountToken0);
-   await app1.wait();
-   console.log("coin 0 aproved");
-
-  //  if(!isApprovedToken0){
-  //  const app1=await UNIcontract.approve(address, amountToken0);
-  //  await app1.wait();
-  //  console.log('Token 0 approved.');
-
-  // }else {console.log("token 0 already approved;")}
-
- // const isApprovedToken1 = await SOLcontract.allowance(user,address);
-
-  // if(!isApprovedToken1){
-  //  const app2=await SOLcontract.approve(address, amountToken1);
-  //  await app2.wait();
-  //  console.log('Token 1 approved.');
-  // }else{console.log("token 1 already approved;")}
-
-  const app2=await SOLcontract.approve(address, amountToken1);
-  await app2.wait();
-  console.log("coin 1 aproved");
-
-  const tx = await contract.deposit(amountToken0,amountToken1, {
-    gasLimit: 270000,  
-    gasPrice: 20000000000,  
-});
-  
-   const receipt = await tx.wait();
-   console.log(receipt);
-
-
-   console.log('Deposit successful!');
-   setMessage("deposit successful !")
-    }catch (error) {
-      console.error('Error during deposit:', error.message || error);
-      setMessage("deposit failed :( ")
+      const receipt = await tx.wait();
+      console.log(receipt);
+      console.log("Deposit successful!");
+      setMessage("deposit successful !");
+    } catch (error) {
+      console.error("Error during deposit:", error.message || error);
+      setMessage("deposit failed :(");
     }
-  }
-
-
+  };
   return (
     <>
       <div className="bg-light/30 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
@@ -456,17 +431,15 @@ function Deposit({ setDisplay }) {
                   />
                 </div>
                 <div className="flex h-full items-center justify-center bg-light/20 px-5 text-xs text-white/80">
-                  WETH
+                  UNI
                 </div>
               </div>
             </div>
-
             <div className="mt-6 mb-[2px] flex items-center justify-center">
               <div className="rounded-md bg-light/20 p-1.5">
                 <GrAdd className="text-white/80 text-base" />
               </div>
             </div>
-
             <div className="flex flex-col gap-y-[6px]">
               <div className="flex justify-between text-light">
                 <span>Amount</span>
@@ -483,12 +456,11 @@ function Deposit({ setDisplay }) {
                   />
                 </div>
                 <div className="flex h-full items-center justify-center bg-light/20 px-5 text-xs text-white/80">
-                  WBNB
+                  SOL
                 </div>
               </div>
             </div>
           </div>
-
           <div className="rounded-md border border-light/20 p-3 flex flex-col gap-y-2 mb-4">
             <div className="flex items-center justify-between text-white/50 text-xs font-normal">
               <div className="truncate">Total liquidity providing (In USD)</div>
@@ -499,10 +471,14 @@ function Deposit({ setDisplay }) {
               <div>-</div>
             </div>
           </div>
-          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full" onClick={handleDeposit}>
-            Deposit
+          <button
+            className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full"
+            onClick={handleDeposit}
+          >
+            DEPOSIT
           </button>
         </div>
+        {message === "deposit failed :(" && <Notification message={message} />}
       </div>
     </>
   );
@@ -529,18 +505,15 @@ function Withdraw({ setDisplay }) {
                   <input
                     type="number"
                     placeholder="0.00"
-                    value={coin1Amount}
-                    onChange={handleCoin1}
                     className="w-full bg-transparent text-base font-normal text-white outline-none truncate [appearance:textfield] placeholder:text-white/20 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-opacity duration-300 ease-in-out"
                   />
                 </div>
                 <div className="flex h-full items-center justify-center bg-light/20 px-5 text-xs text-white/80">
-                  WETH-WBNB
+                  UNI-SOL
                 </div>
               </div>
             </div>
           </div>
-
           <div className="rounded-md border border-light/20 p-3 flex flex-col gap-y-2 mb-4">
             <div className="flex items-center justify-between text-white/50 text-xs font-normal">
               <div className="truncate">Your Balance (In USD)</div>
@@ -551,15 +524,14 @@ function Withdraw({ setDisplay }) {
               <div>-</div>
             </div>
           </div>
-          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full" onClick={handleDeposit}>
-            DEPOSIT
+          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full">
+            Connect Wallet
           </button>
         </div>
       </div>
     </>
   );
 }
-
 function BackArrow({ setDisplay }) {
   return (
     <button onClick={() => setDisplay("your share")}>
@@ -567,7 +539,6 @@ function BackArrow({ setDisplay }) {
     </button>
   );
 }
-
 BackArrow.propTypes = {
   setDisplay: PropTypes.func,
 };
