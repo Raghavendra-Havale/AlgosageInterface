@@ -20,7 +20,7 @@ const Dashboard = () => {
             <button className="text-sm py-2.5 px-5 rounded-lg hover:text-white font-medium text-white bg-light/20">
               All Vaults
             </button>
-            <button className="text-sm py-2.5 px-5 rounded-lg text-light hover:text-white  font-medium">
+            {/* <button className="text-sm py-2.5 px-5 rounded-lg text-light hover:text-white  font-medium">
               Incentivized Vaults
             </button>
             <button className="text-sm py-2.5 px-5 rounded-lg text-light hover:text-white  font-medium">
@@ -28,7 +28,7 @@ const Dashboard = () => {
             </button>
             <button className="text-sm py-2.5 px-5 rounded-lg text-light hover:text-white  font-medium">
               Volatile
-            </button>
+            </button> */}
           </div>
           <div className="hidden grow md:block"></div>
           <button className="bg-light/10 hover:bg-light/30 cursor-pointer flex items-center gap-1.5 px-3 py-2 text-sm outline-none justify-between font-medium select-none h-11 w-45 shrink-0 rounded-lg text-white">

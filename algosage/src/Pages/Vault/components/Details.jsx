@@ -9,6 +9,8 @@ function Details() {
   const [open2, setOpen2] = useState(true);
   const [open3, setOpen3] = useState(true);
   const [display, setDisplay] = useState("your share");
+  const [input1, setInput1] = useState("");
+  const [input2, setInput2] = useState("");
 
   function handleOpen1() {
     setOpen1((open) => !open);
@@ -45,10 +47,10 @@ function Details() {
                     />
                     <div className="flex gap-x-2 px-4 pt-4">
                       <span className="rounded-xl bg-light/20 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                        Dynamic
+                        Automated
                       </span>
                       <span className="rounded-xl bg-light/20 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                        Narrow
+                        Manual
                       </span>
                     </div>
                     <div className="flex flex-col gap-y-4 p-4">
@@ -145,22 +147,20 @@ function Details() {
                           decoding="async"
                         />
                         <span className="whitespace-nowrap font-semibold text-white/90">
-                          WBNB
+                          rETH
                         </span>
                       </div>
                     </td>
                     <td className="px-5 py-3 pr-8 text-sm text-white">
                       54.93%
                     </td>
-                    <td className="px-5 py-3 pr-8 text-sm text-white">
-                      $2.06M
-                    </td>
+                    <td className="px-5 py-3 pr-8 text-sm text-white">-- --</td>
                   </tr>
                   <tr className="border-t border-t-black bg-light/20 hover:bg-light/30">
                     <td className="px-5 py-3 pr-8 text-sm text-white">
                       <div className="flex items-center gap-3">
                         <img
-                          src="https://app.gamma.xyz/_next/static/media/icon.ca2e2bd7.svg"
+                          src="https://app.gamma.xyz/_next/static/media/icon.dddcef40.svg"
                           alt="WBNB"
                           width={24}
                           height={24}
@@ -174,14 +174,14 @@ function Details() {
                     <td className="px-5 py-3 pr-8 text-sm text-white">
                       24.93%
                     </td>
-                    <td className="px-5 py-3 pr-8 text-sm text-white">
-                      $1.69M
-                    </td>
+                    <td className="px-5 py-3 pr-8 text-sm text-white">-- --</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
+
+          {/* Risk & Audit
           <div>
             <h3 className="text-base font-semibold text-white pb-4">
               Risk & Audit
@@ -214,29 +214,38 @@ function Details() {
               acknowledge that you use it on the basis of your own enquiry,
               without solicitation or inducement.
             </p>
-          </div>
+          </div> */}
         </div>
         <div className="order-1 flex h-fit flex-col gap-y-3 md:order-2 md:w-[360px]">
           <div className="rounded-lg overflow-hidden">
             {display === "your share" && <YourShare setDisplay={setDisplay} />}
             {display === "withdraw" && <Withdraw setDisplay={setDisplay} />}
-            {display === "deposit" && <Deposit setDisplay={setDisplay} />}
+            {display === "deposit" && (
+              <Deposit
+                setDisplay={setDisplay}
+                input1={input1}
+                setInput1={setInput1}
+                input2={input2}
+                setInput2={setInput2}
+              />
+            )}
           </div>
 
-          <div className="rounded-lg overflow-hidden">
+          {/* <div className="rounded-lg overflow-hidden">
             <div
               className="p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center bg-light/20"
               role="button"
             >
               ✨ Staking Incentives <AiOutlineDown />
             </div>
-          </div>
+          </div> */}
+
           <div className="rounded-lg overflow-hidden">
             <div
               className="p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center bg-light/20"
               role="button"
             >
-              Contact Addresses <AiOutlineDown />
+              Vault Address <AiOutlineDown />
             </div>
           </div>
         </div>
@@ -266,7 +275,7 @@ function YourShare({ setDisplay }) {
           <div className="flex gap-x-3 pb-4">
             <span className="rounded-xl bg-light/60 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap hover:bg-light/40">
               <a
-                href="https://swap.defillama.com/?chain=bsc&to=0x2170ed0880ac9a755fd29b2688956bd959f933f8"
+                href="http://app.uniswap.org"
                 className="flex flex-row items-center gap-x-2"
               >
                 Get WETH token
@@ -274,7 +283,7 @@ function YourShare({ setDisplay }) {
             </span>
             <span className="rounded-xl bg-light/60 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap hover:bg-light/40">
               <a
-                href="https://swap.defillama.com/?chain=bsc&to=0x2170ed0880ac9a755fd29b2688956bd959f933f8"
+                href="http://app.uniswap.org"
                 className="flex flex-row items-center gap-x-2"
               >
                 Get WBNB token
@@ -370,7 +379,7 @@ function Deposit({ setDisplay }) {
             </div>
           </div>
           <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full">
-            Connect Wallet
+            Deposit
           </button>
         </div>
       </div>

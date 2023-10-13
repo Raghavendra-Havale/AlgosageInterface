@@ -18,31 +18,31 @@ function Vault() {
           <div className="relative flex flex-col gap-4">
             <div className="flex items-center gap-2">
               <img
-                src="https://app.gamma.xyz/_next/static/media/bnb.5470df19.svg"
-                alt="BNB logo"
+                src="https://app.gamma.xyz/_next/static/media/eth.fdd82abb.svg"
+                alt="Goerli logo"
                 className=""
               />
               <span className="whitespace-nowrap font-medium text-white-90 white-70 text-xs">
-                BNB Chain
+                Goerli Chain
               </span>
             </div>
             <div className="flex items-center gap-x-3">
               <div className="flex gap-3 flex-col items-start md:flex-row md:items-center">
                 <div className="flex shrink-0 items-center">
                   <img
-                    src="https://app.gamma.xyz/_next/static/media/icon.dddcef40.svg"
-                    alt="WETH"
+                    src="https://app.gamma.xyz/_next/static/media/icon.01795f24.svg"
+                    alt="rETH"
                     className="z-0 -mr-1.5"
                   />
                   <img
-                    src="https://app.gamma.xyz/_next/static/media/icon.ca2e2bd7.svg"
-                    alt="WBNB"
+                    src="https://app.gamma.xyz/_next/static/media/icon.dddcef40.svg"
+                    alt="WETH"
                     className="z-0 -mr-1.5"
                   />
                 </div>
                 <div className="flex flex-col">
                   <span className="whitespace-nowrap text-white-90 text-xl font-normal">
-                    WETH-WBNB
+                    rETH-WETH
                   </span>
                 </div>
                 <div className="flex gap-x-2">
@@ -50,7 +50,7 @@ function Vault() {
                     0.05%
                   </span>
                   <span className="rounded-xl bg-light/20 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                    narrow
+                    automated
                   </span>
                   <span className="hidden items-center gap-x-2 font-normal text-light/10 sm:top-0 sm:flex sm:border-l sm:border-l-light/70 sm:pl-2 sm:text-sm sm:text-light/70 sm:hover:text-light/80">
                     All vaults <AiOutlineDown />
@@ -77,10 +77,10 @@ function Vault() {
               </div>
               <div className="flex flex-col gap-1 break-all border-r border-r-[#454545] px-3 first:pl-0 last:border-none">
                 <div className="whitespace-nowrap text-xs font-medium text-light">
-                  Total APR (24H)
+                  Total Vaults Launched
                 </div>
                 <div className="flex items-center gap-2 text-xl text-white">
-                  1.94%
+                  -- --
                 </div>
               </div>
             </div>

@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 
 const chains = [
+  // {
+  //   title: "BNB Chain",
+  //   img: "https://app.gamma.xyz/_next/static/media/bnb.5470df19.svg",
+  //   amount: `$${23.17}M`,
+  // },
   {
-    title: "BNB Chain",
-    img: "https://app.gamma.xyz/_next/static/media/bnb.5470df19.svg",
-    amount: `$${23.17}M`,
-  },
-  {
-    title: "Ethereum",
+    title: "Goerli",
     img: "https://app.gamma.xyz/_next/static/media/eth.fdd82abb.svg",
     amount: `$${5.16}M`,
   },
@@ -21,16 +21,16 @@ const chains = [
     img: "https://app.gamma.xyz/_next/static/media/arbitrum.b084ab24.svg",
     amount: `$${812.44}K`,
   },
-  {
-    title: "Moonbeam",
-    img: "https://app.gamma.xyz/_next/static/media/moonbeam.2978f403.svg",
-    amount: `$${55.48}K`,
-  },
-  {
-    title: "Celo",
-    img: "https://app.gamma.xyz/_next/static/media/celo.3df3ed56.svg",
-    amount: `$${1.26}K`,
-  },
+  // {
+  //   title: "Moonbeam",
+  //   img: "https://app.gamma.xyz/_next/static/media/moonbeam.2978f403.svg",
+  //   amount: `$${55.48}K`,
+  // },
+  // {
+  //   title: "Celo",
+  //   img: "https://app.gamma.xyz/_next/static/media/celo.3df3ed56.svg",
+  //   amount: `$${1.26}K`,
+  // },
 ];
 
 function TvlChains() {
