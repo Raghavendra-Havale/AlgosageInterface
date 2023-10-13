@@ -83,7 +83,6 @@ const CreateStrategy = () => {
               funds or public funds with a <br /> revenue-sharing model.
             </p>
           </div>
-          {loading && <p>Loading...</p>}
           <form className="grid grid-cols-2 grid-rows-4 md:grid-cols-3 md:grid-rows-2 gap-4 mt-4">
             <div>
               <label className="block text-sm text-gray-500 ">
