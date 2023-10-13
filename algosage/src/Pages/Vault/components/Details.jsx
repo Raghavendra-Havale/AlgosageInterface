@@ -330,8 +330,8 @@ function Deposit({ setDisplay }) {
   const [SOLcontract, setSOLcontract] = useState(null);
   const [coin0Amount, setCoin0Amount] = useState(0);
   const [coin1Amount, setCoin1Amount] = useState(0);
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState("")
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
   const handleCoin0 = (e) => {
     setCoin0Amount(e.target.value);
   };
@@ -359,7 +359,7 @@ function Deposit({ setDisplay }) {
   }, []);
   const handleDeposit = async () => {
     console.log("current wallet", user);
-    setLoading(true)
+    setLoading(true);
 
     try {
       if (coin0Amount === null || coin0Amount === undefined) {
@@ -400,17 +400,19 @@ function Deposit({ setDisplay }) {
       const receipt = await tx.wait();
       console.log(receipt);
       // setSuccess(receipt)
-      setLoading(false)
+      // setLoading(false);
       console.log("Deposit successful!");
       setMessage("deposit successful !");
     } catch (error) {
       console.error("Error during deposit:", error.message || error);
       setMessage(error.message);
+    } finally {
+      setLoading(false);
+      // setMessage("");
     }
   };
   return (
     <>
-    {loading ? <h2 className="text-white">Loadinnn</h2> : null}
       <div className="bg-light/30 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
         <div className="flex gap-x-3">
           <BackArrow setDisplay={setDisplay} />
@@ -482,14 +484,30 @@ function Deposit({ setDisplay }) {
           >
             DEPOSIT
           </button>
-        </div>
 
-        {/* displaying error message */}
-        {message !== "" && (
-          <p className="p-3 rounded-lg bg-gray-400 border border-rose-500">
-            {message}
-          </p>
-        )}
+          {/* displaying error message */}
+          {message.includes("invalid decimal value") && (
+            <p className="p-3 mt-3 text-center rounded-lg bg-rose-500 border border-rose-500">
+              Invalid Input, check again
+            </p>
+          )}
+          {message.includes("user rejected transaction") && (
+            <p className="p-3 mt-3 text-center rounded-lg bg-rose-500 border border-rose-500">
+              Transactioin terminated!
+            </p>
+          )}
+          {message.includes("value must be a string") && (
+            <p className="p-3 mt-3 text-center rounded-lg bg-rose-500 border border-rose-500">
+              Wrong value!!!
+            </p>
+          )}
+          {message === "" && ""}
+          {loading && (
+            <p className="p-3 mt-3 text-center rounded-lg bg-green-500 border border-green-500">
+              Loading...
+            </p>
+          )}
+        </div>
       </div>
     </>
   );
