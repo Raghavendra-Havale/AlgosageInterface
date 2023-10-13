@@ -330,6 +330,8 @@ function Deposit({ setDisplay }) {
   const [SOLcontract, setSOLcontract] = useState(null);
   const [coin0Amount, setCoin0Amount] = useState(0);
   const [coin1Amount, setCoin1Amount] = useState(0);
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState("")
   const handleCoin0 = (e) => {
     setCoin0Amount(e.target.value);
   };
@@ -357,6 +359,7 @@ function Deposit({ setDisplay }) {
   }, []);
   const handleDeposit = async () => {
     console.log("current wallet", user);
+    setLoading(true)
 
     try {
       if (coin0Amount === null || coin0Amount === undefined) {
@@ -396,6 +399,8 @@ function Deposit({ setDisplay }) {
 
       const receipt = await tx.wait();
       console.log(receipt);
+      // setSuccess(receipt)
+      setLoading(false)
       console.log("Deposit successful!");
       setMessage("deposit successful !");
     } catch (error) {
@@ -405,6 +410,7 @@ function Deposit({ setDisplay }) {
   };
   return (
     <>
+    {loading ? <h2 className="text-white">Loadinnn</h2> : null}
       <div className="bg-light/30 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
         <div className="flex gap-x-3">
           <BackArrow setDisplay={setDisplay} />
