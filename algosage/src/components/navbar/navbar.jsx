@@ -30,7 +30,7 @@ function Navbar() {
             <AiOutlineMenu />
           </div>
           {window.innerWidth <= 975 && reveal && (
-            <div className="flex-col lg:flex-row m-0 flex h-screen lg:h-full list-none items-left lg:items-center lg:gap-4 px-4  lg:p-0 absolute top-[40px] lg:top-0 w-[1000px] bg-primary lg:bg-transparent lg:relative -left-[105px] lg:left-0">
+            <div className="flex-col lg:flex-row m-0 flex h-[600px] lg:h-full list-none items-left lg:items-center lg:gap-4 px-4  lg:p-0 absolute top-[40px] lg:top-0 w-[1000px] lg:w-[500px] bg-primary lg:bg-transparent lg:relative -left-[60px] lg:left-0">
               <div onClick={() => handleNavBar("discover")}>
                 <Link
                   to={"/discover"}
