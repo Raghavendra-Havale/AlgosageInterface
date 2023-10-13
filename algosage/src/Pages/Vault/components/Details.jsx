@@ -1,8 +1,13 @@
 import { BsFillPatchCheckFill, BsArrow90DegLeft } from "react-icons/bs";
 import { AiOutlineDown } from "react-icons/ai";
 import { GrAdd } from "react-icons/gr";
-import { useState } from "react";
+//import { useState } from "react";
 import PropTypes from "prop-types";
+import { useState,useEffect } from "react";
+import { ethers } from "ethers";
+import ABI from './ABI.json';
+import UNIabi from "./UNI.json";
+import SOLabi from "./SOL.json";
 
 function Details() {
   const [open1, setOpen1] = useState(true);
@@ -312,6 +317,118 @@ function YourShare({ setDisplay }) {
 }
 
 function Deposit({ setDisplay }) {
+
+  const [message,setMessage]=useState('');
+  const address = "0x99D20577e42fC6aB38FB94809430d80F9103BAab";//contract  address
+  const UNIaddress= "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984" ;
+  const SOLaddress="0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692";
+  const [contract, setContract] = useState(null);
+  const [metamask,setMetamask]=useState(false);
+  const [user,setUser]=useState('');
+  const [UNIcontract,setUNIcontract]=useState(null);
+  const [SOLcontract,setSOLcontract]=useState(null);
+  const [coin0Amount,setCoin0Amount]=useState(0);
+  const [coin1Amount,setCoin1Amount]=useState(0);
+
+
+  const handleCoin0 = (e) => {
+    setCoin0Amount(e.target.value);
+  };
+
+
+  const handleCoin1 = (e) => {
+    setCoin1Amount(e.target.value);
+  };
+
+  useEffect(()=>{
+    const initialize = async()=> {
+      if(window.ethereum ){
+        await window.ethereum.enable();
+        const provider= new ethers.providers.Web3Provider(window.ethereum);
+        const signer= provider.getSigner();
+        const contract=new ethers.Contract(address,ABI,signer);
+        const UNIContract=new ethers.Contract(UNIaddress,UNIabi,signer);
+        const SOLContract=new ethers.Contract(SOLaddress,SOLabi,signer)
+        const signers = await provider.listAccounts();
+        const walletAddress = signers[0];
+         setUser(walletAddress);
+        setUNIcontract(UNIContract);
+        setSOLcontract(SOLContract);
+        setContract(contract);
+        
+      }
+
+
+    }
+    initialize();
+    
+
+  },[]);
+
+
+
+  const handleDeposit=async()=>{
+
+    console.log("current wallet",user);
+  
+    try{
+   
+      if (coin0Amount === null || coin0Amount === undefined) {
+        console.error('Coin 0 amount is not valid.');
+        return;
+      }
+  
+      if (coin1Amount === null || coin1Amount === undefined) {
+        console.error('Coin 1 amount is not valid.');
+        return;
+      }
+
+    const amountToken0 = ethers.utils.parseEther(coin0Amount);
+    const amountToken1 = ethers.utils.parseEther(coin1Amount);
+   
+
+   //const isApprovedToken0 = await UNIcontract.allowance(user,address);
+   const app1=await UNIcontract.approve(address, amountToken0);
+   await app1.wait();
+   console.log("coin 0 aproved");
+
+  //  if(!isApprovedToken0){
+  //  const app1=await UNIcontract.approve(address, amountToken0);
+  //  await app1.wait();
+  //  console.log('Token 0 approved.');
+
+  // }else {console.log("token 0 already approved;")}
+
+ // const isApprovedToken1 = await SOLcontract.allowance(user,address);
+
+  // if(!isApprovedToken1){
+  //  const app2=await SOLcontract.approve(address, amountToken1);
+  //  await app2.wait();
+  //  console.log('Token 1 approved.');
+  // }else{console.log("token 1 already approved;")}
+
+  const app2=await SOLcontract.approve(address, amountToken1);
+  await app2.wait();
+  console.log("coin 1 aproved");
+
+  const tx = await contract.deposit(amountToken0,amountToken1, {
+    gasLimit: 270000,  
+    gasPrice: 20000000000,  
+});
+  
+   const receipt = await tx.wait();
+   console.log(receipt);
+
+
+   console.log('Deposit successful!');
+   setMessage("deposit successful !")
+    }catch (error) {
+      console.error('Error during deposit:', error.message || error);
+      setMessage("deposit failed :( ")
+    }
+  }
+
+
   return (
     <>
       <div className="bg-light/30 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
@@ -333,6 +450,8 @@ function Deposit({ setDisplay }) {
                   <input
                     type="number"
                     placeholder="0.00"
+                    value={coin0Amount}
+                    onChange={handleCoin0}
                     className="w-full bg-transparent text-base font-normal text-white outline-none truncate [appearance:textfield] placeholder:text-white/20 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-opacity duration-300 ease-in-out"
                   />
                 </div>
@@ -358,6 +477,8 @@ function Deposit({ setDisplay }) {
                   <input
                     type="number"
                     placeholder="0.00"
+                    value={coin1Amount}
+                    onChange={handleCoin1}
                     className="w-full bg-transparent text-base font-normal text-white outline-none truncate [appearance:textfield] placeholder:text-white/20 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-opacity duration-300 ease-in-out"
                   />
                 </div>
@@ -378,7 +499,7 @@ function Deposit({ setDisplay }) {
               <div>-</div>
             </div>
           </div>
-          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full">
+          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full" onClick={handleDeposit}>
             Deposit
           </button>
         </div>
@@ -408,6 +529,8 @@ function Withdraw({ setDisplay }) {
                   <input
                     type="number"
                     placeholder="0.00"
+                    value={coin1Amount}
+                    onChange={handleCoin1}
                     className="w-full bg-transparent text-base font-normal text-white outline-none truncate [appearance:textfield] placeholder:text-white/20 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-opacity duration-300 ease-in-out"
                   />
                 </div>
@@ -428,8 +551,8 @@ function Withdraw({ setDisplay }) {
               <div>-</div>
             </div>
           </div>
-          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full">
-            Connect Wallet
+          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full" onClick={handleDeposit}>
+            DEPOSIT
           </button>
         </div>
       </div>
