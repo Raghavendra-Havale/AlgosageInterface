@@ -143,7 +143,7 @@ function Analytics() {
     // </div>
 
     <section className="mx-auto max-w-6xl my-6 w-full px-5 xl:px-0">
-      <div className="bg-white/10 p-5 rounded-lg mx-auto text-center">
+      <div className="bg-light/10 py-[300px] rounded-lg mx-auto text-center text-4xl">
         coming soon!
       </div>
     </section>

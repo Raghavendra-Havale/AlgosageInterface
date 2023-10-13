@@ -10,7 +10,6 @@ import { ethers } from "ethers";
 import ABI from "./ABI.json";
 import UNIabi from "./UNI.json";
 import SOLabi from "./SOL.json";
-import Notification from "../notification";
 
 function Details() {
   const [open1, setOpen1] = useState(true);
@@ -401,7 +400,7 @@ function Deposit({ setDisplay }) {
       setMessage("deposit successful !");
     } catch (error) {
       console.error("Error during deposit:", error.message || error);
-      setMessage("deposit failed :(");
+      setMessage(error.message);
     }
   };
   return (
@@ -478,7 +477,13 @@ function Deposit({ setDisplay }) {
             DEPOSIT
           </button>
         </div>
-        {message === "deposit failed :(" && <Notification message={message} />}
+
+        {/* displaying error message */}
+        {message !== "" && (
+          <p className="p-3 rounded-lg bg-gray-400 border border-rose-500">
+            {message}
+          </p>
+        )}
       </div>
     </>
   );
