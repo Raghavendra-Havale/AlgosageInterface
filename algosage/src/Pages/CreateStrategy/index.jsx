@@ -21,19 +21,19 @@ function CreateStrategy() {
               <label className="block text-sm text-gray-500 ">
                 Choose Network
               </label>
-              <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-light/10">
-                <option>Ethereum</option>
-                <option>Polygon</option>
-                <option>BNB Chain</option>
-                <option>Avalanche</option>
-                <option>Optimisn</option>
+              <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-[#29292999]">
+                <option className="bg-light/10">Ethereum</option>
+                <option className="bg-light/10">Polygon</option>
+                <option className="bg-light/10">BNB Chain</option>
+                <option className="bg-light/10">Avalanche</option>
+                <option className="bg-light/10">Optimisn</option>
               </select>
             </div>
             <div>
               <label className="block text-sm text-gray-500">
                 Choose DEX (Liquidity Source){" "}
               </label>
-              <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-light/10">
+              <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-[#29292999]">
                 <option>Uniswap V3</option>
               </select>
             </div>
@@ -44,14 +44,14 @@ function CreateStrategy() {
               <input
                 type="text"
                 placeholder="pool address"
-                className="p-3 focus:outline-none placeholder:text-light rounded-lg w-full text-sm bg-light/10"
+                className="p-3 focus:outline-none placeholder:text-light rounded-lg w-full text-sm bg-[#29292999]"
               />
             </div>
             <div>
               <label className="block text-sm text-gray-500 ">
                 Select Fee Type:
               </label>
-              <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-light/10">
+              <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-[#29292999]">
                 <option> DynamicFeesOnly</option>
                 <option>FlatProfit</option>
                 <option>DynamicProfit</option>
@@ -64,7 +64,7 @@ function CreateStrategy() {
               <input
                 type="text"
                 placeholder="swaprouter"
-                className="p-3 focus:outline-none placeholder:text-light rounded-lg w-full text-sm bg-light/10"
+                className="p-3 focus:outline-none placeholder:text-light rounded-lg w-full text-sm bg-[#29292999]"
               />
             </div>
             <div>
@@ -74,7 +74,7 @@ function CreateStrategy() {
               <input
                 type="text"
                 placeholder="oracle"
-                className="p-3 focus:outline-none placeholder:text-light rounded-lg w-full text-sm bg-light/10"
+                className="p-3 focus:outline-none placeholder:text-light rounded-lg w-full text-sm bg-[#29292999]"
               />
             </div>
             <div className="flex items-center gap-2">
