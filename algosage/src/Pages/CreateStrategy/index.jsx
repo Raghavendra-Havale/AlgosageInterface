@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 
 const CreateStrategy = () => {
-  const address = "0x0824dD008b6C29cB1d38d85d44858880d9C41a7B";
+  const address = "0x2E9D4A3C9565a3E826641B749Dd71297A450B77e";
   const [user, setUser] = useState({});
   const [wallet, setWallet] = useState("");
 
