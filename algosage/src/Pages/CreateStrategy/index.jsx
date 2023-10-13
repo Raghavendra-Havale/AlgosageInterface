@@ -186,7 +186,7 @@ const CreateStrategy = () => {
               className="font-semibold flex items-center gap-x-2 justify-center bg-light text-black/100 hover:bg-white/40 px-3 py-5 rounded-lg w-1/2 col-span-full mx-auto text-xl"
               onClick={handleClick}
             >
-              Create Strategy
+              {loading ? "LOADING..." : "Create Strategy"}
             </button>
           </form>
         </div>
