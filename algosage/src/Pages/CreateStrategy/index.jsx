@@ -1,81 +1,103 @@
 import ProtocolStats from "../../components/ProtocolStats";
+import "./index.css";
 
 function CreateStrategy() {
   return (
     <>
       <ProtocolStats />
-      <section className="mx-auto max-w-6xl my-6 w-full px-5 xl:px-0">
-        <div className="bg-secondary">
-          <h1 className="text-2xl font-semibold pb-1 ">ℚuadrat</h1>
-          <p className="text-sm pb-3 ">
-            The open market of Asset Management on Ethereum,
-            <br />
-            Polygon, BNB Chain, Avalanche, Optimism, Arbitrum, Base
-          </p>
-          <h1 className="text-2xl font-semibold   pb-1">Create New Strategy</h1>
-          <p className="text-sm pb-8 ">
-            Quadrat allows you to create Uniswap V3 strategies for <br />{" "}
-            managing your personal funds or public funds with a <br />{" "}
-            revenue-sharing model.
-          </p>
-          <form>
-            <label className="block mb-2 text-sm text-gray-500">
-              Choose Network
-            </label>
-            <select className="bg-gray-800 w-36 text-sm">
-              <option>Ethereum</option>
-              <option>Polygon</option>
-              <option>BNB Chain</option>
-              <option>Avalanche</option>
-              <option>Optimisn</option>
-            </select>
-            <label className="block mb-2 pt-2 text-sm text-gray-500">
-              Choose DEX (Liquidity Source){" "}
-            </label>
-            <select className="bg-gray-800 w-36 text-sm">
-              <option>Uniswap V3</option>
-            </select>
-            <label className="block mb-2 pt-2 text-sm text-gray-500">
-              Select pair
-            </label>
-            <select className="bg-gray-800 w-32 text-sm flex">
-              <option>WETH</option>
-            </select>
-            <div className=" pt-2 text-sm">
-              <u className="text-gray-500 no-underline">TVL: </u>
-              <span className=" font-semibold">$245,999,810</span>
-              <span className="mx-2"> </span>
-              <u className="text-gray-500 no-underline">Volume 24h: </u>
-              <span className=" font-semibold">$1,835,877</span>
-              <span className="mx-2"> </span>
-              <u className="text-gray-500 no-underline">Fees 24h: </u>
-              <span className=" font-semibold">$5,507</span>
+      <section className="mx-auto max-w-6xl my-6 w-full px-4 xl:px-0 ">
+        <div className="flex-col md:flex-row p-4 rounded-lg bg-secondary">
+          <div className="">
+            <h1 className="text-2xl font-semibold pb-1 ">ℚuadrat</h1>
+            <p className="text-sm pb-3 text-light">
+              The open market of Asset Management on Ethereum,
+              <br />
+              Polygon, BNB Chain, Avalanche, Optimism, Arbitrum, Base
+            </p>
+            <h1 className="text-2xl font-semibold   pb-1">
+              Create New Strategy
+            </h1>
+            <p className="text-sm pb-8 text-light">
+              Quadrat allows you to create Uniswap V3 strategies for <br />{" "}
+              managing your personal funds or public funds with a <br />{" "}
+              revenue-sharing model.
+            </p>
+          </div>
+          <form className="grid grid-cols-2 grid-rows-4 md:grid-cols-3 md:grid-rows-2 gap-4 mt-4">
+            <div>
+              <label className="block text-sm text-gray-500 ">
+                Choose Network
+              </label>
+              <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-light/10">
+                <option>Ethereum</option>
+                <option>Polygon</option>
+                <option>BNB Chain</option>
+                <option>Avalanche</option>
+                <option>Optimisn</option>
+              </select>
             </div>
             <div>
-              <label className="block mb-2 pt-2 text-sm text-gray-500">
-                Set Asset Manager Address
+              <label className="block text-sm text-gray-500">
+                Choose DEX (Liquidity Source){" "}
               </label>
-              <a
-                href="https://etherscan.io/address/0xBfe4a6FaFB8be8F2193AFBf488E100A6aA60b986"
-                rel="noreferrer"
-                target="_blank"
-                className="text-sm cursor-pointer"
-              >
-                View on Etherscan
-              </a>
+              <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-light/10">
+                <option>Uniswap V3</option>
+              </select>
             </div>
             <div>
-              <label className="block mb-2 pt-2 text-sm text-gray-500">
-                Set Management Fee
-              </label>
-              <div>
-                <input
-                  type="text"
-                  className="bg-secondary w-16 h-8 border-stone-300"
-                />
-                <span>% </span>
-              </div>
+              <label className="block text-sm text-gray-500">Select pair</label>
+              <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-light/10">
+                <option>WETH</option>
+              </select>
             </div>
+            <div>
+              <label className="block text-sm text-gray-500 ">
+                Select Fee Type:
+              </label>
+              <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-light/10">
+                <option> DynamicFeesOnly</option>
+                <option>FlatProfit</option>
+                <option>DynamicProfit</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm text-gray-500 ">
+                Input Pool Address:
+              </label>
+              <input
+                type="text"
+                placeholder="Pool Address"
+                className="p-3 focus:outline-none placeholder:text-light rounded-lg w-full text-sm bg-light/10"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-500 ">
+                Input Oracle Address:
+              </label>
+              <input
+                type="text"
+                placeholder="Oracle Address"
+                className="p-3 focus:outline-none placeholder:text-light rounded-lg w-full text-sm bg-light/10"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <p className="text-gray-500">Vault Visibility:</p>
+              <label className="switch cursor-pointer">
+                <input type="checkbox" />
+                <span className="slider"></span>
+              </label>
+            </div>
+            <div className="flex items-center gap-2">
+              <p className="text-gray-500 break-all">WhiteListedDeposits:</p>
+              <label className="switch cursor-pointer">
+                <input type="checkbox" />
+                <span className="slider"></span>
+              </label>
+            </div>
+
+            <button className="font-semibold flex items-center gap-x-2 justify-center bg-light text-black/100 hover:bg-white/40 px-3 py-7 rounded-lg w-full col-span-full text-xl">
+              Connect Wallet
+            </button>
           </form>
         </div>
       </section>
