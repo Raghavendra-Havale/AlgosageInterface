@@ -9,7 +9,7 @@ const CreateStrategy = () => {
   const [user, setUser] = useState({});
   const [wallet, setWallet] = useState("");
 
-  const [network, setNetwork] = useState("");
+  // const [network, setNetwork] = useState("");
   const [dex, setDex] = useState("");
   const [poolAddress, setPoolAddress] = useState("");
   const [feeType, setFeeType] = useState("");
@@ -40,7 +40,7 @@ const CreateStrategy = () => {
 
       const receipt = await tx.wait();
       console.log(receipt);
-      console.log("Deposit successful!");
+      // console.log("Deposit successful!");
       // setMessage("deposit successful !");
     } catch (error) {
       console.error("Error during deposit:", error.message || error);
@@ -60,10 +60,10 @@ const CreateStrategy = () => {
         const contract = new ethers.Contract(address, ABI, signer);
         const signers = await provider.listAccounts();
         const walletAddress = signers[0];
-        console.log("heloo");
         setUser(contract);
         setWallet(walletAddress);
-        console.log(walletAddress);
+        // console.log(walletAddress);
+        // console.log(contract);
       }
     };
     initialize();
@@ -181,12 +181,31 @@ const CreateStrategy = () => {
               </label>
             </div>
 
-            <button
-              className="font-semibold flex items-center gap-x-2 justify-center bg-light text-black/100 hover:bg-white/40 px-3 py-5 rounded-lg w-1/2 col-span-full mx-auto text-xl"
-              onClick={handleClick}
-            >
-              {loading ? "LOADING..." : "Create Strategy"}
-            </button>
+            {wallet === "" && (
+              <button
+                className="font-semibold flex items-center gap-x-2 justify-center bg-error/30 text-white hover:bg-error/40 px-3 py-5 rounded-lg w-1/2 col-span-full mx-auto text-xl disabled:cursor-not-allowed"
+                onClick={handleClick}
+                type="submit"
+                disabled
+              >
+                Wallet Not Connected
+              </button>
+            )}
+
+            {wallet !== "" && (
+              <button
+                className={`font-semibold flex items-center gap-x-2 justify-center  text-black/100  px-3 py-5 rounded-lg w-1/2 col-span-full mx-auto text-xl  ${
+                  loading
+                    ? "bg-yellow/50 disabled:cursor-not-allowed hover:bg-yellow/50"
+                    : "bg-light hover:bg-white/40 cursor-pointer"
+                }`}
+                onClick={handleClick}
+                type="submit"
+                disabled={loading ? true : false}
+              >
+                {loading ? "Loading..." : "Create Strategy"}
+              </button>
+            )}
           </form>
         </div>
       </section>

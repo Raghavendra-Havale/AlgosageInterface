@@ -62,17 +62,20 @@ function Details() {
                     </div>
                     <div className="flex flex-col gap-y-4 p-4">
                       <p>
-                        For Automated Vaults Liquidity ranges are automatically rebalanced when
-                        certain rebalance triggers are hit.
+                        For Automated Vaults Liquidity ranges are automatically
+                        rebalanced when certain rebalance triggers are hit.
                       </p>
                       <p>
-                        For Automated Vaults, as per the algorithm, the ranges are triggered for rebalancing.
-                        Each vault may have it's own separate mechanism to handle the rebalances. AlgoSage vaults support
-                        multiple positions and hence the algorithms can be made advanced too. Vaults also support HOLD functionality
-                        which allows the managers to have HOLD all assets into the vault and not any position, this is usually
-                        helpful to avoid sudden directional movements.
-                        The possibilities with AlgoSage vaults are endless.
-
+                        {`For Automated Vaults, as per the algorithm, the ranges
+                        are triggered for rebalancing. Each vault may have it's
+                        own separate mechanism to handle the rebalances.
+                        AlgoSage vaults support multiple positions and hence the
+                        algorithms can be made advanced too. Vaults also support
+                        HOLD functionality which allows the managers to have
+                        HOLD all assets into the vault and not any position,
+                        this is usually helpful to avoid sudden directional
+                        movements. The possibilities with AlgoSage vaults are
+                        endless.`}
                       </p>
                     </div>
                   </div>
@@ -102,7 +105,7 @@ function Details() {
                 <h3 className="flex" onClick={handleOpen3}>
                   <button
                     className="px-4 flex flex-1 items-center justify-between py-4 transition-all"
-                  // onClick={() => handleOpen3((open) => !open)}
+                    // onClick={() => handleOpen3((open) => !open)}
                   >
                     Trade-offs <AiOutlineDown className="" />
                   </button>
@@ -159,9 +162,7 @@ function Details() {
                         </span>
                       </div>
                     </td>
-                    <td className="px-5 py-3 pr-8 text-sm text-white">
-                      -- %
-                    </td>
+                    <td className="px-5 py-3 pr-8 text-sm text-white">-- %</td>
                     <td className="px-5 py-3 pr-8 text-sm text-white">-- --</td>
                   </tr>
                   <tr className="border-t border-t-black bg-light/20 hover:bg-light/30">
@@ -179,9 +180,7 @@ function Details() {
                         </span>
                       </div>
                     </td>
-                    <td className="px-5 py-3 pr-8 text-sm text-white">
-                      -- %
-                    </td>
+                    <td className="px-5 py-3 pr-8 text-sm text-white">-- %</td>
                     <td className="px-5 py-3 pr-8 text-sm text-white">-- --</td>
                   </tr>
                 </tbody>
@@ -325,14 +324,14 @@ function Deposit({ setDisplay }) {
   const UNIaddress = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
   const SOLaddress = "0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692";
   const [contract, setContract] = useState(null);
-  const [metamask, setMetamask] = useState(false);
+  // const [metamask, setMetamask] = useState(false);
   const [user, setUser] = useState("");
   const [UNIcontract, setUNIcontract] = useState(null);
   const [SOLcontract, setSOLcontract] = useState(null);
   const [coin0Amount, setCoin0Amount] = useState(0);
   const [coin1Amount, setCoin1Amount] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
+  // const [success, setSuccess] = useState("");
   const handleCoin0 = (e) => {
     setCoin0Amount(e.target.value);
   };

@@ -7,7 +7,7 @@ function Footer() {
   return (
     <footer className="flex items-center justify-end gap-3 p-6">
       <a
-        href="https://twitter.com/AlgoSageDefi"
+        href="https://twitter.com/LayerDapp"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
@@ -15,7 +15,7 @@ function Footer() {
         <RiTwitterXFill />
       </a>
       <a
-        href="https://discord.com/invite/qSs6U7VF"
+        href="https://discord.gg/eDwnvCc8nB"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
@@ -39,7 +39,7 @@ function Footer() {
         <AiOutlineMail />
       </a>
       <a
-        href="https://docs.algosage.io/"
+        href="https://docs.layerdapp.xyz"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
