@@ -10,7 +10,7 @@ const CreateStrategy = () => {
   const [wallet, setWallet] = useState("");
 
   // const [network, setNetwork] = useState("");
-  const [dex, setDex] = useState("");
+  // const [dex, setDex] = useState("");
   const [poolAddress, setPoolAddress] = useState("");
   const [feeType, setFeeType] = useState("");
   const [swapRouter, setSwapRouter] = useState("");
@@ -102,7 +102,7 @@ const CreateStrategy = () => {
               </label>
               <select
                 className="p-3 focus:outline-none rounded-lg w-full text-sm bg-[#29292999]"
-                onChange={(e) => setDex(e.target.value)}
+                // onChange={(e) => setDex(e.target.value)}
               >
                 <option value={`0xB4C5E700c8114d0C758b71865Cf9F70605cdF6d8`}>
                   Uniswap V3

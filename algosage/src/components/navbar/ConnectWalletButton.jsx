@@ -1,5 +1,5 @@
 // File: /src/components/navbar/ConnectWalletButton.jsx
-import React from "react";
+// import React from "react";
 import { useConnect } from "@rainbow-me/rainbowkit";
 
 const ConnectWalletButton = () => {
@@ -30,3 +30,5 @@ const ConnectWalletButton = () => {
 };
 
 export default ConnectWalletButton;
+
+

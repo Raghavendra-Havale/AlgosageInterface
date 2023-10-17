@@ -2,14 +2,17 @@ import { Link } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import ABI from "./ABI.json";
+// import ABI from "./ABI.json";
 // import ConnectWalletButton from "./ConnectWalletButton";
+
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+
 
 function Navbar() {
   const [activeTab, setActiveTab] = useState("");
   const [reveal, setReveal] = useState(false);
-  const address = "0x32dCe5B86Bd874B19332cb76FE7FaE29EC772042";  //contract  address
-  const [contract, setContract] = useState(null);
+  // const address = "0x32dCe5B86Bd874B19332cb76FE7FaE29EC772042";  //contract  address
+  // const [contract, setContract] = useState(null);
   const [metamask, setMetamask] = useState(false);
   const [userAddr, setUserAddr] = useState('')
   const [shortAddr, setShortAddr] = useState('')
@@ -29,8 +32,8 @@ function Navbar() {
         const address = await signer.getAddress();
         setUserAddr(address)
 
-        const contract = new ethers.Contract(address, ABI.abi, signer);
-        setContract(contract);
+        // const contract = new ethers.Contract(address, ABI.abi, signer);
+        // setContract(contract);
 
       }
 
@@ -54,6 +57,8 @@ function Navbar() {
       alert('MetaMask not installed!');
     }
   };
+
+  console.log(walletCheck,shortAddr);
 
 
   function handleNavBar(page) {
@@ -174,8 +179,10 @@ function Navbar() {
       </div>
 
       <div className="flex gap-4 items-center">
-        {shortAddr != '' ? <h2 className="font-medium text-white">{shortAddr}</h2> : null}
-        {!metamask ? (
+        <ConnectButton/>
+        {/* {shortAddr != '' ? <h2 className="font-medium text-white">{shortAddr}</h2> : null} */}
+
+        {/* {!metamask ? (
           <button className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-light/10 hover:bg-light/30 rounded-lg" onClick={walletCheck}>
             Connect Wallet
           </button>
@@ -183,7 +190,8 @@ function Navbar() {
           <button className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-light/10 hover:bg-light/30 rounded-lg" onClick={() => { setMetamask(false); setShortAddr(''); setUserAddr('') }}>
             Disconnect
           </button>
-        )}
+        )} */}
+        
       </div>
 
     </header>
