@@ -16,8 +16,22 @@ import {
 
 const myTheme = merge(darkTheme(), {
   colors: {
-    // accentColor: '#1976D2',
-    accentColor:"#757575"
+    accentColor: '#1976D2',
+    // accentColor:"#757575"
+    // accentColorForeground: '#1976D2',
+    // actionButtonBorder: '...',
+    // actionButtonBorderMobile: '...',
+    // actionButtonSecondaryBackground: '...',
+    // closeButton: '...',
+    closeButtonBackground: '#1976D2',
+    connectButtonBackground: '#1976D2',
+    connectButtonBackgroundError: '#1976D2',
+    connectButtonInnerBackground: '#1976D2',
+    // connectButtonText: '...',
+    // connectButtonTextError: '...',
+    // connectionIndicator: '...',
+    downloadBottomCardBackground: '#1976D2',
+    downloadTopCardBackground: '#1976D2',
   },
 } );
 
