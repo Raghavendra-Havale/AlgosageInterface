@@ -17,6 +17,7 @@ export default {
         purple: "rgb(147, 121, 184)",
         cyan: "rgb(77, 215, 232)",
         light: "rgb(110, 111, 111)",
+        error: "#db5127",
       },
       fontFamily: {
         sans: ["ui-sans-serif", "system-ui", "sans-serif"],

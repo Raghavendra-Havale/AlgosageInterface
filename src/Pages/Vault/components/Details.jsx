@@ -1,38 +1,25 @@
-import { BsFillPatchCheckFill, BsArrow90DegLeft } from "react-icons/bs";
+import {
+  // BsFillPatchCheckFill,
+  BsArrow90DegLeft,
+} from "react-icons/bs";
 import { AiOutlineDown } from "react-icons/ai";
 import { GrAdd } from "react-icons/gr";
 import PropTypes from "prop-types";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import ABI from './ABI.json';
+import ABI from "./ABI.json";
 import UNIabi from "./UNI.json";
 import SOLabi from "./SOL.json";
+import { useSelector, useDispatch } from "react-redux";
+import { updateNotifications, updateLoading } from "../../../state/slice";
 
 function Details() {
   const [open1, setOpen1] = useState(true);
   const [open2, setOpen2] = useState(true);
   const [open3, setOpen3] = useState(true);
   const [display, setDisplay] = useState("your share");
-  
-  
-
-
-
-
-  // const walletCheck = async() => {        //check wallet exist?
-  //   if (window.ethereum) {
-  //     setMetamask(true);
-  //   } else {
-  //     alert('MetaMask not installed!');
-  //   }
-  // };
-  
-
-  
-
-
-
-
+  const [input1, setInput1] = useState("");
+  const [input2, setInput2] = useState("");
 
   function handleOpen1() {
     setOpen1((open) => !open);
@@ -69,24 +56,28 @@ function Details() {
                     />
                     <div className="flex gap-x-2 px-4 pt-4">
                       <span className="rounded-xl bg-light/20 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                        Dynamic
+                        Automated
                       </span>
                       <span className="rounded-xl bg-light/20 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                        Narrow
+                        Manual
                       </span>
                     </div>
                     <div className="flex flex-col gap-y-4 p-4">
                       <p>
-                        Liquidity ranges are automatically rebalanced when
-                        certain rebalance triggers are hit.
+                        For Automated Vaults Liquidity ranges are automatically
+                        rebalanced when certain rebalance triggers are hit.
                       </p>
                       <p>
-                        A liquidity range is set at 10% and 1,000% of current
-                        price, and rebalance triggers are set at 7.5%. When the
-                        price moves from 7.5% of the distance from the current
-                        price to either the lower or upper range, the position
-                        will be automatically rebalanced in a new range of 10%
-                        and 1,000% of the current price.
+                        {`For Automated Vaults, as per the algorithm, the ranges
+                        are triggered for rebalancing. Each vault may have it's
+                        own separate mechanism to handle the rebalances.
+                        AlgoSage vaults support multiple positions and hence the
+                        algorithms can be made advanced too. Vaults also support
+                        HOLD functionality which allows the managers to have
+                        HOLD all assets into the vault and not any position,
+                        this is usually helpful to avoid sudden directional
+                        movements. The possibilities with AlgoSage vaults are
+                        endless.`}
                       </p>
                     </div>
                   </div>
@@ -162,7 +153,25 @@ function Details() {
                     <td className="px-5 py-3 pr-8 text-sm text-white">
                       <div className="flex items-center gap-3">
                         <img
-                          src="https://app.gamma.xyz/_next/static/media/icon.ca2e2bd7.svg"
+                          src="https://cryptologos.cc/logos/uniswap-uni-logo.svg?v=026"
+                          alt="UNI"
+                          width={24}
+                          height={24}
+                          decoding="async"
+                        />
+                        <span className="whitespace-nowrap font-semibold text-white/90">
+                          UNI
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-5 py-3 pr-8 text-sm text-white">-- %</td>
+                    <td className="px-5 py-3 pr-8 text-sm text-white">-- --</td>
+                  </tr>
+                  <tr className="border-t border-t-black bg-light/20 hover:bg-light/30">
+                    <td className="px-5 py-3 pr-8 text-sm text-white">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=026"
                           alt="SOL"
                           width={24}
                           height={24}
@@ -173,39 +182,15 @@ function Details() {
                         </span>
                       </div>
                     </td>
-                    <td className="px-5 py-3 pr-8 text-sm text-white">
-                      54.93%
-                    </td>
-                    <td className="px-5 py-3 pr-8 text-sm text-white">
-                      $2.06M
-                    </td>
-                  </tr>
-                  <tr className="border-t border-t-black bg-light/20 hover:bg-light/30">
-                    <td className="px-5 py-3 pr-8 text-sm text-white">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src="https://app.gamma.xyz/_next/static/media/icon.ca2e2bd7.svg"
-                          alt="SOL"
-                          width={24}
-                          height={24}
-                          decoding="async"
-                        />
-                        <span className="whitespace-nowrap font-semibold text-white/90">
-                          UNI
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-5 py-3 pr-8 text-sm text-white">
-                      24.93%
-                    </td>
-                    <td className="px-5 py-3 pr-8 text-sm text-white">
-                      $1.69M
-                    </td>
+                    <td className="px-5 py-3 pr-8 text-sm text-white">-- %</td>
+                    <td className="px-5 py-3 pr-8 text-sm text-white">-- --</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
+
+          {/* Risk & Audit
           <div>
             <h3 className="text-base font-semibold text-white pb-4">
               Risk & Audit
@@ -238,29 +223,38 @@ function Details() {
               acknowledge that you use it on the basis of your own enquiry,
               without solicitation or inducement.
             </p>
-          </div>
+          </div> */}
         </div>
         <div className="order-1 flex h-fit flex-col gap-y-3 md:order-2 md:w-[360px]">
           <div className="rounded-lg overflow-hidden">
             {display === "your share" && <YourShare setDisplay={setDisplay} />}
             {display === "withdraw" && <Withdraw setDisplay={setDisplay} />}
-            {display === "deposit" && <Deposit setDisplay={setDisplay} />}
+            {display === "deposit" && (
+              <Deposit
+                setDisplay={setDisplay}
+                input1={input1}
+                setInput1={setInput1}
+                input2={input2}
+                setInput2={setInput2}
+              />
+            )}
           </div>
 
-          <div className="rounded-lg overflow-hidden">
+          {/* <div className="rounded-lg overflow-hidden">
             <div
               className="p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center bg-light/20"
               role="button"
             >
               ✨ Staking Incentives <AiOutlineDown />
             </div>
-          </div>
+          </div> */}
+
           <div className="rounded-lg overflow-hidden">
             <div
               className="p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center bg-light/20"
               role="button"
             >
-              Contact Addresses <AiOutlineDown />
+              Vault Address <AiOutlineDown />
             </div>
           </div>
         </div>
@@ -290,18 +284,18 @@ function YourShare({ setDisplay }) {
           <div className="flex gap-x-3 pb-4">
             <span className="rounded-xl bg-light/60 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap hover:bg-light/40">
               <a
-                href="https://swap.defillama.com/?chain=bsc&to=0x2170ed0880ac9a755fd29b2688956bd959f933f8"
+                href="http://app.uniswap.org"
                 className="flex flex-row items-center gap-x-2"
               >
-                Get UNI token
+                Get WETH token
               </a>
             </span>
             <span className="rounded-xl bg-light/60 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap hover:bg-light/40">
               <a
-                href="https://swap.defillama.com/?chain=bsc&to=0x2170ed0880ac9a755fd29b2688956bd959f933f8"
+                href="http://app.uniswap.org"
                 className="flex flex-row items-center gap-x-2"
               >
-                Get SOL token
+                Get WBNB token
               </a>
             </span>
           </div>
@@ -327,120 +321,137 @@ function YourShare({ setDisplay }) {
 }
 
 function Deposit({ setDisplay }) {
-
-  const [message,setMessage]=useState('');
-  const address = "0xaf159dd96a0dbe6cfd5d3a21936378150291c6f2";//contract  address
-  const UNIaddress= "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984" ;
-  const SOLaddress="0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692";
+  const dispatch = useDispatch();
+  const { notifications } = useSelector((state) => state.app);
+  const address = "0xaf159dd96a0dbe6cfd5d3a21936378150291c6f2"; //contract  address
+  const UNIaddress = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
+  const SOLaddress = "0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692";
   const [contract, setContract] = useState(null);
-  const [metamask,setMetamask]=useState(false);
-  const [user,setUser]=useState('');
-  const [UNIcontract,setUNIcontract]=useState(null);
-  const [SOLcontract,setSOLcontract]=useState(null);
-  const [coin0Amount,setCoin0Amount]=useState(0);
-  const [coin1Amount,setCoin1Amount]=useState(0);
-
-
+  // const [metamask, setMetamask] = useState(false);
+  const [user, setUser] = useState("");
+  const [UNIcontract, setUNIcontract] = useState(null);
+  const [SOLcontract, setSOLcontract] = useState(null);
+  const [coin0Amount, setCoin0Amount] = useState(0);
+  const [coin1Amount, setCoin1Amount] = useState(0);
+  // const [success, setSuccess] = useState("");
   const handleCoin0 = (e) => {
     setCoin0Amount(e.target.value);
   };
-
-
   const handleCoin1 = (e) => {
     setCoin1Amount(e.target.value);
   };
-
-  useEffect(()=>{
-    const initialize = async()=> {
-      if(window.ethereum ){
+  useEffect(() => {
+    const initialize = async () => {
+      if (window.ethereum) {
         await window.ethereum.enable();
-        const provider= new ethers.providers.Web3Provider(window.ethereum);
-        const signer= provider.getSigner();
-        const contract=new ethers.Contract(address,ABI,signer);
-        const UNIContract=new ethers.Contract(UNIaddress,UNIabi,signer);
-        const SOLContract=new ethers.Contract(SOLaddress,SOLabi,signer)
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(address, ABI, signer);
+        const UNIContract = new ethers.Contract(UNIaddress, UNIabi, signer);
+        const SOLContract = new ethers.Contract(SOLaddress, SOLabi, signer);
         const signers = await provider.listAccounts();
         const walletAddress = signers[0];
-         setUser(walletAddress);
+        setUser(walletAddress);
         setUNIcontract(UNIContract);
         setSOLcontract(SOLContract);
         setContract(contract);
-        
       }
-
-
-    }
+    };
     initialize();
-    
+  }, []);
+  const handleDeposit = async () => {
+    console.log("current wallet", user);
 
-  },[]);
-
-
-
-  const handleDeposit=async()=>{
-
-    console.log("current wallet",user);
-  
-    try{
-   
+    try {
+      dispatch(
+        updateLoading({
+          type: "loading",
+          header: "LOADING!!!",
+          info: ["Transaction pending..."],
+          overlay: true,
+        })
+      );
       if (coin0Amount === null || coin0Amount === undefined) {
-        console.error('Coin 0 amount is not valid.');
+        console.error("Coin 0 amount is not valid.");
         return;
       }
-  
+
       if (coin1Amount === null || coin1Amount === undefined) {
-        console.error('Coin 1 amount is not valid.');
+        console.error("Coin 1 amount is not valid.");
         return;
       }
+      const amountToken0 = ethers.utils.parseEther(coin0Amount);
+      const amountToken1 = ethers.utils.parseEther(coin1Amount);
 
-    const amountToken0 = ethers.utils.parseEther(coin0Amount);
-    const amountToken1 = ethers.utils.parseEther(coin1Amount);
-   
+      //const isApprovedToken0 = await UNIcontract.allowance(user,address);
+      const app1 = await UNIcontract.approve(address, amountToken0);
+      await app1.wait();
+      console.log("coin 0 aproved");
+      //  if(!isApprovedToken0){
+      //  const app1=await UNIcontract.approve(address, amountToken0);
+      //  await app1.wait();
+      //  console.log('Token 0 approved.');
+      // }else {console.log("token 0 already approved;")}
+      // const isApprovedToken1 = await SOLcontract.allowance(user,address);
+      // if(!isApprovedToken1){
+      //  const app2=await SOLcontract.approve(address, amountToken1);
+      //  await app2.wait();
+      //  console.log('Token 1 approved.');
+      // }else{console.log("token 1 already approved;")}
+      const app2 = await SOLcontract.approve(address, amountToken1);
+      await app2.wait();
+      console.log("coin 1 aproved");
+      const tx = await contract.deposit(amountToken0, amountToken1, {
+        gasLimit: 270000,
+        gasPrice: 20000000000,
+      });
 
-   //const isApprovedToken0 = await UNIcontract.allowance(user,address);
-   const app1=await UNIcontract.approve(address, amountToken0);
-   await app1.wait();
-   console.log("coin 0 aproved");
+      const receipt = await tx.wait();
+      dispatch(updateLoading({}));
+      console.log(receipt);
+      if (receipt) {
+        dispatch(
+          updateNotifications([
+            ...notifications,
+            {
+              type: "Successful",
+              header: "Transaction Successfull",
+              info: [
+                "Transaction Hash: ",
+                {
+                  text: XPathResult.transactionHash.slice(0, 26) + "...",
+                  link: `https://goerli.etherscan.io/tx/${receipt.transactionHash}`,
+                },
+              ],
+              overlay: true,
+            },
+          ])
+        );
+      }
+    } catch (error) {
+      console.error();
+      console.log(error.message);
+      const errorMsg =
+        error.message.includes("insufficient funds") && "Insufficient funds";
+      const reject =
+        error.message.includes("user rejected transaction") &&
+        "Transactioin terminated!!!";
+      const noinput =
+        error.message.includes("value must be a string") && "Input Error!!!";
 
-  //  if(!isApprovedToken0){
-  //  const app1=await UNIcontract.approve(address, amountToken0);
-  //  await app1.wait();
-  //  console.log('Token 0 approved.');
-
-  // }else {console.log("token 0 already approved;")}
-
- // const isApprovedToken1 = await SOLcontract.allowance(user,address);
-
-  // if(!isApprovedToken1){
-  //  const app2=await SOLcontract.approve(address, amountToken1);
-  //  await app2.wait();
-  //  console.log('Token 1 approved.');
-  // }else{console.log("token 1 already approved;")}
-
-  const app2=await SOLcontract.approve(address, amountToken1);
-  await app2.wait();
-  console.log("coin 1 aproved");
-
-  const tx = await contract.deposit(amountToken0,amountToken1, {
-    gasLimit: 270000,  
-    gasPrice: 20000000000,  
-});
-  
-   const receipt = await tx.wait();
-   console.log(receipt);
-
-
-   console.log('Deposit successful!');
-   setMessage("deposit successful !")
-    }catch (error) {
-      console.error('Error during deposit:', error.message || error);
-      setMessage("deposit failed :( ")
+      dispatch(updateLoading({}));
+      dispatch(
+        updateNotifications([
+          ...notifications,
+          {
+            type: "error",
+            info: [errorMsg, reject, noinput],
+            overlay: true,
+          },
+        ])
+      );
     }
-  }
-
-
-
-
+  };
   return (
     <>
       <div className="bg-light/30 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
@@ -472,13 +483,11 @@ function Deposit({ setDisplay }) {
                 </div>
               </div>
             </div>
-
             <div className="mt-6 mb-[2px] flex items-center justify-center">
               <div className="rounded-md bg-light/20 p-1.5">
                 <GrAdd className="text-white/80 text-base" />
               </div>
             </div>
-
             <div className="flex flex-col gap-y-[6px]">
               <div className="flex justify-between text-light">
                 <span>Amount</span>
@@ -500,7 +509,6 @@ function Deposit({ setDisplay }) {
               </div>
             </div>
           </div>
-
           <div className="rounded-md border border-light/20 p-3 flex flex-col gap-y-2 mb-4">
             <div className="flex items-center justify-between text-white/50 text-xs font-normal">
               <div className="truncate">Total liquidity providing (In USD)</div>
@@ -511,7 +519,10 @@ function Deposit({ setDisplay }) {
               <div>-</div>
             </div>
           </div>
-          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full" onClick={handleDeposit}>
+          <button
+            className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full"
+            onClick={handleDeposit}
+          >
             DEPOSIT
           </button>
         </div>
@@ -550,7 +561,6 @@ function Withdraw({ setDisplay }) {
               </div>
             </div>
           </div>
-
           <div className="rounded-md border border-light/20 p-3 flex flex-col gap-y-2 mb-4">
             <div className="flex items-center justify-between text-white/50 text-xs font-normal">
               <div className="truncate">Your Balance (In USD)</div>
@@ -561,7 +571,7 @@ function Withdraw({ setDisplay }) {
               <div>-</div>
             </div>
           </div>
-          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full" onClick={handleDeposit}>
+          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full">
             Connect Wallet
           </button>
         </div>
@@ -569,7 +579,6 @@ function Withdraw({ setDisplay }) {
     </>
   );
 }
-
 function BackArrow({ setDisplay }) {
   return (
     <button onClick={() => setDisplay("your share")}>
@@ -577,7 +586,6 @@ function BackArrow({ setDisplay }) {
     </button>
   );
 }
-
 BackArrow.propTypes = {
   setDisplay: PropTypes.func,
 };

@@ -20,7 +20,7 @@ const Dashboard = () => {
             <button className="text-sm py-2.5 px-5 rounded-lg hover:text-white font-medium text-white bg-light/20">
               All Vaults
             </button>
-            <button className="text-sm py-2.5 px-5 rounded-lg text-light hover:text-white  font-medium">
+            {/* <button className="text-sm py-2.5 px-5 rounded-lg text-light hover:text-white  font-medium">
               Incentivized Vaults
             </button>
             <button className="text-sm py-2.5 px-5 rounded-lg text-light hover:text-white  font-medium">
@@ -28,7 +28,7 @@ const Dashboard = () => {
             </button>
             <button className="text-sm py-2.5 px-5 rounded-lg text-light hover:text-white  font-medium">
               Volatile
-            </button>
+            </button> */}
           </div>
           <div className="hidden grow md:block"></div>
           <button className="bg-light/10 hover:bg-light/30 cursor-pointer flex items-center gap-1.5 px-3 py-2 text-sm outline-none justify-between font-medium select-none h-11 w-45 shrink-0 rounded-lg text-white">
@@ -53,7 +53,7 @@ const Dashboard = () => {
               <tr>
                 <th className="whitespace-nowrap bg-light/40 p-4 text-left text-xs font-semibold uppercase text-white">
                   <div className="cursor-pointer select-none flex items-center gap-2">
-                    Algo Vault
+                    AlgoSage Vaults
                   </div>
                 </th>
                 <th className="whitespace-nowrap bg-light/40 p-4 text-left text-xs font-semibold uppercase text-white">
@@ -88,14 +88,14 @@ const Dashboard = () => {
                     <div className="flex items-center gap-3">
                       <div className="flex items-center shrink-0">
                         <img
-                          src="	https://app.gamma.xyz/_next/static/media/icon.dddcef40.svg"
-                          alt="weth"
+                          src="https://cryptologos.cc/logos/uniswap-uni-logo.svg?v=026"
+                          alt="uni"
                           className="z-0 -mr-1.5"
                           decoding="async"
                         />
                         <img
-                          src="https://app.gamma.xyz/_next/static/media/icon.ca2e2bd7.svg"
-                          alt="wbnb"
+                          src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=026"
+                          alt="sol"
                           className="z-0 -mr-1.5 "
                           decoding="async"
                         />
@@ -104,11 +104,11 @@ const Dashboard = () => {
                         <span className="whitespace-nowrap font-semibold text-white/80">
                           UNI-SOL
                         </span>
-                        <span className="text-xs text-white/60">Thena</span>
+                        <span className="text-xs text-white/60">Goerli</span>
                       </div>
                       <div className="flex gap-x-2">
                         <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                          0.1277%
+                          0.00%
                         </span>
                       </div>
                     </div>
@@ -117,17 +117,17 @@ const Dashboard = () => {
                 <td className="px-5 py-3 pr-8 text-sm text-white">
                   <Link to={"/vault"}>
                     <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                      Narrow
+                      Manual
                     </span>
                   </Link>
                 </td>
                 <td className="px-5 py-3 pr-8 text-sm text-white">
-                  <Link to={"/vault"}>$3.82M</Link>
+                  <Link to={"/vault"}>$0.00M</Link>
                 </td>
                 <td className="px-5 py-3 pr-8 text-sm text-white">
                   <Link to={"/vault"}>
                     <span className="flex items-center gap-x-1">
-                      7.58%<button className="text-sm">✨</button>
+                      0.00%<button className="text-sm">✨</button>
                     </span>
                   </Link>
                 </td>

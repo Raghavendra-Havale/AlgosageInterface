@@ -7,7 +7,7 @@ function Footer() {
   return (
     <footer className="flex items-center justify-end gap-3 p-6">
       <a
-        href="https://twitter.com/Range_Protocol"
+        href="https://twitter.com/LayerDapp"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
@@ -15,7 +15,7 @@ function Footer() {
         <RiTwitterXFill />
       </a>
       <a
-        href="https://discord.com/invite/range-protocol"
+        href="https://discord.gg/eDwnvCc8nB"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
@@ -23,7 +23,7 @@ function Footer() {
         <BiLogoDiscord />
       </a>
       <a
-        href="https://rangeprotocol.medium.com/"
+        href="https://medium.com/@algosage_defi"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
@@ -31,7 +31,7 @@ function Footer() {
         <AiFillMediumSquare />
       </a>
       <a
-        href="mailto:contact@rangeprotocol.com"
+        href="mailto:team@algosage.io"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
@@ -39,7 +39,7 @@ function Footer() {
         <AiOutlineMail />
       </a>
       <a
-        href="https://range-protocol.gitbook.io/range-protocol/"
+        href="https://docs.layerdapp.xyz"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"

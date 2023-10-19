@@ -5,7 +5,9 @@ function ManageStrategy() {
     <>
       <ProtocolStats />
       <section className="mx-auto max-w-6xl my-6 w-full px-5 xl:px-0">
-        ManageStrategy
+        <div className="bg-light/10 py-[300px] rounded-lg mx-auto text-center text-4xl">
+          coming soon!
+        </div>
       </section>
     </>
   );
