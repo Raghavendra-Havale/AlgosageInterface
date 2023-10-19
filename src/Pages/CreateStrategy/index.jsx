@@ -3,20 +3,16 @@ import "./index.css";
 import ABI from "./ABI.json";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { updateNotifications, updateLoading } from "../../state/slice";
 
 const CreateStrategy = () => {
-  const dispatch = useDispatch();
-  const { notifications } = useSelector((state) => state.app);
-  const address = "0x2E9D4A3C9565a3E826641B749Dd71297A450B77e";
-  const [user, setUser] = useState({});
+  const address = "0xfCA26911D88E6667aE92AeC3677F14e214B1E77E";
+  const [contract, setContract] = useState(null);
   const [wallet, setWallet] = useState("");
 
   // const [network, setNetwork] = useState("");
   // const [dex, setDex] = useState("");
   const [poolAddress, setPoolAddress] = useState("");
-  const [feeType, setFeeType] = useState("");
+  const [feeType, setFeeType] = useState(0);
   const [swapRouter, setSwapRouter] = useState("");
   const [oracleAddress, setOracleAddress] = useState("");
   const [vaultVisible, setVaultVisible] = useState(false);
@@ -25,85 +21,31 @@ const CreateStrategy = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log("current wallet", user);
+    console.log("current wallet", wallet);
     setLoading(true);
 
+    const parsedFeeType = parseInt(feeType, 10);
+
     try {
-      dispatch(
-        updateLoading({
-          type: "loading",
-          header: "LOADING!!!",
-          info: ["Transaction pending..."],
-          overlay: true,
-        })
-      );
-      const tx = await user.launchVault(
+      const tx = await contract.launchVault(
         poolAddress,
         oracleAddress,
         swapRouter,
         vaultVisible,
         whiteDeposit,
-        Number(feeType),
-        {
-          gasLimit: 270000,
-          gasPrice: 20000000000,
-        }
+        parsedFeeType
       );
-
+      console.log("vault creation pending... ");
       const receipt = await tx.wait();
-      dispatch(updateLoading({}));
-      console.log(receipt);
-      if (receipt) {
-        dispatch(
-          updateNotifications([
-            ...notifications,
-            {
-              type: "Successful",
-              header: "Transaction Successfull",
-              info: [
-                "Transaction Hash: ",
-                {
-                  text: XPathResult.transactionHash.slice(0, 26) + "...",
-                  link: `https://goerli.etherscan.io/tx/${receipt.transactionHash}`,
-                },
-              ],
-              overlay: true,
-            },
-          ])
-        );
-      }
-      // console.log("Deposit successful!");
+      console.log("vault created successfuly !");
+       console.log(receipt);
       // setMessage("deposit successful !");
     } catch (error) {
-      console.error();
-      console.log(error.message);
-      //////////Several possible error outcomes //////////////////////
-      const errorMsg =
-        error.message.includes("insufficient funds") && "Insufficient funds";
-      const reject =
-        error.message.includes("user rejected transaction") &&
-        "Transactioin terminated!!!";
-      const noinput =
-        error.message.includes(
-          "resolver or addr is not configured for ENS name"
-        ) && "Input Error!!!";
-      const nonceerror =
-        error.message.includes("nonce has already been used") &&
-        "Nonce already used!!!";
-      const failedtransac =
-        error.message.includes("transaction failed") && "Transaction Failed!!!";
-
-      dispatch(updateLoading({}));
-      dispatch(
-        updateNotifications([
-          ...notifications,
-          {
-            type: "error",
-            info: [errorMsg, reject, noinput, nonceerror, failedtransac],
-            overlay: true,
-          },
-        ])
-      );
+      console.error("Error during deposit:", error.message || error);
+      // setMessage(error.message);
+    } finally {
+      setLoading(false);
+      // setMessage("");
     }
   };
 
@@ -116,13 +58,15 @@ const CreateStrategy = () => {
         const contract = new ethers.Contract(address, ABI, signer);
         const signers = await provider.listAccounts();
         const walletAddress = signers[0];
-        setUser(contract);
+        setContract(contract);
         setWallet(walletAddress);
         // console.log(walletAddress);
         // console.log(contract);
       }
     };
+
     initialize();
+
   }, []);
 
   return (
@@ -150,6 +94,7 @@ const CreateStrategy = () => {
                 <option className="bg-light/10">BNB Chain</option>
                 <option className="bg-light/10">Avalanche</option>
                 <option className="bg-light/10">Optimisn</option>
+                <option className="bg-light/10">Goreli - testnet</option>
               </select>
             </div>
             <div>
@@ -183,11 +128,13 @@ const CreateStrategy = () => {
               </label>
               <select
                 className="p-3 focus:outline-none rounded-lg w-full text-sm bg-[#29292999]"
+                value={feeType}
                 onChange={(e) => setFeeType(e.target.value)}
               >
-                <option value={0}> DynamicFeesOnly</option>
-                <option value={1}>FlatProfit</option>
-                <option value={2}>DynamicProfit</option>
+                <option value={0}>Flat Fess Only</option>
+                <option value={1}>Dynamic Fees Only</option>
+                <option value={2}>Flat Profit</option>
+                <option value={3}>Dynamic Profit</option>
               </select>
             </div>
             <div>
@@ -250,12 +197,16 @@ const CreateStrategy = () => {
 
             {wallet !== "" && (
               <button
-                className="font-semibold flex items-center gap-x-2 justify-center  text-black/100  px-3 py-5 rounded-lg w-1/2 col-span-full mx-auto text-xl bg-light hover:bg-white/40 cursor-pointer"
+                className={`font-semibold flex items-center gap-x-2 justify-center  text-black/100  px-3 py-5 rounded-lg w-1/2 col-span-full mx-auto text-xl  ${
+                  loading
+                    ? "bg-yellow/50 disabled:cursor-not-allowed hover:bg-yellow/50"
+                    : "bg-light hover:bg-white/40 cursor-pointer"
+                }`}
                 onClick={handleClick}
                 type="submit"
                 disabled={loading ? true : false}
               >
-                Create Strategy
+                {loading ? "Loading..." : "Create Strategy"}
               </button>
             )}
           </form>
