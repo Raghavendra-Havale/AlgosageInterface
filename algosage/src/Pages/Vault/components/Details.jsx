@@ -321,11 +321,10 @@ function YourShare({ setDisplay }) {
 }
 
 function Deposit({ setDisplay }) {
+  const dispatch = useDispatch();
+  const { notifications } = useSelector((state) => state.app);
 
-  // const dispatch = useDispatch();
-  // const { notifications } = useSelector((state) => state.app);
-
-  const address =    "0x5a4bfd10A99a3e562dD8Ba6550BE305e81b372E1"; //contract  address
+  const address = "0x5a4bfd10A99a3e562dD8Ba6550BE305e81b372E1"; //contract  address
   const UNIaddress = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
   const SOLaddress = "0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692";
   const [contract, setContract] = useState(null);
@@ -363,17 +362,17 @@ function Deposit({ setDisplay }) {
   }, []);
 
   const handleDeposit = async () => {
-    console.log("current wallet:",user);
+    console.log("current wallet:", user);
 
     try {
-      // dispatch(
-      //   updateLoading({
-      //     type: "loading",
-      //     header: "LOADING!!!",
-      //     info: ["Transaction pending..."],
-      //     overlay: true,
-      //   })
-      // );
+      dispatch(
+        updateLoading({
+          type: "loading",
+          header: "LOADING!!!",
+          info: ["Transaction pending..."],
+          overlay: true,
+        })
+      );
       if (coin0Amount === null || coin0Amount === undefined) {
         console.log("token 1 amount is not valid.");
         return;
@@ -386,34 +385,40 @@ function Deposit({ setDisplay }) {
       const amountToken0 = ethers.utils.parseEther(coin0Amount);
       const amountToken1 = ethers.utils.parseEther(coin1Amount);
 
-        // Check and approve allowance for Token 0 (UNI)
-        const allowanceToken0 = await UNIcontract.allowance(user, address);
-        console.log("current allowance of Token1:", allowanceToken0.toString());
-        
-        if (allowanceToken0.lt(amountToken0)) {
-          const approveTx1 = await UNIcontract.approve(address, ethers.constants.MaxUint256);
-          console.log("Token 1 approval pending ..");
-          await approveTx1.wait();
-          console.log("Token 1  approved.");
-        } else {
-          console.log("Token 1 already approved.");
-        }
-    
-        // Check and approve allowance for Token 1 (SOL)
-        const allowanceToken1 = await SOLcontract.allowance(user, address);
-        console.log("current allowance of token 2:", allowanceToken1.toString());
-    
-        if (allowanceToken1.lt(amountToken1)) {
-          const approveTx2 = await SOLcontract.approve(address, ethers.constants.MaxUint256);
-          console.log("Token 2 approval pending ..");
-          await approveTx2.wait();
-          console.log("Token 2  approved.");
-        } else {
-          console.log("Token 2 already approved.");
-        }
+      // Check and approve allowance for Token 0 (UNI)
+      const allowanceToken0 = await UNIcontract.allowance(user, address);
+      console.log("current allowance of Token1:", allowanceToken0.toString());
 
-        //deposit 
-      console.log("proceeding deposit ..")
+      if (allowanceToken0.lt(amountToken0)) {
+        const approveTx1 = await UNIcontract.approve(
+          address,
+          ethers.constants.MaxUint256
+        );
+        console.log("Token 1 approval pending ..");
+        await approveTx1.wait();
+        console.log("Token 1  approved.");
+      } else {
+        console.log("Token 1 already approved.");
+      }
+
+      // Check and approve allowance for Token 1 (SOL)
+      const allowanceToken1 = await SOLcontract.allowance(user, address);
+      console.log("current allowance of token 2:", allowanceToken1.toString());
+
+      if (allowanceToken1.lt(amountToken1)) {
+        const approveTx2 = await SOLcontract.approve(
+          address,
+          ethers.constants.MaxUint256
+        );
+        console.log("Token 2 approval pending ..");
+        await approveTx2.wait();
+        console.log("Token 2  approved.");
+      } else {
+        console.log("Token 2 already approved.");
+      }
+
+      //deposit
+      console.log("proceeding deposit ..");
       const tx = await contract.deposit(amountToken0, amountToken1, {
         gasLimit: 270000,
         gasPrice: 20000000000,
@@ -421,49 +426,48 @@ function Deposit({ setDisplay }) {
 
       const receipt = await tx.wait();
       console.log("Deposit successfull !");
-      // dispatch(updateLoading({}));
-      // console.log(receipt);
-      // if (receipt) {
-      //   dispatch(
-      //     updateNotifications([
-      //       ...notifications,
-      //       {
-      //         type: "Successful",
-      //         header: "Transaction Successfull",
-      //         info: [
-      //           "Transaction Hash: ",
-      //           {
-      //             text: XPathResult.transactionHash.slice(0, 26) + "...",
-      //             link: `https://goerli.etherscan.io/tx/${receipt.transactionHash}`,
-      //           },
-      //         ],
-      //         overlay: true,
-      //       },
-      //     ])
-      //   );
-      // }
+      dispatch(updateLoading({}));
+      console.log(receipt);
+      if (receipt) {
+        dispatch(
+          updateNotifications([
+            ...notifications,
+            {
+              type: "Successful",
+              header: "Transaction Successfull",
+              info: [
+                "Transaction Hash: ",
+                {
+                  text: XPathResult.transactionHash.slice(0, 26) + "...",
+                  link: `https://goerli.etherscan.io/tx/${receipt.transactionHash}`,
+                },
+              ],
+              overlay: true,
+            },
+          ])
+        );
+      }
     } catch (error) {
-      // console.error();
-      // console.log(error.message);
-      // const errorMsg =
-      //   error.message.includes("insufficient funds") && "Insufficient funds";
-      // const reject =
-      //   error.message.includes("user rejected transaction") &&
-      //   "Transactioin terminated!!!";
-      // const noinput =
-      //   error.message.includes("value must be a string") && "Input Error!!!";
-
-      // dispatch(updateLoading({}));
-      // dispatch(
-      //   updateNotifications([
-      //     ...notifications,
-      //     {
-      //       type: "error",
-      //       info: [errorMsg, reject, noinput],
-      //       overlay: true,
-      //     },
-      //   ])
-      // );
+      console.error();
+      console.log(error.message);
+      const errorMsg =
+        error.message.includes("insufficient funds") && "Insufficient funds";
+      const reject =
+        error.message.includes("user rejected transaction") &&
+        "Transactioin terminated!!!";
+      const noinput =
+        error.message.includes("value must be a string") && "Input Error!!!";
+      dispatch(updateLoading({}));
+      dispatch(
+        updateNotifications([
+          ...notifications,
+          {
+            type: "error",
+            info: [errorMsg, reject, noinput],
+            overlay: true,
+          },
+        ])
+      );
     }
   };
   return (
@@ -545,13 +549,13 @@ function Deposit({ setDisplay }) {
   );
 }
 function Withdraw({ setDisplay }) {
-
-
   const [contract, setContract] = useState(null);
-  const [user, setUser] = useState("");
-  const[amount,setAmount]=useState(0);
-  const address =    "0x5a4bfd10A99a3e562dD8Ba6550BE305e81b372E1"; //contract  address
-
+  const [
+    // user,
+    setUser,
+  ] = useState("");
+  const [amount, setAmount] = useState(0);
+  const address = "0x5a4bfd10A99a3e562dD8Ba6550BE305e81b372E1"; //contract  address
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
@@ -571,12 +575,9 @@ function Withdraw({ setDisplay }) {
       }
     };
     initialize();
-  }, []);
+  }, [setUser, setContract]);
 
   const handleWithdraw = async () => {
-    
-    
-    
     // const algoaddress='0xAEaE82345d3B3c6707DAe908863e23879F6ed812';
     //  const userBalance = await algoaddress.balanceOf(user);
     // console.log(userBalance);
@@ -587,28 +588,18 @@ function Withdraw({ setDisplay }) {
           gasLimit: 270000,
           gasPrice: 20000000000,
         });
-        
+
         await withdrawTx.wait();
         console.log("Withdrawal successful!");
-        
       }
     } catch (error) {
-      
       console.error("Error during withdrawal:", error);
       console.log("Transaction hash:", error.transactionHash);
       console.log("Transaction details:", error.transaction);
       console.log("Receipt details:", error.receipt);
-      
     }
   };
 
-
-
-
-
-
-
-  
   return (
     <>
       <div className="bg-light/30 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
@@ -651,7 +642,10 @@ function Withdraw({ setDisplay }) {
               <div>-</div>
             </div>
           </div>
-          <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full" onClick={handleWithdraw}>
+          <button
+            className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full"
+            onClick={handleWithdraw}
+          >
             WITHDRAW
           </button>
         </div>
