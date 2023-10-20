@@ -3,8 +3,12 @@ import "./index.css";
 import ABI from "./ABI.json";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateNotifications, updateLoading } from "../../state/slice";
 
 const CreateStrategy = () => {
+  const dispatch = useDispatch();
+  const { notifications } = useSelector((state) => state.app);
   const address = "0xfCA26911D88E6667aE92AeC3677F14e214B1E77E";
   const [contract, setContract] = useState(null);
   const [wallet, setWallet] = useState("");
@@ -27,6 +31,16 @@ const CreateStrategy = () => {
     const parsedFeeType = parseInt(feeType, 10);
 
     try {
+
+      dispatch(
+        updateLoading({
+          type: "loading",
+          header: "LOADING!!!",
+          info: ["Transaction pending..."],
+          overlay: true,
+        })
+       );
+
       const tx = await contract.launchVault(
         poolAddress,
         oracleAddress,
@@ -38,14 +52,64 @@ const CreateStrategy = () => {
       console.log("vault creation pending... ");
       const receipt = await tx.wait();
       console.log("vault created successfuly !");
+      dispatch(updateLoading({}));
        console.log(receipt);
+       if (receipt) {
+        dispatch(
+          updateNotifications([
+            ...notifications,
+            {
+              type: "Successful",
+              header: "Transaction Successfull",
+              info: [
+                "Transaction Hash: ",
+                {
+                  text: XPathResult.transactionHash.slice(0, 26) + "...",
+                  link: `https://goerli.etherscan.io/tx/${receipt.transactionHash}`,
+                },
+              ],
+              overlay: true,
+            },
+          ])
+        );
+      }
+      // console.log("Deposit successful!");
       // setMessage("deposit successful !");
+      
+       
+
     } catch (error) {
-      console.error("Error during deposit:", error.message || error);
-      // setMessage(error.message);
-    } finally {
+      console.error();
+      console.log(error.message);
+      //////////Several possible error outcomes //////////////////////
+      const errorMsg =
+        error.message.includes("insufficient funds") && "Insufficient funds";
+      const reject =
+        error.message.includes("user rejected transaction") &&
+        "Transactioin terminated!!!";
+      const noinput =
+        error.message.includes(
+          "resolver or addr is not configured for ENS name"
+        ) && "Input Error!!!";
+      const nonceerror =
+        error.message.includes("nonce has already been used") &&
+        "Nonce already used!!!";
+      const failedtransac =
+        error.message.includes("transaction failed") && "Transaction Failed!!!";
+
+      dispatch(updateLoading({}));
+      dispatch(
+        updateNotifications([
+          ...notifications,
+          {
+            type: "error",
+            info: [errorMsg, reject, noinput, nonceerror, failedtransac],
+            overlay: true,
+          },
+        ])
+      );
+    }finally{
       setLoading(false);
-      // setMessage("");
     }
   };
 
@@ -60,8 +124,7 @@ const CreateStrategy = () => {
         const walletAddress = signers[0];
         setContract(contract);
         setWallet(walletAddress);
-        // console.log(walletAddress);
-        // console.log(contract);
+        
       }
     };
 
