@@ -335,6 +335,11 @@ function Deposit({ setDisplay }) {
   const [coin0Amount, setCoin0Amount] = useState(0);
   const [coin1Amount, setCoin1Amount] = useState(0);
   // const [success, setSuccess] = useState("");
+
+  // condition to display approve UNI and SOL and DEPOSIT
+  const [uniapproved, setUniApproved] = useState(false);
+  const [solapproved, setSolApproved] = useState(false);
+
   const handleCoin0 = (e) => {
     setCoin0Amount(e.target.value);
   };
@@ -370,7 +375,7 @@ function Deposit({ setDisplay }) {
           type: "loading",
           header: "LOADING!!!",
           info: ["Transaction pending..."],
-          overlay: true,
+          overlay: false,
         })
       );
       if (coin0Amount === null || coin0Amount === undefined) {
@@ -395,8 +400,28 @@ function Deposit({ setDisplay }) {
           ethers.constants.MaxUint256
         );
         console.log("Token 1 approval pending ..");
-        await approveTx1.wait();
+        const token1 = await approveTx1.wait();
+        if (token1) setUniApproved(true);
         console.log("Token 1  approved.");
+        if (token1) {
+          dispatch(
+            updateNotifications([
+              ...notifications,
+              {
+                type: "successful",
+                header: "UNI Token Approved",
+                info: [
+                  "Transaction Hash: ",
+                  {
+                    text: "View Here",
+                    link: `https://goerli.etherscan.io/tx/${token1.transactionHash}`,
+                  },
+                ],
+                overlay: true,
+              },
+            ])
+          );
+        }
       } else {
         console.log("Token 1 already approved.");
       }
@@ -411,8 +436,28 @@ function Deposit({ setDisplay }) {
           ethers.constants.MaxUint256
         );
         console.log("Token 2 approval pending ..");
-        await approveTx2.wait();
+        const token2 = await approveTx2.wait();
+        if (token2) setSolApproved(true);
         console.log("Token 2  approved.");
+        if (token2) {
+          dispatch(
+            updateNotifications([
+              ...notifications,
+              {
+                type: "successful",
+                header: "SOL Token Approved",
+                info: [
+                  "Transaction Hash: ",
+                  {
+                    text: "View Here",
+                    link: `https://goerli.etherscan.io/tx/${token2.transactionHash}`,
+                  },
+                ],
+                overlay: true,
+              },
+            ])
+          );
+        }
       } else {
         console.log("Token 2 already approved.");
       }
@@ -433,12 +478,12 @@ function Deposit({ setDisplay }) {
           updateNotifications([
             ...notifications,
             {
-              type: "Successful",
-              header: "Transaction Successfull",
+              type: "successful",
+              header: "Deposit Successfull",
               info: [
                 "Transaction Hash: ",
                 {
-                  text: XPathResult.transactionHash.slice(0, 26) + "...",
+                  text: "View Here",
                   link: `https://goerli.etherscan.io/tx/${receipt.transactionHash}`,
                 },
               ],
@@ -457,13 +502,16 @@ function Deposit({ setDisplay }) {
         "Transactioin terminated!!!";
       const noinput =
         error.message.includes("value must be a string") && "Input Error!!!";
+      const failed =
+        error.message.includes("transaction failed") && "Transaction Failed!!!";
       dispatch(updateLoading({}));
       dispatch(
         updateNotifications([
           ...notifications,
           {
             type: "error",
-            info: [errorMsg, reject, noinput],
+            header: "Deposit Failed!!!",
+            info: [errorMsg, reject, noinput, failed],
             overlay: true,
           },
         ])
@@ -537,12 +585,28 @@ function Deposit({ setDisplay }) {
               <div>-</div>
             </div>
           </div>
-          <button
-            className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full"
-            onClick={handleDeposit}
-          >
-            DEPOSIT
-          </button>
+
+          {/* when UNI is not approved */}
+          {!uniapproved && (
+            <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full">
+              Approve UNI
+            </button>
+          )}
+          {/* when UNI is approved but SOL is not */}
+          {uniapproved && !solapproved && (
+            <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full">
+              Approve SOL
+            </button>
+          )}
+          {/* when UNI and SOL are approved */}
+          {uniapproved && solapproved && (
+            <button
+              className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full"
+              onClick={handleDeposit}
+            >
+              DEPOSIT
+            </button>
+          )}
         </div>
       </div>
     </>

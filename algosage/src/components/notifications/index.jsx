@@ -48,7 +48,7 @@ export default function Notifications() {
                 onClick={() => {
                   close(index);
                 }}
-                className="my-auto"
+                className="absolute rounded-bl-lg top-0 right-0 bg-light/20 p-3 hover:bg-light/40 flex"
               >
                 {notification.type !== "loading" && <AiOutlineClose />}
               </button>
@@ -58,7 +58,7 @@ export default function Notifications() {
               onClick={() => {
                 close(index);
               }}
-              className="absolute top-0 right-0 p-2 flex"
+              className="absolute rounded-bl-lg top-0 right-0 bg-light/20 p-3 hover:bg-light/40 flex"
             >
               {notification.type !== "loading" && <AiOutlineClose />}
             </button>

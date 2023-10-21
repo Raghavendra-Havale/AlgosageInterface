@@ -86,17 +86,21 @@ const Dashboard = () => {
                 <td className="px-5 py-3 pr-8 text-sm text-white">
                   <Link to={"/vault"}>
                     <div className="flex items-center gap-3">
-                      <div className="flex items-center shrink-0">
+                      <div className="flex items-center gap-1 shrink-0">
                         <img
                           src="https://cryptologos.cc/logos/uniswap-uni-logo.svg?v=026"
                           alt="uni"
-                          className="z-0 -mr-1.5"
+                          width={24}
+                          height={24}
+                          className="z-0"
                           decoding="async"
                         />
                         <img
                           src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=026"
                           alt="sol"
-                          className="z-0 -mr-1.5 "
+                          width={24}
+                          height={24}
+                          className="z-0"
                           decoding="async"
                         />
                       </div>
@@ -117,7 +121,7 @@ const Dashboard = () => {
                 <td className="px-5 py-3 pr-8 text-sm text-white">
                   <Link to={"/vault"}>
                     <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                      Manual
+                      Automated
                     </span>
                   </Link>
                 </td>

@@ -31,15 +31,14 @@ const CreateStrategy = () => {
     const parsedFeeType = parseInt(feeType, 10);
 
     try {
-
       dispatch(
         updateLoading({
           type: "loading",
-          header: "LOADING!!!",
+          header: "please wait, LOADING...",
           info: ["Transaction pending..."],
-          overlay: true,
+          overlay: false,
         })
-       );
+      );
 
       const tx = await contract.launchVault(
         poolAddress,
@@ -53,18 +52,18 @@ const CreateStrategy = () => {
       const receipt = await tx.wait();
       console.log("vault created successfuly !");
       dispatch(updateLoading({}));
-       console.log(receipt);
-       if (receipt) {
+      console.log(receipt);
+      if (receipt) {
         dispatch(
           updateNotifications([
             ...notifications,
             {
-              type: "Successful",
-              header: "Transaction Successfull",
+              type: "successful",
+              header: "Transaction Successfull👍",
               info: [
                 "Transaction Hash: ",
                 {
-                  text: XPathResult.transactionHash.slice(0, 26) + "...",
+                  text: "View Here",
                   link: `https://goerli.etherscan.io/tx/${receipt.transactionHash}`,
                 },
               ],
@@ -75,9 +74,6 @@ const CreateStrategy = () => {
       }
       // console.log("Deposit successful!");
       // setMessage("deposit successful !");
-      
-       
-
     } catch (error) {
       console.error();
       console.log(error.message);
@@ -108,7 +104,7 @@ const CreateStrategy = () => {
           },
         ])
       );
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -124,12 +120,10 @@ const CreateStrategy = () => {
         const walletAddress = signers[0];
         setContract(contract);
         setWallet(walletAddress);
-        
       }
     };
 
     initialize();
-
   }, []);
 
   return (
@@ -260,16 +254,12 @@ const CreateStrategy = () => {
 
             {wallet !== "" && (
               <button
-                className={`font-semibold flex items-center gap-x-2 justify-center  text-black/100  px-3 py-5 rounded-lg w-1/2 col-span-full mx-auto text-xl  ${
-                  loading
-                    ? "bg-yellow/50 disabled:cursor-not-allowed hover:bg-yellow/50"
-                    : "bg-light hover:bg-white/40 cursor-pointer"
-                }`}
+                className="font-semibold flex items-center gap-x-2 justify-center  text-black/100  px-3 py-5 rounded-lg w-1/2 col-span-full mx-auto text-xl  bg-light hover:bg-white/40 cursor-pointer"
                 onClick={handleClick}
                 type="submit"
                 disabled={loading ? true : false}
               >
-                {loading ? "Loading..." : "Create Strategy"}
+                Create Strategy
               </button>
             )}
           </form>
