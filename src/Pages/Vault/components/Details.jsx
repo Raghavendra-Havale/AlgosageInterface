@@ -482,8 +482,8 @@ const amountToken0 = ethers.utils.parseEther(coin0Amount);
 
 if (allowanceToken0.lt(amountToken0)) {
   const approveTx1 = await UNIcontract.approve(
-    address,
-    ethers.constants.MaxUint256
+    address,amountToken0
+    // ethers.constants.MaxUint256
   );
   console.log("Token 1 approval pending ..");
   dispatch(
@@ -492,7 +492,7 @@ if (allowanceToken0.lt(amountToken0)) {
       {
         type: "loading",
         header: "Approving Token 0",
-        info: [],
+        info: ["Transaction pending.."],
         overlay: false,
       },
     ])
@@ -564,8 +564,8 @@ if (allowanceToken0.lt(amountToken0)) {
   
         if (allowanceToken1.lt(amountToken1)) {
           const approveTx2 = await SOLcontract.approve(
-            address,
-            ethers.constants.MaxUint256
+            address,amountToken1
+            // ethers.constants.MaxUint256
           );
           console.log("Token 2 approval pending ..");
           dispatch(
@@ -574,7 +574,7 @@ if (allowanceToken0.lt(amountToken0)) {
               {
                 type: "loading",
                 header: "Approving Token 1",
-                info: [],
+                info: ["Transaction pending.."],
                 overlay: false,
               },
             ])
