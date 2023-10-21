@@ -34,7 +34,7 @@ const CreateStrategy = () => {
       dispatch(
         updateLoading({
           type: "loading",
-          header: "please wait, LOADING...",
+          header: "Creating New Vault",
           info: ["Transaction pending..."],
           overlay: false,
         })
