@@ -361,19 +361,170 @@ function Deposit({ setDisplay }) {
         setUNIcontract(UNIContract);
         setSOLcontract(SOLContract);
         setContract(contract);
-
       }
     };
     initialize();
   }, []);
 
+  const handleUNI = async () => {
+    if (coin0Amount === null || coin0Amount === undefined || coin0Amount == 0) {
+      console.log("token 1 amount is not valid.");
+      dispatch(
+        updateNotifications([
+          ...notifications,
+          {
+            type: "error",
+            header: "ERROR",
+            info: ["Invalid UNI amount!!!"],
+            overlay: true,
+          },
+        ])
+      );
+      return;
+    }
 
+    // Check and approve allowance for Token 0 (UNI)
+    const allowanceToken0 = await UNIcontract.allowance(user, address);
+    console.log("current allowance of Token1:", allowanceToken0.toString());
 
+    const amountToken0 = ethers.utils.parseEther(coin0Amount);
 
-        
-  
+    if (allowanceToken0.lt(amountToken0)) {
+      const approveTx1 = await UNIcontract.approve(
+        address,
+        amountToken0
+        // ethers.constants.MaxUint256
+      );
+      console.log("Token 1 approval pending ..");
+      dispatch(
+        updateNotifications([
+          ...notifications,
+          {
+            type: "loading",
+            header: "Approving UNI Token",
+            info: ["Transaction pending.."],
+            overlay: true,
+          },
+        ])
+      );
+      const token1 = await approveTx1.wait();
+      if (token1) setUniApproved(true);
+      console.log("Token 1  approved.");
+      if (token1) {
+        dispatch(
+          updateNotifications([
+            ...notifications,
+            {
+              type: "successful",
+              header: "UNI Token Approved",
+              info: [
+                "Transaction Hash: ",
+                {
+                  text: "View Here",
+                  link: `https://goerli.etherscan.io/tx/${token1.transactionHash}`,
+                },
+              ],
+              overlay: true,
+            },
+          ])
+        );
+      }
+    } else {
+      console.log("Token 1 already approved.");
+      dispatch(
+        updateNotifications([
+          ...notifications,
+          {
+            type: "successful",
+            header: "UNI token is already approved",
+            info: [],
+            overlay: true,
+          },
+        ])
+      );
+      setUniApproved(true);
+    }
+  };
 
+  const handleSOL = async () => {
+    if (coin1Amount === null || coin1Amount === undefined || coin1Amount == 0) {
+      console.log("token 2 amount is not valid.");
+      dispatch(
+        updateNotifications([
+          ...notifications,
+          {
+            type: "error",
+            header: "ERROR",
+            info: ["Invalid SOL amount!!!"],
+            overlay: true,
+          },
+        ])
+      );
+      return;
+    }
 
+    // Check and approve allowance for Token 1 (SOL)
+    const allowanceToken1 = await SOLcontract.allowance(user, address);
+    console.log("current allowance of token 2:", allowanceToken1.toString());
+
+    const amountToken1 = ethers.utils.parseEther(coin1Amount);
+
+    if (allowanceToken1.lt(amountToken1)) {
+      const approveTx2 = await SOLcontract.approve(
+        address,
+        amountToken1
+        // ethers.constants.MaxUint256
+      );
+      console.log("Token 2 approval pending ..");
+      dispatch(
+        updateNotifications([
+          ...notifications,
+          {
+            type: "loading",
+            header: "Approving SOL Token",
+            info: ["Transaction pending.."],
+            overlay: true,
+          },
+        ])
+      );
+      const token2 = await approveTx2.wait();
+      if (token2) setSolApproved(true);
+      console.log("Token 2  approved.");
+      if (token2) {
+        dispatch(
+          updateNotifications([
+            ...notifications,
+            {
+              type: "successful",
+              header: "SOL Token Approved",
+              info: [
+                "Transaction Hash: ",
+                {
+                  text: "View Here",
+                  link: `https://goerli.etherscan.io/tx/${token2.transactionHash}`,
+                },
+              ],
+              overlay: true,
+            },
+          ])
+        );
+      }
+    } else {
+      console.log("Token 2 already approved.");
+      dispatch(
+        updateNotifications([
+          ...notifications,
+          {
+            type: "successful",
+            header: "token 2 is already approved",
+            info: [],
+            overlay: false,
+          },
+        ])
+      );
+      setSolApproved(true);
+    }
+  };
 
   const handleDeposit = async () => {
     console.log("current wallet:", user);
@@ -382,9 +533,9 @@ function Deposit({ setDisplay }) {
       dispatch(
         updateLoading({
           type: "loading",
-          header: "LOADING!!!",
+          header: "Processing Deposit",
           info: ["Transaction pending..."],
-          overlay: false,
+          overlay: true,
         })
       );
       if (coin0Amount === null || coin0Amount === undefined) {
@@ -399,7 +550,6 @@ function Deposit({ setDisplay }) {
       const amountToken0 = ethers.utils.parseEther(coin0Amount);
       const amountToken1 = ethers.utils.parseEther(coin1Amount);
 
-      
       //deposit
       console.log("proceeding deposit ..");
       const tx = await contract.deposit(amountToken0, amountToken1, {
@@ -455,174 +605,7 @@ function Deposit({ setDisplay }) {
         ])
       );
     }
-
   };
-
- 
- 
-  const handleUNI=async()=>{ 
-
-    if (coin0Amount === null || coin0Amount === undefined|| coin0Amount==0) {
-      console.log("token 1 amount is not valid.");
-      return;
-    }
-
-    if (coin1Amount === null || coin1Amount === undefined|| coin1Amount==0) {
-      console.log("token 2 amount is not valid.");
-      return;
-    }
-
-// Check and approve allowance for Token 0 (UNI)
-const allowanceToken0 = await UNIcontract.allowance(user, address);
-console.log("current allowance of Token1:", allowanceToken0.toString());
-
-const amountToken0 = ethers.utils.parseEther(coin0Amount);
-
-
-
-if (allowanceToken0.lt(amountToken0)) {
-  const approveTx1 = await UNIcontract.approve(
-    address,amountToken0
-    // ethers.constants.MaxUint256
-  );
-  console.log("Token 1 approval pending ..");
-  dispatch(
-    updateNotifications([
-      ...notifications,
-      {
-        type: "loading",
-        header: "Approving Token 0",
-        info: ["Transaction pending.."],
-        overlay: false,
-      },
-    ])
-  );
-  const token1 = await approveTx1.wait();
-        if (token1) setUniApproved(true);
-        console.log("Token 1  approved.");
-        if (token1) {
-          dispatch(
-            updateNotifications([
-              ...notifications,
-              {
-                type: "successful",
-                header: "UNI Token Approved",
-                info: [
-                  "Transaction Hash: ",
-                  {
-                    text: "View Here",
-                    link: `https://goerli.etherscan.io/tx/${token1.transactionHash}`,
-                  },
-                ],
-                overlay: true,
-              },
-            ])
-          );
-        }
-  
-  } else {
-  console.log("Token 1 already approved.");
-  dispatch(
-    updateNotifications([
-      ...notifications,
-      {
-        type: "successful",
-        header: "token 1 is already approved",
-        info: [],
-        overlay: false,
-      },
-    ])
-  );
-  setUniApproved(true);
-}
-
-   
-  }
-
-
-
-  const handleSOL=async()=>{ 
-
-    if (coin0Amount === null || coin0Amount === undefined|| coin0Amount==0) {
-      console.log("token 1 amount is not valid.");
-      return;
-    }
-
-    if (coin1Amount === null || coin1Amount === undefined|| coin1Amount==0) {
-      console.log("token 2 amount is not valid.");
-      return;
-    }
-
-
-
-        // Check and approve allowance for Token 1 (SOL)
-        const allowanceToken1 = await SOLcontract.allowance(user, address);
-        console.log("current allowance of token 2:", allowanceToken1.toString());
-
-        
-        const amountToken1 = ethers.utils.parseEther(coin1Amount);
-  
-        if (allowanceToken1.lt(amountToken1)) {
-          const approveTx2 = await SOLcontract.approve(
-            address,amountToken1
-            // ethers.constants.MaxUint256
-          );
-          console.log("Token 2 approval pending ..");
-          dispatch(
-            updateNotifications([
-              ...notifications,
-              {
-                type: "loading",
-                header: "Approving Token 1",
-                info: ["Transaction pending.."],
-                overlay: false,
-              },
-            ])
-          );
-          const token2 = await approveTx2.wait();
-                if (token2) setSolApproved(true);
-                console.log("Token 2  approved.");
-                if (token2) {
-                  dispatch(
-                    updateNotifications([
-                      ...notifications,
-                      {
-                        type: "successful",
-                        header: "SOL Token Approved",
-                        info: [
-                          "Transaction Hash: ",
-                          {
-                            text: "View Here",
-                            link: `https://goerli.etherscan.io/tx/${token2.transactionHash}`,
-                          },
-                        ],
-                        overlay: true,
-                      },
-                    ])
-                  );
-                }
-         
-        } else {
-          console.log("Token 2 already approved.");
-          dispatch(
-            updateNotifications([
-              ...notifications,
-              {
-                type: "successful",
-                header: "token 2 is already approved",
-                info: [],
-                overlay: false,
-              },
-            ])
-          );
-          setSolApproved(true);
-        }
-
-    
-  }
-
-
-
 
   return (
     <>
@@ -694,13 +677,19 @@ if (allowanceToken0.lt(amountToken0)) {
 
           {/* when UNI is not approved */}
           {!uniapproved && (
-            <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full" onClick={handleUNI}>
+            <button
+              className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full"
+              onClick={handleUNI}
+            >
               Approve UNI
             </button>
           )}
           {/* when UNI is approved but SOL is not */}
           {uniapproved && !solapproved && (
-            <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full" onClick={handleSOL}>
+            <button
+              className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full"
+              onClick={handleSOL}
+            >
               Approve SOL
             </button>
           )}
@@ -719,10 +708,10 @@ if (allowanceToken0.lt(amountToken0)) {
   );
 }
 function Withdraw({ setDisplay }) {
-  const [contract, setContract] = useState(null);
-  const [user,setUser] = useState("");
+  // const [contract, setContract] = useState(null);
+  // const [user, setUser] = useState("");
   const [amount, setAmount] = useState(0);
-  const address = "0x5a4bfd10A99a3e562dD8Ba6550BE305e81b372E1"; //contract  address
+  // const address = "0x5a4bfd10A99a3e562dD8Ba6550BE305e81b372E1"; //contract  address
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
@@ -745,27 +734,25 @@ function Withdraw({ setDisplay }) {
   // }, [setUser, setContract]);
 
   const handleWithdraw = async () => {
-  //   // const algoaddress='0xAEaE82345d3B3c6707DAe908863e23879F6ed812';
-  //   //  const userBalance = await algoaddress.balanceOf(user);
-  //   // console.log(userBalance);
-
-  //   try {
-  //     if (contract) {
-  //       const withdrawTx = await contract.withdraw(amount, {
-  //         gasLimit: 270000,
-  //         gasPrice: 20000000000,
-  //       });
-
-  //       await withdrawTx.wait();
-  //       console.log("Withdrawal successful!");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during withdrawal:", error);
-  //     console.log("Transaction hash:", error.transactionHash);
-  //     console.log("Transaction details:", error.transaction);
-  //     console.log("Receipt details:", error.receipt);
-  //   }
-   };
+    //   // const algoaddress='0xAEaE82345d3B3c6707DAe908863e23879F6ed812';
+    //   //  const userBalance = await algoaddress.balanceOf(user);
+    //   // console.log(userBalance);
+    //   try {
+    //     if (contract) {
+    //       const withdrawTx = await contract.withdraw(amount, {
+    //         gasLimit: 270000,
+    //         gasPrice: 20000000000,
+    //       });
+    //       await withdrawTx.wait();
+    //       console.log("Withdrawal successful!");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error during withdrawal:", error);
+    //     console.log("Transaction hash:", error.transactionHash);
+    //     console.log("Transaction details:", error.transaction);
+    //     console.log("Receipt details:", error.receipt);
+    //   }
+  };
 
   return (
     <>

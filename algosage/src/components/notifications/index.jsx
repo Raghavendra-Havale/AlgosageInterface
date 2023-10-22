@@ -89,7 +89,7 @@ export default function Notifications() {
       <div
         className={
           "flex flex-col absolute right-0 bottom-0 gap-2 w-[22rem] rounded-md p-4 z-[500] " +
-          (notifications?.length > 1 && " bg-white/20")
+          (notifications?.length > 1 && " bg-white/10")
         }
       >
         <button

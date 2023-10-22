@@ -32,7 +32,7 @@ const Dashboard = () => {
           </div>
           <div className="hidden grow md:block"></div>
           <button className="bg-light/10 hover:bg-light/30 cursor-pointer flex items-center gap-1.5 px-3 py-2 text-sm outline-none justify-between font-medium select-none h-11 w-45 shrink-0 rounded-lg text-white">
-            <button className="">All Strategies</button>
+            <span className="">All Strategies</span>
             <AiOutlineDown />
           </button>
           <div className="h-11 w-full text-sm md:w-[300px]">

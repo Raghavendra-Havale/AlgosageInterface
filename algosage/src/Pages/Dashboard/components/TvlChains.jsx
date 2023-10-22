@@ -9,17 +9,17 @@ const chains = [
   {
     title: "Goerli",
     img: "https://app.gamma.xyz/_next/static/media/eth.fdd82abb.svg",
-    amount: `$${0.00}M`,
+    amount: `$${0.0}M`,
   },
   {
     title: "Polygon PoS",
     img: "https://app.gamma.xyz/_next/static/media/polygon.a8468c20.svg",
-    amount: `$${0.00}M`,
+    amount: `$${0.0}M`,
   },
   {
     title: "Arbitrum",
     img: "https://app.gamma.xyz/_next/static/media/arbitrum.b084ab24.svg",
-    amount: `$${0.00}K`,
+    amount: `$${0.0}K`,
   },
   // {
   //   title: "Moonbeam",
@@ -35,12 +35,12 @@ const chains = [
 
 function TvlChains() {
   return chains.map((chain) => (
-    <>
-      <Link
-        to="/dashboard"
-        className="flex justify-between items-center bg-light/10 rounded-lg py-3 px-4 gap-12 cursor-default select-none w-[241px] h-[48px] overflow-hidden"
-        key={chain.title}
-      >
+    <Link
+      to="/dashboard"
+      className="flex justify-between items-center bg-light/10 rounded-lg py-3 px-4 gap-12 cursor-default select-none w-[241px] h-[48px] overflow-hidden"
+      key={chain.title}
+    >
+      <>
         <div className="flex items-center gap-2">
           <img alt={`${chain.title} logo`} src={chain?.img} className="" />
           <span className="whitespace-nowrap font-medium text-white">
@@ -48,8 +48,8 @@ function TvlChains() {
           </span>
         </div>
         <div className="font-medium text-white">{chain.amount}</div>
-      </Link>
-    </>
+      </>
+    </Link>
   ));
 }
 
