@@ -71,14 +71,14 @@ export default function NotificationOverlay() {
                 </div>
 
                 <div className="flex justify-between gap-4">
-                  {/* {notification.type !== "loading" && ( */}
-                  <button
-                    onClick={() => close(index)}
-                    className="bg-light/10 hover:bg-light/30 p-2 text-[0.875rem] font-semibold text-orange w-1/3 mx-auto rounded-md"
-                  >
-                    Close
-                  </button>
-                  {/* )} */}
+                  {notification.type !== "loading" && (
+                    <button
+                      onClick={() => close(index)}
+                      className="bg-light/10 hover:bg-light/30 p-2 text-[0.875rem] font-semibold text-orange w-1/3 mx-auto rounded-md"
+                    >
+                      Close
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

@@ -16,6 +16,7 @@ export function InfoSpan({ info, bulletPoint, type }) {
           <Link
             className="text-blue-400 underline flex text-[0.75rem]"
             to={info.link}
+            target="_blank"
           >
             {info.text}
           </Link>
