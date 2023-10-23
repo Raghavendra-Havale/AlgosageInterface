@@ -6,6 +6,39 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateNotifications, updateLoading } from "../../state/slice";
 
+const options = [
+  {
+    value: "option1",
+    label: "Ethereum",
+    image: "../../../ethereum-eth-logo.svg",
+  },
+  {
+    value: "option2",
+    label: "Polygon",
+    image: "../../../polygon-matic-logo.svg",
+  },
+  {
+    value: "option3",
+    label: "Avalanche",
+    image: "../../../avalanche-avax-logo.svg",
+  },
+  {
+    value: "option4",
+    label: "optimism",
+    image: "../../../optimism-ethereum-op-logo.svg",
+  },
+  {
+    value: "option5",
+    label: "BNB Chain",
+    image: "../../../bnb-bnb-logo.svg",
+  },
+  {
+    value: "option6",
+    label: "Goerli - testnet",
+    image: "../../../ethereum-eth-logo.svg",
+  },
+];
+
 const CreateStrategy = () => {
   const dispatch = useDispatch();
   const { notifications } = useSelector((state) => state.app);
@@ -23,6 +56,15 @@ const CreateStrategy = () => {
   const [whiteDeposit, setWhiteDeposit] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  //// choose network state ///
+  const [selectedOption, setSelectedOption] = useState(options[5]);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setDropdownOpen(false);
+  };
+
   const handleClick = async (e) => {
     e.preventDefault();
     console.log("current wallet", wallet);
@@ -36,7 +78,7 @@ const CreateStrategy = () => {
           type: "loading",
           header: "Creating New Vault",
           info: ["Transaction pending..."],
-          overlay: false,
+          overlay: true,
         })
       );
 
@@ -145,14 +187,52 @@ const CreateStrategy = () => {
               <label className="block text-sm text-gray-500 ">
                 Choose Network
               </label>
+              <div
+                className="flex gap-2 items-center py-3 px-3 w-full relative bg-[#29292999] rounded-lg"
+                onClick={() => setDropdownOpen(!isDropdownOpen)}
+              >
+                <img
+                  src={selectedOption.image}
+                  alt={selectedOption.label}
+                  className="w-4 h-auto"
+                />
+                <span>{selectedOption.label}</span>
+
+                {isDropdownOpen && (
+                  <div className="bg-[#292929] rounded-lg absolute top-[100%] left-0 py-2 flex flex-col w-full z-10">
+                    {options.map((option) => (
+                      <div
+                        key={option.value}
+                        className="flex gap-3 hover:bg-light/50 cursor-pointer py-3 px-3"
+                        onClick={() => handleOptionSelect(option)}
+                      >
+                        <img
+                          src={option.image}
+                          alt={option.label}
+                          className="w-4 h-auto"
+                        />
+                        <span>{option.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              {/* 
               <select className="p-3 focus:outline-none rounded-lg w-full text-sm bg-[#29292999]">
-                <option className="bg-light/10">Ethereum</option>
+                <option className="bg-light/10">
+                  <img
+                    src="../../../ethereum-eth-logo.svg"
+                    alt="ethereum logo"
+                    className="w-4 h-auto"
+                  />
+                  Ethereum
+                </option>
                 <option className="bg-light/10">Polygon</option>
                 <option className="bg-light/10">BNB Chain</option>
                 <option className="bg-light/10">Avalanche</option>
                 <option className="bg-light/10">Optimisn</option>
                 <option className="bg-light/10">Goreli - testnet</option>
-              </select>
+              </select> */}
             </div>
             <div>
               <label className="block text-sm text-gray-500">
