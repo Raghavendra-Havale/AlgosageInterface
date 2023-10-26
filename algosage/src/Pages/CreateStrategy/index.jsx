@@ -34,7 +34,7 @@ const options = [
   },
   {
     value: "option6",
-    label: "Goerli - testnet",
+    label: "Goerli",
     image: "../../../ethereum-eth-logo.svg",
   },
 ];
@@ -168,27 +168,32 @@ const CreateStrategy = () => {
     initialize();
   }, []);
 
+  useEffect(() => {
+    const watchWallet = () => {
+      if (wallet !== "") return true;
+    };
+    watchWallet();
+  }, [wallet]);
+
   return (
     <>
       <ProtocolStats />
       <section className="mx-auto max-w-6xl my-6 w-full px-4 xl:px-0 ">
-        <div className="flex-col md:flex-row p-4 rounded-lg bg-secondary">
+        <div className="flex-col md:flex-row p-3 md:p-4 rounded-lg bg-secondary">
           <div className="">
-            <h1 className="text-2xl font-semibold   pb-1">
-              Create New Strategy
-            </h1>
+            <h1 className="text-2xl font-semibold pb-1">Create New Strategy</h1>
             <p className="text-sm pb-8 text-light">
               Create Uniswap V3 strategies for <br /> managing your personal
               funds or public funds with a <br /> revenue-sharing model.
             </p>
           </div>
           <form className="grid grid-cols-2 grid-rows-4 md:grid-cols-3 md:grid-rows-2 gap-4 mt-4">
-            <div>
+            <div className="flex flex-col justify-between">
               <label className="block text-sm text-gray-500 ">
                 Choose Network
               </label>
               <div
-                className="flex gap-2 items-center py-3 px-3 w-full relative bg-[#29292999] rounded-lg"
+                className="flex gap-2 items-center py-[9px] px-[9px] w-full relative bg-[#29292999] rounded-lg mt-auto mb-0"
                 onClick={() => setDropdownOpen(!isDropdownOpen)}
               >
                 <img
@@ -321,9 +326,9 @@ const CreateStrategy = () => {
               </label>
             </div>
 
-            {wallet === "" && (
+            {!wallet && (
               <button
-                className="font-semibold flex items-center gap-x-2 justify-center bg-error/30 text-white hover:bg-error/40 px-3 py-5 rounded-lg w-1/2 col-span-full mx-auto text-xl disabled:cursor-not-allowed"
+                className="font-semibold flex items-center gap-x-2 justify-center bg-error/30 text-white hover:bg-error/40 px-3 py-5 rounded-lg w-full lg:w-1/2 col-span-full mx-auto text-xl disabled:cursor-not-allowed"
                 onClick={handleClick}
                 type="submit"
                 disabled
@@ -332,9 +337,9 @@ const CreateStrategy = () => {
               </button>
             )}
 
-            {wallet !== "" && (
+            {wallet && (
               <button
-                className="font-semibold flex items-center gap-x-2 justify-center  text-black/100  px-3 py-5 rounded-lg w-1/2 col-span-full mx-auto text-xl  bg-light hover:bg-white/40 cursor-pointer"
+                className="font-semibold flex items-center gap-x-2 justify-center  text-black/100  px-3 py-5 rounded-lg col-span-full mx-auto text-xl  bg-light hover:bg-white/40 cursor-pointer w-full lg:w-1/2"
                 onClick={handleClick}
                 type="submit"
                 disabled={loading ? true : false}
