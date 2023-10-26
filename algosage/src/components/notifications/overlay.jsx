@@ -37,7 +37,7 @@ export default function NotificationOverlay() {
                 " flex absolute backdrop-blur-sm backdrop-brightness-50 w-screen h-screen shadow z-[250]"
               }
             >
-              <div className="flex flex-col self-center mx-auto mt-[-7rem] rounded-md bg-[#131114] gap-4 p-6">
+              <div className="flex flex-col self-center mx-auto mt-[-7rem] rounded-md bg-[#131114] gap-2 lg:gap-4 px-2 py-5 lg:px-6">
                 <div className="mx-auto flex font-semibold">
                   {notification?.header}
                 </div>
