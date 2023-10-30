@@ -39,7 +39,7 @@ function Footer() {
         <AiOutlineMail />
       </a>
       <a
-        href="https://app.algosage.io/"
+        href="https://docs.algosage.io/"
         className="text-white/80 hover:text-white"
         target="_blank"
         rel="noopener noreferrer"
