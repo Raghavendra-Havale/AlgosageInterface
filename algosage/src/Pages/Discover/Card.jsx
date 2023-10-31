@@ -1,5 +1,7 @@
 import { Cards } from "./Cards";
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+
 
 const cards = [
   // {
@@ -57,6 +59,24 @@ const cards = [
 ];
 
 const Card = () => {
+
+  const [uniquePoolCount, setUniquePoolCount] = useState(0);
+
+  useEffect(() => {
+    // Fetching data from the provided API
+    fetch("https://algosage-backend-as1k.onrender.com/api/data")
+      .then((response) => response.json())
+      .then((data) => {
+        // Extracting unique pool addresses
+        const uniquePools = [...new Set(data.map(item => item.pool_address))];
+        // Setting the count of unique pool addresses
+        setUniquePoolCount(uniquePools.length);
+      })
+      .catch((error) => {
+        console.error('Failed fetching API data:', error);
+      });
+  }, []); // Effect will run once after the component mounts
+
   return (
     <>
       <h1 className="text-xl font-normal text-white/90 pb-3">
@@ -82,7 +102,7 @@ const Card = () => {
               </div>
               <div className="flex flex-col gap-1 border-r border-r-gray-500 pl-3 last:border-none">
                 <div className="text-light text-sm">Total Pairs</div>
-                <div className="flex items-center text-xl">--</div>
+                <div className="flex items-center text-xl">{uniquePoolCount}</div>
               </div>
             </div>
             <Link to="/dashboard">
