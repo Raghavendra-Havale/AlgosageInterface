@@ -6,6 +6,7 @@ const chains = [
   //   img: "https://app.gamma.xyz/_next/static/media/bnb.5470df19.svg",
   //   amount: `$${23.17}M`,
   // },
+  
   {
     title: "Goerli",
     img: "https://app.gamma.xyz/_next/static/media/eth.fdd82abb.svg",

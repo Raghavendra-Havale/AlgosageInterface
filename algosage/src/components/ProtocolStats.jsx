@@ -1,5 +1,20 @@
+import react, {useState, useEffect} from "react";
+
 function ProtocolStats() {
-  const initial = () => {
+
+  let [vaultCount, setVaultCount] = useState(0)
+  // let [fulldata, setFulldata] = useState([])
+
+  useEffect(()=>{
+    fetch("https://algosage-backend-as1k.onrender.com/api/data")
+    .then((response)=> response.json())
+    .then((data)=>{
+      setVaultCount(data.length)
+      // setFulldata(data)
+    })
+  })
+
+
     return (
       <>
         <div className="h-[56px] sm:hidden"></div>
@@ -30,7 +45,8 @@ function ProtocolStats() {
                       Total Vaults Launched
                     </div>
                     <div className="flex items-center gap-2 text-xl text-white">
-                      -- --
+                      {vaultCount}
+                      {/* {console.log("hello",fulldata)} */}
                     </div>
                   </div>
                 </div>
@@ -40,9 +56,6 @@ function ProtocolStats() {
         </div>
       </>
     );
-  };
-
-  return initial();
-}
+  }
 
 export default ProtocolStats;
