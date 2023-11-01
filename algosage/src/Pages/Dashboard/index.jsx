@@ -298,7 +298,7 @@ const Dashboard = () => {
                           </div>
                           <div className="flex gap-x-2">
                             <span className="rounded-xl bg-light/50 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap">
-                              0.00%
+                              {(item.fee_tier)/10000}%
                             </span>
                           </div>
                         </div>
