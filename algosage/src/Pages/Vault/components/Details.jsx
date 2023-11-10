@@ -266,6 +266,44 @@ function Details() {
 export default Details;
 
 function YourShare({ setDisplay }) {
+
+  const algoaddress='0x8523c71015a6E7B6eb7D67590a6abA6064e094f0';
+  const[bal,setBal]=useState(0);
+  const [user, setUser] = useState("");
+  const [algoContract,setAlgoContract]=useState(null);
+
+
+  useEffect(() => {
+    const initialize = async () => {
+      if (window.ethereum) {
+        await window.ethereum.enable();
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const algoShareContract=new ethers.Contract(algoaddress,algoABI,signer)
+        const signers = await provider.listAccounts();
+        const walletAddress = signers[0];
+        setUser(walletAddress);
+        setAlgoContract(algoShareContract);
+      }
+    };
+
+    initialize();
+    
+  },[] );
+
+  useEffect(()=>{
+   balanceUpdate();
+   });
+
+  const balanceUpdate=async()=>{
+    const userBalance = await algoContract.getBalance(user);
+    const userBalanceWei = ethers.BigNumber.from(userBalance); 
+    const userBalanceEth = ethers.utils.formatUnits(userBalanceWei, 'ether');
+    //console.log('User Balance in Ether:', userBalanceEth);
+    setBal(userBalanceEth);
+  };
+
+
   return (
     <>
       <div className="bg-light/40 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
@@ -278,7 +316,7 @@ function YourShare({ setDisplay }) {
               Your Balance
             </div>
             <div className="pb-2 text-sm text-white">-</div>
-            <div className="text-xs text-light/80">0.00 LP</div>
+            <div className="text-xs text-light/80">{bal}  LP</div>
           </div>
         </div>
         <div className="p-4">
@@ -716,7 +754,7 @@ function Withdraw({ setDisplay }) {
   const address = "0xD4f83F4D87AC0713974851b28865a7f5C8225D44"; //contract  address
   const algoaddress='0x8523c71015a6E7B6eb7D67590a6abA6064e094f0';
 
-const[bal,setBal]=useState(0);
+  const[bal,setBal]=useState(0);
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
