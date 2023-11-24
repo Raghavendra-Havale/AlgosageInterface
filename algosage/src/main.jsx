@@ -4,6 +4,10 @@ import { RouterProvider } from "react-router-dom";
 import { store } from "./state/store";
 import { Provider } from "react-redux";
 import router from "./routing/router";
+import { useState, useEffect } from "react";
+import { useContractRead,useContractWrite, usePrepareContractWrite ,useWaitForTransaction, useAccount ,useWalletClient} from "wagmi";
+import ASVTabi from "./ASVT_ABI.json";
+
 
 import merge from "lodash.merge";
 
@@ -55,10 +59,36 @@ const wagmiConfig = createConfig({
   publicClient,
 });
 
+
+function App() {
+useContractRead({})
+
+const { data: walletClient } = useWalletClient();
+
+const {data : readData } = useContractRead({
+  address: "0x8523c71015a6E7B6eb7D67590a6abA6064e094f0",
+  abi: ASVTabi,
+  functionName: "getBalance",
+  args: [walletClient.account],
+})
+
+console.log(walletClient,readData);
+console.log("hiiiiiiiiiii")
+}
+
+
+
+
+
+
+
+
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <>
       <WagmiConfig config={wagmiConfig}>
+      
         <RainbowKitProvider theme={myTheme} chains={chains}>
           <RouterProvider router={router} />
         </RainbowKitProvider>
@@ -66,3 +96,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </>
   </Provider>
 );
+
+export default App;

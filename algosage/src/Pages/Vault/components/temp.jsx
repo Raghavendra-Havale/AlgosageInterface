@@ -12,10 +12,11 @@ import UNIabi from "./UNI.json";
 import SOLabi from "./SOL.json";
 import { useSelector, useDispatch } from "react-redux";
 import { updateNotifications, updateLoading } from "../../../state/slice";
-import { useContractRead,useContractWrite, usePrepareContractWrite ,useWaitForTransaction, useAccount,} from "wagmi";
+import { useContractRead,useContractWrite, usePrepareContractWrite ,useWaitForTransaction, useAccount} from "wagmi";
 import ASVTabi from './ASVT_ABI.json';
 import { useBalance } from 'wagmi'
 import { parseEther } from "viem";
+
 function Details() {
   const [open1, setOpen1] = useState(true);
   const [open2, setOpen2] = useState(true);
@@ -23,9 +24,6 @@ function Details() {
   const [display, setDisplay] = useState("your share");
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
-  
-
-
 
   function handleOpen1() {
     setOpen1((open) => !open);
@@ -273,419 +271,225 @@ export default Details;
 function YourShare({ setDisplay }) {
   
   
-  const { address} = useAccount();
+    const { address} = useAccount();
+    
+    const {data : readData } =  useContractRead({
+      address: "0x8523c71015a6E7B6eb7D67590a6abA6064e094f0",
+      abi: ASVTabi,
+      functionName: "getBalance",
+      args: [address],
+    })
+    const balInETH=Number(readData)/10**18;
+    const bal=balInETH.toFixed(6);
   
-  const {data : readData } =  useContractRead({
-    address: "0x8523c71015a6E7B6eb7D67590a6abA6064e094f0",
-    abi: ASVTabi,
-    functionName: "getBalance",
-    args: [address],
-    watch: true,
-  })
-  const balInETH=Number(readData)/10**18;
-  const bal=balInETH.toFixed(6);
-
-return (
-  <>
-    <div className="bg-light/40 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
-      Your Share
-    </div>
-    <div className="bg-light/20 font-normal text-xs">
-      <div className="grid grid-cols-2 border-b border-b-black">
-        <div className="p-4 border-r last:border-none border-r-black-95">
-          <div className="pb-1 text-xs font-normal text-white-80">
-            Your Balance
+  return (
+    <>
+      <div className="bg-light/40 p-4 text-white-100 font-semibold text-sm rounded-t-lg select-none flex justify-between items-center">
+        Your Share
+      </div>
+      <div className="bg-light/20 font-normal text-xs">
+        <div className="grid grid-cols-2 border-b border-b-black">
+          <div className="p-4 border-r last:border-none border-r-black-95">
+            <div className="pb-1 text-xs font-normal text-white-80">
+              Your Balance
+            </div>
+            <div className="pb-2 text-sm text-white">-</div>
+            <div className="text-xs text-light/80">{bal} LP</div>
           </div>
-          <div className="pb-2 text-sm text-white">-</div>
-          <div className="text-xs text-light/80">{bal} LP</div>
         </div>
-      </div>
-      <div className="p-4">
-        <div className="flex gap-x-3 pb-4">
-          <span className="rounded-xl bg-light/60 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap hover:bg-light/40">
-            <a
-              href="http://app.uniswap.org"
-              className="flex flex-row items-center gap-x-2"
-            >
-              Get UNI token
-            </a>
-          </span>
-          <span className="rounded-xl bg-light/60 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap hover:bg-light/40">
-            <a
-              href="http://app.uniswap.org"
-              className="flex flex-row items-center gap-x-2"
-            >
-              Get SOL token
-            </a>
-          </span>
-        </div>
+        <div className="p-4">
+          <div className="flex gap-x-3 pb-4">
+            <span className="rounded-xl bg-light/60 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap hover:bg-light/40">
+              <a
+                href="http://app.uniswap.org"
+                className="flex flex-row items-center gap-x-2"
+              >
+                Get UNI token
+              </a>
+            </span>
+            <span className="rounded-xl bg-light/60 px-3 py-1 text-center text-xs text-[#c9c9c9] whitespace-nowrap hover:bg-light/40">
+              <a
+                href="http://app.uniswap.org"
+                className="flex flex-row items-center gap-x-2"
+              >
+                Get SOL token
+              </a>
+            </span>
+          </div>
 
-        <div className="flex gap-x-1.5">
-          <button
-            className="font-medium flex items-center gap-x-2 justify-center bg-white text-black enabled:hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full flex-1"
-            onClick={() => setDisplay("deposit")}
-          >
-            Deposit
-          </button>
-          <button
-            className="font-medium flex items-center gap-x-2 justify-center bg-light/40 text-white-100 enabled:hover:bg-light/30 px-3 py-[11px] text-sm rounded-lg w-full flex-1"
-            onClick={() => setDisplay("withdraw")}
-          >
-            Withdraw
-          </button>
+          <div className="flex gap-x-1.5">
+            <button
+              className="font-medium flex items-center gap-x-2 justify-center bg-white text-black enabled:hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full flex-1"
+              onClick={() => setDisplay("deposit")}
+            >
+              Deposit
+            </button>
+            <button
+              className="font-medium flex items-center gap-x-2 justify-center bg-light/40 text-white-100 enabled:hover:bg-light/30 px-3 py-[11px] text-sm rounded-lg w-full flex-1"
+              onClick={() => setDisplay("withdraw")}
+            >
+              Withdraw
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </>
-);
+    </>
+  );
 }
 
 function Deposit({ setDisplay }) {
+
   const dispatch = useDispatch();
+
   const { notifications } = useSelector((state) => state.app);
 
-  // const address = "0x5a4bfd10A99a3e562dD8Ba6550BE305e81b372E1"; //contract  address
-  // const UNIaddress = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
-  // const SOLaddress = "0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692";
-  // const [contract, setContract] = useState(null);
-  // // const [metamask, setMetamask] = useState(false);
-  // const [user, setUser] = useState("");
-  // const [UNIcontract, setUNIcontract] = useState(null);
-  // const [SOLcontract, setSOLcontract] = useState(null);
-  const [uniapproved, setUniApproved] = useState(false);
-  const [solapproved, setSolApproved] = useState(false);
   const coin0Amount = useRef('');
   const coin1Amount = useRef('');
-  // const [balance1, setBalance1] = useState(0);
-  // const [balance2, setBalance2] = useState(0);
+  
+  const [balance1, setBalance1] = useState(0);
+  const [balance2, setBalance2] = useState(0);
+
+  const [coin0Allowance, setCoin0Allowance] = useState(0);
+  const [coin1Allowance, setCoin1Allowance] = useState(0);
+
+
+  // condition to display approve UNI and SOL and DEPOSIT
+  const [uniapproved, setUniApproved] = useState(false);
+  const [solapproved, setSolApproved] = useState(false);
+
   const { address } = useAccount();
- 
-
-  // const handleCoin0 = (e) => {
-  //   setCoin0Amount(e.target.value);
-  // };
-  // const handleCoin1 = (e) => {
-  //   setCoin1Amount(e.target.value);
-  // };
-  // useEffect(() => {
-  //   const initialize = async () => {
-  //     if (window.ethereum) {
-  //       await window.ethereum.enable();
-  //       const provider = new ethers.providers.Web3Provider(window.ethereum);
-  //       const signer = provider.getSigner();
-  //       const contract = new ethers.Contract(address, ABI, signer);
-  //       const UNIContract = new ethers.Contract(UNIaddress, UNIabi, signer);
-  //       const SOLContract = new ethers.Contract(SOLaddress, SOLabi, signer);
-  //       const signers = await provider.listAccounts();
-  //       const walletAddress = signers[0];
-  //       setUser(walletAddress);
-  //       setUNIcontract(UNIContract);
-  //       setSOLcontract(SOLContract);
-  //       setContract(contract);
-  //     }
-  //   };
-  //   initialize();
-  // }, []);
+  // const[call,setCall]=useState(false);
 
 
 
-const handleInputChange1 = (event) => {
+
+
+
+  const handleInputChange1 = (event) => {
     // Update the ref variable with the input value
     coin0Amount.current = event.target.value;
   };
+  
 const handleInputChange2 = (event) => {
   // Update the ref variable with the input value
   coin1Amount.current = event.target.value;
 };
 
 
+ async function test() {
+    try{const { data: bal1} =  await useBalance({
+    address: address,
+    token: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+    chainId:5
+  });
+  setBalance1(Number(bal1.formatted).toFixed(5));
+ }catch(e){
+    console.log(e);
+  }
 
 
-const { data:uni} =   useBalance({
-  address: address,
-  token: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
-  chainId:5,
-  watch: true,
-});
+  }
+test();
 
-const { data:sol} =   useBalance({
+async function test2() {
+  try{
+  const { data: bal2} =  await useBalance({
   address: address,
   token: "0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692",
-  chainId:5,
-  watch: true,
+  chainId:5
 });
+setBalance2(Number(bal2.formatted).toFixed(5));
+}catch(e){
+  console.log(e);
+}
 
 
+}
+test2();
 
-
-var {data : allowance1 } =  useContractRead({
-  address: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
-  abi: UNIabi,
-  functionName: "allowance",
-  args: [address,'0xD4f83F4D87AC0713974851b28865a7f5C8225D44'],
-  watch: true,
-  // onSuccess(data) {
-  // console.log('Success', data);
-  // },
+  
+    var {data : allowance1 } =  useContractRead({
+      address: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+      abi: UNIabi,
+      functionName: "allowance",
+      args: [address,'0xD4f83F4D87AC0713974851b28865a7f5C8225D44'],
+      
+      
+    });
+  
+   
+  var {data : allowance2 } =  useContractRead({
+    address: "0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692",
+    abi: SOLabi,
+    functionName: "allowance",
+    args: [address,'0xD4f83F4D87AC0713974851b28865a7f5C8225D44'],
   });
 
-allowance1=Number(allowance1.toString());
-// console.log(allowance1);
+  
 
-var {data : allowance2 } =  useContractRead({
-address: "0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692",
-abi: SOLabi,
-functionName: "allowance",
-args: [address,'0xD4f83F4D87AC0713974851b28865a7f5C8225D44'],
-watch: true,
-});
+ 
 
-allowance2=Number(allowance2.toString());
-// console.log(allowance2);
-
-
-
-
-
-const { config:approval1} =   usePrepareContractWrite({
+ const { config} =   usePrepareContractWrite({
   address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
   abi: UNIabi,
   functionName: 'approve',
-  // enabled:false,
-  args:['0xD4f83F4D87AC0713974851b28865a7f5C8225D44',10000000000],
-  watch: true,
-  // onSuccess(data) {
-  //   setUniApproved(true);
-  //   console.log('uni aproved', data);
-  // }
+  args: ['0xD4f83F4D87AC0713974851b28865a7f5C8225D44', 1000000000000],
+  
   
 });
 
-const  { data: data1, write: write1 } = useContractWrite(approval1) 
+const { data, write } = useContractWrite(config)
 
-// const { isLoading, isSuccess } = useWaitForTransaction({
-//   hash: data1?.hash,
-// })
-
-
-const {config:approval2} = usePrepareContractWrite({
-  address:'0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692',
-  abi: SOLabi,
-  functionName: 'approve',
-  watch: true,
-  // enabled:false,
-  args:['0xD4f83F4D87AC0713974851b28865a7f5C8225D44',1000000000000],
-  // onSuccess(data) {
-  //   setSolApproved(true);
-  //   console.log('SOL approved', data);
-  // }
+const { isLoading, isSuccess } = useWaitForTransaction({
+  hash: data?.hash,
 })
-const { data: data2, write: write2 } = useContractWrite(approval2);
-
-
-
-
-
-
-
-
-const { config:depositcoins} =   usePrepareContractWrite({
-  address: '0xD4f83F4D87AC0713974851b28865a7f5C8225D44',
-  abi: ABI,
-  functionName: 'deposit',
-  // enabled:false,
-  args:[10000000,1000000],
-  watch: true,
   
-  
-});
+   
+   
 
-const  { data: data3, write:write3 } = useContractWrite(depositcoins) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  const handleUNI = async () => {
-    if (coin0Amount.current === null || coin0Amount.current === undefined || coin0Amount.current == 0) {
-      console.log("token 1 amount is not valid.");
-      dispatch(
-        updateNotifications([
-          ...notifications,
-          {
-            type: "error",
-            header: "ERROR",
-            info: ["Invalid UNI amount!!!"],
-            overlay: true,
-          },
-        ])
-      );
-      return;
-    }
-
-    // Check and approve allowance for Token 0 (UNI)
     
-    console.log("current allowance of Token1:", allowance1);
 
-    const amountToken0 = Number(ethers.utils.parseEther(coin0Amount.current));
-    console.log("token 1 input amount:", amountToken0);
 
-    if (allowance1<amountToken0) {
-    
-     
+    // const { config2 } = usePrepareContractWrite({
+    //   address:'0xe032756D2aBaC260a1cA5a9F1BAf4f2E6Fd57692',
+    //   abi: SOLabi,
+    //   functionName: 'approve',
+    //   args: ['0xD4f83F4D87AC0713974851b28865a7f5C8225D44', coin1Amount],
+    // })
+          
+    //  const { write2 } = useContractWrite(config2);
+    //  const { isLoading2, isSuccess2, error2 } = useWaitForTransaction({
+    //     hash: write2?.data?.hash,
+    //   })
 
-      console.log("Token 1 approval pending ..");
-      dispatch(
-        updateNotifications([
-          ...notifications,
-          {
-            type: "loading",
-            header: "Approving UNI Token",
-            info: ["Transaction pending.."],
-            overlay: true,
-          },
-        ])
-      );
+        
       
-
-     write1?.({
-        args: ['0xD4f83F4D87AC0713974851b28865a7f5C8225D44', amountToken0],
-      });
-    
-
-                  //*********************//pls add condition for success(only time out given couldnt make tx wait)***************************************
-
-  setTimeout(() => {
-      console.log("Token 1 approved.");
-      dispatch(
-        updateNotifications([
-          ...notifications,
-          {
-            type: "successful",
-            header: "UNI token approved",
-            info: [],
-            overlay: true,
-          },
-        ])
-      );
-      setUniApproved(true);
-      }, 20000);
-
-    }
-    
-    if(allowance1>=amountToken0)
-    {
-      console.log("Token 1 already approved.");
-      dispatch(
-        updateNotifications([
-          ...notifications,
-          {
-            type: "successful",
-            header: "UNI token is already approved",
-            info: [],
-            overlay: true,
-          },
-        ])
-      );
-      setUniApproved(true);
-    }
-  };
-
-  const handleSOL = async () => {
-    if (coin1Amount.current === null || coin1Amount.current === undefined || coin1Amount.current == 0) {
-      console.log("token 2 amount is not valid.");
-      dispatch(
-        updateNotifications([
-          ...notifications,
-          {
-            type: "error",
-            header: "ERROR",
-            info: ["Invalid SOL amount!!!"],
-            overlay: true,
-          },
-        ])
-      );
-      return;
-    }
-
-    
-    
-    console.log("current allowance of Token2:", allowance2);
-
-    const amountToken1 = Number(ethers.utils.parseEther(coin1Amount.current));
-    console.log("token 2 input amount:", amountToken1);
-
-    if (allowance2<amountToken1) {
-    
-     
-
-      console.log("Token 1 approval pending ..");
-      dispatch(
-        updateNotifications([
-          ...notifications,
-          {
-            type: "loading",
-            header: "Approving SOL Token",
-            info: ["Transaction pending.."],
-            overlay: true,
-          },
-        ])
-      );
       
-
-     write2({
-        args: ['0xD4f83F4D87AC0713974851b28865a7f5C8225D44', amountToken1],
-      });
     
-      setSolApproved(true);
-
-        //*********************//pls add condition for success(only time out given couldnt make tx wait)***************************************
-
-  setTimeout(() => {
-      console.log("Token 1 approved.");
-      dispatch(
-        updateNotifications([
-          ...notifications,
-          {
-            type: "successful",
-            header: "SOL token approved",
-            info: [],
-            overlay: true,
-          },
-        ])
-      );
-      
-      }, 20000);
-
-    }
     
-    if(allowance2>=amountToken1)
-    {
-      setSolApproved(true);
-      console.log("Token 1 already approved.");
-      dispatch(
-        updateNotifications([
-          ...notifications,
-          {
-            type: "successful",
-            header: "SOL token is already approved",
-            info: [],
-            overlay: true,
-          },
-        ])
-      );
-      setUniApproved(true);
-    }
-  };
-  
+    
+
+
+    
+   
+   
+   
+   
+    
+
+
+    // const { isLoading, isSuccess, error } = useWaitForTransaction({
+    //   hash: write?.data?.hash,
+    // });
+
+
+
+
+
+
+
+
+
 
 
 
@@ -695,48 +499,39 @@ const  { data: data3, write:write3 } = useContractWrite(depositcoins)
 
 
   const handleDeposit = async () => {
-    console.log("current wallet:", address);
+    console.log("current wallet:", user);
 
     try {
       dispatch(
         updateLoading({
           type: "loading",
-          header: "Processing Deposit",
+          header: "LOADING!!!",
           info: ["Transaction pending..."],
-          overlay: true,
+          overlay: false,
         })
       );
-      if (coin0Amount.current === null || coin0Amount.current === undefined) {
+      if (coin0Amount === null || coin0Amount === undefined) {
         console.log("token 1 amount is not valid.");
         return;
       }
 
-      if (coin1Amount.current === null || coin1Amount.current === undefined) {
+      if (coin1Amount === null || coin1Amount === undefined) {
         console.log("token 2 amount is not valid.");
         return;
       }
-      const amountToken0 = Number(ethers.utils.parseEther(coin0Amount.current));
-      const amountToken1 = Number(ethers.utils.parseEther(coin1Amount.current));
+      const amountToken0 = ethers.utils.parseEther(coin0Amount);
+      const amountToken1 = ethers.utils.parseEther(coin1Amount);
 
+      
       //deposit
       console.log("proceeding deposit ..");
-      // const tx = await contract.deposit(amountToken0, amountToken1, {
-      //   gasLimit: 270000,
-      //   gasPrice: 20000000000,
-      // });
-
-      // const receipt = await tx.wait();
-
-     write3({
-       args: [amountToken0, amountToken1],
-     })
-      
-
-
-      //console.log("Deposit successfull !");
-      const receipt=false;
+      const tx = await contract.deposit(amountToken0, amountToken1, {
+        gasLimit: 270000,
+        gasPrice: 20000000000,
+      });    const receipt = await tx.wait();
+      console.log("Deposit successfull !");
       dispatch(updateLoading({}));
-      console.log("pop up not set for success");
+      console.log(receipt);
       if (receipt) {
         dispatch(
           updateNotifications([
@@ -781,7 +576,174 @@ const  { data: data3, write:write3 } = useContractWrite(depositcoins)
         ])
       );
     }
+
   };
+
+
+
+
+
+ 
+  const handleUNI = async () => {
+    if (coin0Amount.current === null || coin0Amount.current === undefined || coin0Amount.current == 0) {
+      console.log("token 1 amount is not valid.");
+      dispatch(
+        updateNotifications([
+          ...notifications,
+          {
+            type: "error",
+            header: "ERROR",
+            info: ["Invalid UNI amount!!!"],
+            overlay: true,
+          },
+        ])
+      );
+      return;
+    }
+
+    // Check and approve allowance for Token 0 (UNI)
+    
+    
+
+    const amountToken0 = ethers.utils.parseEther(coin0Amount.current);
+
+    if (0 === 0) {
+      console.log(allowance1);
+      write({args: ["0xD4f83F4D87AC0713974851b28865a7f5C8225D44", amountToken0]});
+      console.log("Token 1 approval pending ..");
+      dispatch(
+        updateNotifications([
+          ...notifications,
+          {
+            type: "loading",
+            header: "Approving UNI Token",
+            info: ["Transaction pending.."],
+            overlay: true,
+          },
+        ])
+      );
+      const token1 = true;
+      if (token1) setUniApproved(true);
+      console.log("Token 1  approved.");
+      if (token1) {
+        dispatch(
+          updateNotifications([
+            ...notifications,
+            {
+              type: "successful",
+              header: "UNI Token Approved",
+              info: [
+                "Transaction Hash: ",
+                {
+                  text: "View Here",
+                  link: `https://goerli.etherscan.io/tx/${token1.transactionHash}`,
+                },
+              ],
+              overlay: true,
+            },
+          ])
+        );
+      }
+    } else {
+      console.log("Token 1 already approved.");
+      dispatch(
+        updateNotifications([
+          ...notifications,
+          {
+            type: "successful",
+            header: "UNI token is already approved",
+            info: [],
+            overlay: true,
+          },
+        ])
+      );
+      setUniApproved(true);
+    }
+  };
+
+
+  // const handleSOL=async()=>{ 
+
+  //   if (coin0Amount === null || coin0Amount === undefined|| coin0Amount==0) {
+  //     console.log("token 1 amount is not valid.");
+  //     return;
+  //   }
+
+  //   if (coin1Amount === null || coin1Amount === undefined|| coin1Amount==0) {
+  //     console.log("token 2 amount is not valid.");
+  //     return;
+  //   }
+
+
+
+  //       // Check and approve allowance for Token 1 (SOL)
+  //       const allowanceToken1 = await SOLcontract.allowance(user, address);
+  //       console.log("current allowance of token 2:", allowanceToken1.toString());
+
+        
+  //       const amountToken1 = ethers.utils.parseEther(coin1Amount);
+  
+  //       if (allowanceToken1.lt(amountToken1)) {
+  //         const approveTx2 = await SOLcontract.approve(
+  //           address,amountToken1
+  //           // ethers.constants.MaxUint256
+  //         );
+  //         console.log("Token 2 approval pending ..");
+  //         dispatch(
+  //           updateNotifications([
+  //             ...notifications,
+  //             {
+  //               type: "loading",
+  //               header: "Approving Token 1",
+  //               info: ["Transaction pending.."],
+  //               overlay: false,
+  //             },
+  //           ])
+  //         );
+  //         const token2 = await approveTx2.wait();
+  //               if (token2) setSolApproved(true);
+  //               console.log("Token 2  approved.");
+  //               if (token2) {
+  //                 dispatch(
+  //                   updateNotifications([
+  //                     ...notifications,
+  //                     {
+  //                       type: "successful",
+  //                       header: "SOL Token Approved",
+  //                       info: [
+  //                         "Transaction Hash: ",
+  //                         {
+  //                           text: "View Here",
+  //                           link: `https://goerli.etherscan.io/tx/${token2.transactionHash}`,
+  //                         },
+  //                       ],
+  //                       overlay: true,
+  //                     },
+  //                   ])
+  //                 );
+  //               }
+         
+  //       } else {
+  //         console.log("Token 2 already approved.");
+  //         dispatch(
+  //           updateNotifications([
+  //             ...notifications,
+  //             {
+  //               type: "successful",
+  //               header: "token 2 is already approved",
+  //               info: [],
+  //               overlay: false,
+  //             },
+  //           ])
+  //         );
+  //         setSolApproved(true);
+  //       }
+
+    
+  // }
+
+
+
 
   return (
     <>
@@ -797,14 +759,13 @@ const  { data: data3, write:write3 } = useContractWrite(depositcoins)
             <div className="flex flex-col gap-y-[6px]">
               <div className="flex justify-between text-light">
                 <span>Amount</span>
-                <span>Balance {uni.formatted}</span>
+                <span>Balance {balance1}</span>
               </div>
               <div className="flex h-[42px] items-center justify-between gap-x-3 overflow-hidden rounded-lg bg-light/10">
                 <div className="flex flex-1 gap-x-2 pl-4 items-center">
                   <input
                     type="number"
                     placeholder="0.00"
-                    // value={coin0Amount}
                     onChange={handleInputChange1}
                     className="w-full bg-transparent text-base font-normal text-white outline-none truncate [appearance:textfield] placeholder:text-white/20 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-opacity duration-300 ease-in-out"
                   />
@@ -822,15 +783,15 @@ const  { data: data3, write:write3 } = useContractWrite(depositcoins)
             <div className="flex flex-col gap-y-[6px]">
               <div className="flex justify-between text-light">
                 <span>Amount</span>
-                <span>Balance {sol.formatted}</span>
+                <span>Balance {balance2}</span>
               </div>
               <div className="flex h-[42px] items-center justify-between gap-x-3 overflow-hidden rounded-lg bg-light/10">
                 <div className="flex flex-1 gap-x-2 pl-4 items-center">
                   <input
                     type="number"
                     placeholder="0.00"
-                    // value={coin1Amount}
-                    onChange={handleInputChange2}
+                    
+                     onChange={handleInputChange2}
                     className="w-full bg-transparent text-base font-normal text-white outline-none truncate [appearance:textfield] placeholder:text-white/20 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-opacity duration-300 ease-in-out"
                   />
                 </div>
@@ -853,20 +814,8 @@ const  { data: data3, write:write3 } = useContractWrite(depositcoins)
 
           {/* when UNI is not approved */}
           {!uniapproved && (
-            <button
-              className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full"
-              onClick={handleUNI}
-            >
-              Approve UNI
-            </button>
-          )}
-          {/* when UNI is approved but SOL is not */}
-          {uniapproved && !solapproved && (
-            <button
-              className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full"
-              onClick={handleSOL}
-            >
-              Approve SOL
+            <button className="font-medium flex items-center gap-x-2 justify-center bg-white/100 text-black/100 hover:bg-white/90 px-3 py-[11px] text-sm rounded-lg w-full" onClick={handleUNI} >
+              APPROVE UNI
             </button>
           )}
           {/* when UNI and SOL are approved */}
@@ -884,15 +833,13 @@ const  { data: data3, write:write3 } = useContractWrite(depositcoins)
   );
 }
 function Withdraw({ setDisplay }) {
-  // const [contract, setContract] = useState(null);
-  // const [user, setUser] = useState("");
+  const [contract, setContract] = useState(null);
+  const [user,setUser] = useState("");
   const [amount, setAmount] = useState(0);
- 
-  // const address = "0x5a4bfd10A99a3e562dD8Ba6550BE305e81b372E1"; //contract  address
+  const address = "0x5a4bfd10A99a3e562dD8Ba6550BE305e81b372E1"; //contract  address
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
-    
   };
 
   // useEffect(() => {
@@ -910,70 +857,29 @@ function Withdraw({ setDisplay }) {
   //   };
   //   initialize();
   // }, [setUser, setContract]);
-  const { address} = useAccount();
-  
-  const {data : readData } =  useContractRead({
-    address: "0x8523c71015a6E7B6eb7D67590a6abA6064e094f0",
-    abi: ASVTabi,
-    functionName: "getBalance",
-    args: [address],
-    watch: true,
-  })
-  const balInETH=Number(readData)/10**18;
-  const bal=balInETH.toFixed(6);
-
-
-
-
-  
-const { config} =   usePrepareContractWrite({
-  address: '0xD4f83F4D87AC0713974851b28865a7f5C8225D44',
-  abi: ABI,
-  functionName: 'withdraw',
-  
-  args:[(amount*10**18)+1],
-  
-  
-});
-
-const  { write} = useContractWrite(config) 
-
 
   const handleWithdraw = async () => {
-    //   // const algoaddress='0xAEaE82345d3B3c6707DAe908863e23879F6ed812';
-    //   //  const userBalance = await algoaddress.balanceOf(user);
-    //   // console.log(userBalance);
-    //   try {
-    //     if (contract) {
-    //       const withdrawTx = await contract.withdraw(amount, {
-    //         gasLimit: 270000,
-    //         gasPrice: 20000000000,
-    //       });
-    //       await withdrawTx.wait();
-    //       console.log("Withdrawal successful!");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error during withdrawal:", error);
-    //     console.log("Transaction hash:", error.transactionHash);
-    //     console.log("Transaction details:", error.transaction);
-    //     console.log("Receipt details:", error.receipt);
-    //   }
+  //   // const algoaddress='0xAEaE82345d3B3c6707DAe908863e23879F6ed812';
+  //   //  const userBalance = await algoaddress.balanceOf(user);
+  //   // console.log(userBalance);
 
+  //   try {
+  //     if (contract) {
+  //       const withdrawTx = await contract.withdraw(amount, {
+  //         gasLimit: 270000,
+  //         gasPrice: 20000000000,
+  //       });
 
-
-const amt = Number(amount)*10*18;
-
-write({
-  args: [amt],
-});
-
-
-
-
-
-
-
-  };
+  //       await withdrawTx.wait();
+  //       console.log("Withdrawal successful!");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during withdrawal:", error);
+  //     console.log("Transaction hash:", error.transactionHash);
+  //     console.log("Transaction details:", error.transaction);
+  //     console.log("Receipt details:", error.receipt);
+  //   }
+   };
 
   return (
     <>
@@ -989,7 +895,7 @@ write({
             <div className="flex flex-col gap-y-[6px]">
               <div className="flex justify-between text-light">
                 <span>Amount</span>
-                <span>Balance {bal}</span>
+                <span>Balance 0.00</span>
               </div>
               <div className="flex h-[42px] items-center justify-between gap-x-3 overflow-hidden rounded-lg bg-light/10">
                 <div className="flex flex-1 gap-x-2 pl-4 items-center">
